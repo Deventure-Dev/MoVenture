@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moventure.WebApi", "Moventure\Moventure.WebApi.csproj", "{5B026BFB-284D-444D-ABC7-A48481233253}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moventure.WebApi", "Moventure\Moventure.WebApi.csproj", "{5B026BFB-284D-444D-ABC7-A48481233253}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{27AB87AE-6FAF-474D-AFE1-7B54B6CE74B7}"
 EndProject
@@ -11,9 +11,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BusinessLogic", "BusinessLo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataLayer", "DataLayer", "{498D5E8E-8848-4C3F-92D4-52ED0D6E2CA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moventure.BusinessLogic", "..\Moventure.BusinessLogic\Moventure.BusinessLogic.csproj", "{5980CA5F-64E6-4C13-8F32-4312B7CBE029}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moventure.DataLayer", "Moventure.DataLayer\Moventure.DataLayer.csproj", "{C0B44315-D1C5-407C-8FE6-F6C32BAEE6C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moventure.DataLayer", "Moventure.DataLayer\Moventure.DataLayer.csproj", "{C0B44315-D1C5-407C-8FE6-F6C32BAEE6C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moventure.BusinessLogic", "Moventure.BusinessLogic\Moventure.BusinessLogic.csproj", "{9E08E868-66D8-4C30-9D52-D9197E4465B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,22 +25,22 @@ Global
 		{5B026BFB-284D-444D-ABC7-A48481233253}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B026BFB-284D-444D-ABC7-A48481233253}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B026BFB-284D-444D-ABC7-A48481233253}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5980CA5F-64E6-4C13-8F32-4312B7CBE029}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5980CA5F-64E6-4C13-8F32-4312B7CBE029}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5980CA5F-64E6-4C13-8F32-4312B7CBE029}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5980CA5F-64E6-4C13-8F32-4312B7CBE029}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C0B44315-D1C5-407C-8FE6-F6C32BAEE6C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C0B44315-D1C5-407C-8FE6-F6C32BAEE6C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0B44315-D1C5-407C-8FE6-F6C32BAEE6C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0B44315-D1C5-407C-8FE6-F6C32BAEE6C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E08E868-66D8-4C30-9D52-D9197E4465B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E08E868-66D8-4C30-9D52-D9197E4465B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E08E868-66D8-4C30-9D52-D9197E4465B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E08E868-66D8-4C30-9D52-D9197E4465B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5B026BFB-284D-444D-ABC7-A48481233253} = {27AB87AE-6FAF-474D-AFE1-7B54B6CE74B7}
-		{5980CA5F-64E6-4C13-8F32-4312B7CBE029} = {63B164F8-3A7A-4A79-B5E7-0672D9E82721}
 		{C0B44315-D1C5-407C-8FE6-F6C32BAEE6C1} = {498D5E8E-8848-4C3F-92D4-52ED0D6E2CA9}
+		{9E08E868-66D8-4C30-9D52-D9197E4465B0} = {63B164F8-3A7A-4A79-B5E7-0672D9E82721}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2421C79D-DE6B-4442-95CE-D9B11B7B7DA9}
