@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Moventure.BusinessLogic.Models
+{
+    public class Playlist
+    {
+        public Guid Id { get; set; }
+        public Guid UserId { get; set; }
+        public DateTime SavedAt { get; set; }
+        public List<Movie> Movies { get; set; }
+    }
+}

@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
-namespace Moventure.WebApi.Models
+namespace Moventure.BusinessLogic.Models
 {
-    public partial class Playlists
+    public class Tag
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public Guid UserId { get; set; }
+        public int Status { get; set; }
         public DateTime SavedAt { get; set; }
-
-        public Users User { get; set; }
+        public User SavedBy { get; set; }
     }
 }
