@@ -96,7 +96,7 @@ namespace Moventure.WebAPI.Controllers
 
         // POST api/values
         [HttpPost]
-        public IActionResult Post([FromBody] string value)
+        public IActionResult Post(CategoryModel model)
         {
             var category = new Categories
             {
