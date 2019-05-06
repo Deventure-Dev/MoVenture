@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace Moventure.BusinessLogic.Models
+namespace Moventure.DataLayer.Models
 {
-    public class Category
+    public partial class Playlists
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public Guid UserId { get; set; }
         public DateTime SavedAt { get; set; }
-        public User SavedBy { get; set; }
+
+        public virtual Users User { get; set; }
     }
 }

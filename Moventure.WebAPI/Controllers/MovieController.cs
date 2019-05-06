@@ -12,18 +12,14 @@ namespace Moventure.WebAPI.Controllers
     public class MovieController : ControllerBase
     {
         private static DateTime today = DateTime.Today;
-        // GET api/values
-        /*[HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }*/
 
         [HttpGet]
-        public string GetByUserId(Guid userId)
+        public IEnumerable<MinifiedMovie> GetByUserId()
         {
+            try
+            {
 
-            /* var movieList = new List<MinifiedMovie>()
+                var movieList = new List<MinifiedMovie>()
              {
                  new MinifiedMovie
                  {
@@ -32,7 +28,7 @@ namespace Moventure.WebAPI.Controllers
                      PictureUrl = "https://images-na.ssl-images-amazon.com/images/I/91WY2zIvzzL._SY445_.jpg",
                      Rating = 4.7,
                      Length = 157,
-                     MainCategory = new Category {
+                     MainCategory = new CategoryModel {
                          Id = Guid.NewGuid(),
                          Name = "Drama",
                          SavedAt = today,
@@ -45,7 +41,7 @@ namespace Moventure.WebAPI.Controllers
                              SavedAt = today
                          }
                      },
-                     Tags = {
+                     Tags = new List<Tag>{
                          new Tag
                          {
                             Id = Guid.NewGuid(),
@@ -69,7 +65,7 @@ namespace Moventure.WebAPI.Controllers
                      PictureUrl = "https://upload.wikimedia.org/wikipedia/en/0/0b/Dark_River_%282017_film%29.png",
                      Rating = 4.2,
                      Length = 175,
-                     MainCategory = new Category {
+                     MainCategory = new CategoryModel {
                          Id = Guid.NewGuid(),
                          Name = "Action",
                          SavedAt = today,
@@ -82,7 +78,7 @@ namespace Moventure.WebAPI.Controllers
                              SavedAt = today
                          }
                      },
-                     Tags = {
+                     Tags = new List<Tag>{
                          new Tag
                          {
                             Id = Guid.NewGuid(),
@@ -101,11 +97,15 @@ namespace Moventure.WebAPI.Controllers
                  }
 
              };
-             Console.WriteLine(movieList);*/
 
+                return movieList; //.FindAll(movie => movie.CreatedBy == userId);
 
-            // return movieList.FindAll(movie => movie.CreatedBy == userId);
-            return "Ana";
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
+            return null;
         }
 
 

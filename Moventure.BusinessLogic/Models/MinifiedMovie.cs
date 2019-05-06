@@ -13,6 +13,6 @@ namespace Moventure.BusinessLogic.Models
         public int Length { get; set; }
         public Guid CreatedBy { get; set; }
         public List<Tag> Tags { get; set; }
-        public Category MainCategory { get; set; }
+        public CategoryModel MainCategory { get; set; }
     }
 }
