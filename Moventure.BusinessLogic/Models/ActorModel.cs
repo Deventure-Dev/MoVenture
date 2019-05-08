@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Moventure.BusinessLogic.Models
 {
-    public class Actor
+    public class ActorModel
     {
         public Guid Id { get; set; }
         public string FirstName { get; set; }
