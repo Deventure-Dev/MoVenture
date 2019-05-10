@@ -14,45 +14,7 @@ namespace Moventure.WebAPI.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        private static DateTime today = DateTime.Today;
-        private List<CategoryModel> Categories = new List<CategoryModel>
-        {
-            new CategoryModel
-            {
-                Id = Guid.NewGuid(),
-                Name = "Action",
-                SavedAt = today,
-                SavedBy = new User
-                {
-                    Id = Guid.NewGuid(),
-                    FirstName = "User2",
-                    LastName = "LastNameUser2",
-                    Email = "test2@yahoo.com",
-                    Password = "parola2parola2",
-                    Status = false,
-                    SavedAt = today
-                },
-
-            },
-
-             new CategoryModel
-            {
-                Id = Guid.NewGuid(),
-                Name = "Drama",
-                SavedAt = today,
-                SavedBy = new User
-                {
-                    Id = Guid.NewGuid(),
-                    FirstName = "User3",
-                    LastName = "LastNameUser3",
-                    Email = "test3@yahoo.com",
-                    Password = "parola3parola3",
-                    Status = false,
-                    SavedAt = today
-                },
-
-            }
-        };
+        
         private readonly IMapper mMapper;
 
         public CategoryController(IMapper mapper)
@@ -61,58 +23,64 @@ namespace Moventure.WebAPI.Controllers
         }
         // GET api/values
         [HttpGet]
-        //public ActionResult<IEnumerable<Category>> Get()
-        public IActionResult Get()
+        public ActionResult<IEnumerable<CategoryModel>> Get()
         {
-            var categories = new CategoryRepo().GetAll();
-            //IList<CategoryModel>
-            Console.WriteLine(mMapper);
-               var mappedCategories = mMapper.Map<CategoryModel>(categories);
-            return Ok(mappedCategories);
-            //return Categories;
+            var categoryRepo = new CategoryRepo();
+            var fetchedCategories = categoryRepo.GetAll();
+            var categoriesCount = categoryRepo.Count();
+
+            if (fetchedCategories == null && categoriesCount < 0)
+            {
+                return BadRequest("Fetching categories failed...!");
+            }
+
+            var mappedCategories = mMapper.Map<CategoryModel>(fetchedCategories);
+
+            return Ok(new {
+                Categories = mappedCategories,
+                Count = categoriesCount
+            });
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public ActionResult<CategoryModel> Get(Guid id)
         {
-            //return "value";
-            var category = new Categories
-            {
-                Name = id.ToString(),
-                Status = 0,
-                SavedAt = DateTime.UtcNow,
-                Savedby = Guid.Parse("06E6C8A6-96E6-40A5-8767-7F4D536A2049")
-            };
-
+           
             var categoryRepo = new CategoryRepo();
-            var createdCategory = categoryRepo.Create(category);
-            if (createdCategory == null)
+            var fetchedCategory = categoryRepo.GetAll().FirstOrDefault(category => category.Id == id);
+
+            if (fetchedCategory == null)
             {
-                return BadRequest("Failed to create category");
+                return BadRequest("Fetching category failed...!");
             }
-            return Ok();
+
+            var mappedCategory = mMapper.Map<CategoryModel>(fetchedCategory);
+
+            return Ok(mappedCategory);
         }
 
         // POST api/values
         [HttpPost]
         public IActionResult Post(CategoryModel model)
         {
-            var category = new Categories
+            var categoryToAdd = new Categories
             {
-                Name = value,
+                Name = model.Name,
                 Status = 0,
                 SavedAt = DateTime.UtcNow,
                 Savedby = Guid.Parse("06E6C8A6-96E6-40A5-8767-7F4D536A2049")
             };
 
             var categoryRepo = new CategoryRepo();
-            var createdCategory = categoryRepo.Create(category);
+            var createdCategory = categoryRepo.Create(categoryToAdd);
+
             if (createdCategory == null)
             {
                 return BadRequest("Failed to create category");
             }
-            return Ok();
+
+            return Ok(createdCategory);
         }
 
         // PUT api/values/5

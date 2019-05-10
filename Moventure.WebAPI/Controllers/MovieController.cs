@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moventure.BusinessLogic.Models;
+using Moventure.BusinessLogic.Repo;
+using Moventure.DataLayer.Models;
 
 namespace Moventure.WebAPI.Controllers
 {
@@ -13,113 +16,81 @@ namespace Moventure.WebAPI.Controllers
     {
         private static DateTime today = DateTime.Today;
 
-        [HttpGet]
-        public IEnumerable<MinifiedMovie> GetByUserId()
+        private readonly IMapper mMapper;
+
+        public MovieController(IMapper mapper)
         {
-            try
+            mMapper = mapper;
+        }
+
+        // GET api/values/5
+        [HttpGet("{id}")]
+        public ActionResult<Movie> Get(Guid id)
+        {
+            var movieRepo = new MovieRepo();
+
+            var fetchedMovie = movieRepo.GetAll().FirstOrDefault(movie => movie.Id == id);
+
+            if (fetchedMovie == null)
             {
-
-                var movieList = new List<MinifiedMovie>()
-             {
-                 new MinifiedMovie
-                 {
-                     Id = Guid.NewGuid(),
-                     Title = "Mr. Nobody",
-                     PictureUrl = "https://images-na.ssl-images-amazon.com/images/I/91WY2zIvzzL._SY445_.jpg",
-                     Rating = 4.7,
-                     Length = 157,
-                     MainCategory = new CategoryModel {
-                         Id = Guid.NewGuid(),
-                         Name = "Drama",
-                         SavedAt = today,
-                         SavedBy = new User
-                         {
-                             Email = "test@yahoo.com",
-                             FirstName = "Mircea",
-                             LastName = "Paul",
-                             Password = "parola",
-                             SavedAt = today
-                         }
-                     },
-                     Tags = new List<Tag>{
-                         new Tag
-                         {
-                            Id = Guid.NewGuid(),
-                            Name = "Action",
-                            SavedAt = today
-                         },
-                         new Tag
-                         {
-                            Id = Guid.NewGuid(),
-                            Name = "Action",
-                            SavedAt = today
-                         }
-                     }
-
-
-                 },
-                  new MinifiedMovie
-                 {
-                     Id = Guid.NewGuid(),
-                     Title = "Dark river",
-                     PictureUrl = "https://upload.wikimedia.org/wikipedia/en/0/0b/Dark_River_%282017_film%29.png",
-                     Rating = 4.2,
-                     Length = 175,
-                     MainCategory = new CategoryModel {
-                         Id = Guid.NewGuid(),
-                         Name = "Action",
-                         SavedAt = today,
-                         SavedBy = new User
-                         {
-                             Email = "asdas@yahoo.com",
-                             FirstName = "Guta",
-                             LastName = "Nicolae",
-                             Password = "gutapassword",
-                             SavedAt = today
-                         }
-                     },
-                     Tags = new List<Tag>{
-                         new Tag
-                         {
-                            Id = Guid.NewGuid(),
-                            Name = "Comedy",
-                            SavedAt = today
-                         },
-                         new Tag
-                         {
-                            Id = Guid.NewGuid(),
-                            Name = "SF",
-                            SavedAt = today
-                         }
-                     }
-
-
-                 }
-
-             };
-
-                return movieList; //.FindAll(movie => movie.CreatedBy == userId);
-
+                return NotFound();
             }
-            catch (Exception ex)
-            {
-                ex.ToString();
-            }
-            return null;
+
+            var mappedMovie = mMapper.Map<Movie>(fetchedMovie);
+
+            return Ok(mappedMovie);
         }
 
 
         // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        [HttpGet]
+        public ActionResult<IEnumerable<Movie>> Get(int id)
         {
-            return "value";
+            var movieRepo = new MovieRepo();
+            var fetchedMovies = movieRepo.GetAll();
+            var movieCount = movieRepo.Count();
+
+            if (fetchedMovies == null && movieCount < 0)
+            {
+                return BadRequest("Fetching movies failed....");
+            }
+
+            var mappedMovies = mMapper.Map<Movie>(fetchedMovies);
+
+            return Ok(new
+            {
+                Movies = mappedMovies,
+                Count = movieCount
+            });
+
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] Movie movie)
         {
+            var movieRepo = new MovieRepo();
+            var movieToAdd = new Movies
+            {
+                Id = new Guid(),
+                Title = movie.Title,
+                PictureUrl = movie.PictureUrl,
+                Rating = movie.Rating,
+                SavedAt = DateTime.UtcNow,
+                RatingCount = (int)movie.Rating,
+                Status = 0,
+                TrailerUrl = movie.TrailerUrl,
+                LaunchDate = movie.LaunchDate
+            };
+
+            var createdMovie = movieRepo.Create(movieToAdd);
+
+            if (createdMovie == null)
+            {
+                return BadRequest("Movie was not created!");
+            }
+
+            return Ok(createdMovie);
         }
 
         // PUT api/values/5

@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Moventure.BusinessLogic.Models;
+using Moventure.BusinessLogic.Repo;
+using Moventure.DataLayer.Models;
 
 namespace Moventure.WebAPI.Controllers
 {
@@ -10,24 +14,75 @@ namespace Moventure.WebAPI.Controllers
     [ApiController]
     public class PlaylistController : ControllerBase
     {
+
+        private readonly IMapper mMapper;
+
+        public PlaylistController(IMapper mapper)
+        {
+            mMapper = mapper;
+        }
+
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<IEnumerable<Playlist>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var playlistRepo = new PlaylistRepo();
+            var fetchedPlaylists = playlistRepo.GetAll();
+            var playlistsCount = playlistRepo.Count();
+
+            if (fetchedPlaylists == null && playlistsCount < 0)
+            {
+                return BadRequest("Fetching playlists failed...!");
+            }
+
+            var mappedPlaylists = mMapper.Map<Playlist>(fetchedPlaylists);
+
+            return Ok(new
+            {
+                Playlists = mappedPlaylists,
+                Count = playlistsCount
+            });
+      
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public ActionResult<Playlist> Get(Guid id)
         {
-            return "value";
+            var playlistRepo = new PlaylistRepo();
+            var fetchedPlaylist = playlistRepo.GetAll().FirstOrDefault(pl => pl.Id == id);
+
+            if (fetchedPlaylist == null)
+            {
+                return BadRequest("Fetching playlist failed...!");
+            }
+
+            var mappedPlaylist = mMapper.Map<Playlist>(fetchedPlaylist);
+
+            return Ok(mappedPlaylist);
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult Post([FromBody] Playlist playlist)
         {
+            var playlistToAdd = new Playlists
+            {
+                Id = new Guid(),
+                Name = playlist.Name,
+                SavedAt = DateTime.UtcNow,
+                UserId = new Guid()
+            };
+
+            var playlistRep = new PlaylistRepo();
+            var createdPlaylist = playlistRep.Create(playlistToAdd);
+
+            if (createdPlaylist == null)
+            {
+                return BadRequest("Creating playlist failed...!");
+            }
+
+            return Ok(createdPlaylist);
         }
 
         // PUT api/values/5

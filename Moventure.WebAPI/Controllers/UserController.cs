@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moventure.BusinessLogic.Models;
+using Moventure.BusinessLogic.Repo;
+using Moventure.DataLayer.Models;
 
 namespace Moventure.WebAPI.Controllers
 {
@@ -11,49 +14,78 @@ namespace Moventure.WebAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private static DateTime today = DateTime.Today;
-        private List<User> Users = new List<User>
+        private readonly IMapper mMapper;
+        
+        public UserController(IMapper mapper)
         {
-            new User
-            {
-                Id = Guid.NewGuid(),
-                FirstName = "User1",
-                LastName = "LastNameUser1",
-                Email = "test@yahoo.com",
-                Password = "parolaparola",
-                Status = false,
-                SavedAt = today
-            },
-            new User
-            {
-                Id = Guid.NewGuid(),
-                FirstName = "Mircea",
-                LastName = "Popescu",
-                Email = "mirceat@yahoo.com",
-                Password = "pa122rolaparola",
-                Status = false,
-                SavedAt = today
-            },
-        };
+            mMapper = mapper;
+        }
 
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<User>> Get()
         {
-            return Users;
+            var userRepo = new UserRepo();
+            var fetchedUsers = userRepo.GetAll();
+            var userCount = userRepo.Count();
+
+            if (fetchedUsers == null)
+            {
+                return BadRequest("Failed to fetch users");
+            }
+
+            var mappedUsers = mMapper.Map<User>(fetchedUsers);
+
+            return Ok(new
+            {
+                Users = mappedUsers,
+                Count = userCount
+            });
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public ActionResult<User> Get(Guid id)
         {
-            return "value";
+            var userRepo = new UserRepo();
+
+            var fetchedUser = userRepo.GetAll().FirstOrDefault(user => user.Id == id);
+
+            if (fetchedUser == null)
+            {
+                return NotFound();
+            }
+
+            var mappedUser = mMapper.Map<User>(fetchedUser);
+
+            return Ok(mappedUser);
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] User user)
         {
+            var userRepo = new UserRepo();
+            var userToAdd = new Users
+            {
+                Id = new Guid(),
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Password = user.Password,
+                SavedAt = DateTime.UtcNow,
+                Status = 0
+            };
+
+            var createdUser = userRepo.Create(userToAdd);
+
+            if (createdUser == null)
+            {
+                return BadRequest("User not created!");
+            }
+
+            return Ok(createdUser);
+
         }
 
         // PUT api/values/5

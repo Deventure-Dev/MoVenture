@@ -12,7 +12,6 @@ namespace Moventure.BusinessLogic.Mapper
         public CategoryMapping()
         {
             CreateMap<Categories, CategoryModel>()
-                .ForMember(m => m.Name, opt => opt.Ignore())
                 .ForMember(m => m.SavedBy, opt => opt.Ignore());
 
             CreateMap<CategoryModel, Categories>();
