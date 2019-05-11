@@ -117,7 +117,7 @@ namespace Moventure.WebAPI.Controllers
         public IActionResult GetMoviesByCategories(Guid userId)
         {
             List<MinifiedMovie> movieList = new List<MinifiedMovie>();
-            movieList.Add(null);
+            movieList.Add(new MinifiedMovie());
             movieList.Add(null);
             movieList.Add(null);
             movieList.Add(null);
