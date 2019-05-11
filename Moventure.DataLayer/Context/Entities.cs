@@ -1,13 +1,16 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Moventure.DataLayer.Models
 {
     public partial class Entities : DbContext
+        //IdentityDbContext<LoginModel, Role, int, IdentityUserClaim<int>,
+        //UserRole, IdentityUserLogin<int>,
+        //IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
         public Entities()
         {
+
         }
 
         public Entities(DbContextOptions<Entities> options)
@@ -31,8 +34,8 @@ namespace Moventure.DataLayer.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=deventure.database.windows.net;Database=moVenture;User ID=developer;Password=123456aA!;Trusted_Connection=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;");
+                optionsBuilder.UseSqlServer(AppConfiguration.ConnectionString);
+
             }
             //TODO: fix this
             optionsBuilder.UseLazyLoadingProxies();

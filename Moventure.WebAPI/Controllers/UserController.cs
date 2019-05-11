@@ -11,6 +11,7 @@ using Moventure.BusinessLogic.Models;
 using Moventure.BusinessLogic.Repo;
 using Moventure.DataLayer.Models;
 using Moventure.WebAPI.Logic;
+using Moventure.WebAPI.Models;
 
 namespace Moventure.WebAPI.Controllers
 {
@@ -32,22 +33,20 @@ namespace Moventure.WebAPI.Controllers
         }
 
         [HttpPost("login", Name = "LoginUser")]
-        public async Task<IActionResult> Login([FromBody] User userDto)
+        public async Task<IActionResult> LoginUser([FromBody] LoginModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            var user = await mUserManager.FindByEmailAsync(userDto.Email);
-
+            var user = await mUserManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
                 return Unauthorized();
             }
 
-            var result = await mSignInManager.CheckPasswordSignInAsync(user, userDto.Password, false);
-
+            var result = await mSignInManager.CheckPasswordSignInAsync(user, model.Password, false);
             if (result.Succeeded)
             {
 
