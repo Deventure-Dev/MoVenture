@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Deventure.Common\Deventure.Common.csproj" />
     <ProjectReference Include="..\Moventure.BusinessLogic\Moventure.BusinessLogic.csproj" />
   </ItemGroup>
 

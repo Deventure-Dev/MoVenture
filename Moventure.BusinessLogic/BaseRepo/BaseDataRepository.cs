@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Moventure.DataLayer.Models;
 
 namespace UpWorky.DataLayer.Repositories
@@ -25,6 +27,32 @@ namespace UpWorky.DataLayer.Repositories
                 mContext = value;
             }
         }
+
+
+        //public IEnumerable<T> ExecuteStoredProcedureList<T>(object storedProcedure)
+        //{
+        //    return mContext.Query.ExecuteStoredProcedureList(storedProcedure);
+        //}
+
+        //public void ExecuteStoredProcedure(object storedProcedure)
+        //{
+        //    mContext.Query.ExecuteStoredProcedure(storedProcedure);
+        //}
+
+        #region Raw SQL
+        //public int ExecuteSqlCommand(string sql, params object[] p)
+        //{
+        //    return mContext.Query<object>.ExecuteSqlCommand(sql, p);
+        //}
+
+        //public async Task<int> ExecuteSqlCommandAsync(string sql, params object[] p)
+        //{
+        //    //return await mContext.Database.ExecuteSqlCommandAsync(sql, p).ConfigureAwait(false);
+        //    return await mContext.Database.ExecuteSqlCommandAsync(sql, p).ConfigureAwait(false);
+        //}
+
+
+        #endregion
 
         #region Disposing logic
 

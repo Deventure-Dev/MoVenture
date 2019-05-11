@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Deventure.Common.Response;
 using Microsoft.AspNetCore.Mvc;
 using Moventure.BusinessLogic.Models;
 using Moventure.BusinessLogic.Repo;
@@ -23,6 +24,22 @@ namespace Moventure.WebAPI.Controllers
             mMapper = mapper;
         }
 
+        public IActionResult GetMoviesByCategories(Guid userId)
+        {
+            List<MinifiedMovie> movieList = new List<MinifiedMovie>();
+            movieList.Add(null);
+            movieList.Add(null);
+            movieList.Add(null);
+            movieList.Add(null);
+            movieList.Add(null);
+            movieList.Add(null);
+
+            //return Ok(ResponseFactory.Success(movieList));
+            return Ok(ResponseFactory.CreateResponse(true, ResponseCode.Success, movieList));
+        }
+
+        #region WEBAPI specific
+
         // GET api/values/5
         [HttpGet("{id}")]
         public ActionResult<Movie> Get(Guid id)
@@ -40,7 +57,6 @@ namespace Moventure.WebAPI.Controllers
 
             return Ok(mappedMovie);
         }
-
 
         // GET api/values/5
         [HttpGet]
@@ -81,7 +97,7 @@ namespace Moventure.WebAPI.Controllers
                 Status = 0,
                 TrailerUrl = movie.TrailerUrl,
                 LaunchDate = DateTime.UtcNow
-               
+
             };
 
             var createdMovie = movieRepo.Create(movieToAdd);
@@ -105,5 +121,10 @@ namespace Moventure.WebAPI.Controllers
         public void Delete(int id)
         {
         }
+
+        #endregion
+
+        #region WEB specific
+
     }
 }
