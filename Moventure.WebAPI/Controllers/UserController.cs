@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Moventure.BusinessLogic.Models;
 using Moventure.BusinessLogic.Repo;
 using Moventure.DataLayer.Models;
+using Moventure.WebAPI.Logic;
 
 namespace Moventure.WebAPI.Controllers
 {
@@ -15,15 +19,75 @@ namespace Moventure.WebAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly IMapper mMapper;
-        
-        public UserController(IMapper mapper)
+        private readonly UserManager<Users> mUserManager;
+        private readonly SignInManager<Users> mSignInManager;
+        private readonly IConfiguration mConfig;
+
+        public UserController(IMapper mapper, UserManager<Users> userManager, SignInManager<Users> signInManager, IConfiguration config)
         {
             mMapper = mapper;
+            mUserManager = userManager;
+            mSignInManager = signInManager;
+            mConfig = config;
+        }
+
+        [HttpPost("login", Name = "LoginUser")]
+        public async Task<IActionResult> Login([FromBody] User userDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var user = await mUserManager.FindByEmailAsync(userDto.Email);
+
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            var result = await mSignInManager.CheckPasswordSignInAsync(user, userDto.Password, false);
+
+            if (result.Succeeded)
+            {
+
+                //uncoment the section to add admins manually
+                //add user role to user
+                //await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "Admin")); 
+
+                await mUserManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "User"));
+
+                var mappedUserToDto = mMapper.Map<User>(user);
+
+                return Ok(new
+                {
+                    token = await TokenGenerator.GenerateJwtToken(user, mMapper, mConfig, mUserManager),
+                    user = mappedUserToDto,
+                });
+            }
+
+            return Unauthorized();
+        }
+
+
+        [HttpPost(Name = "CreateUser")]
+        public async Task<IActionResult> Register([FromBody] User userDto)
+        {
+            var user = mMapper.Map<Users>(userDto);
+
+            var result = await mUserManager.CreateAsync(user, userDto.Password);
+
+            if (result.Succeeded)
+            {
+                return StatusCode(201);
+            }
+
+            return BadRequest(result.Errors);
         }
 
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<User>> Get()
+        public ActionResult<IEnumerable<Users>> Get()
         {
             var userRepo = new UserRepo();
             var fetchedUsers = userRepo.GetAll();
@@ -34,7 +98,7 @@ namespace Moventure.WebAPI.Controllers
                 return BadRequest("Failed to fetch users");
             }
 
-            var mappedUsers = mMapper.Map<User>(fetchedUsers);
+            var mappedUsers = mMapper.Map<Users>(fetchedUsers);
 
             return Ok(new
             {
@@ -45,7 +109,7 @@ namespace Moventure.WebAPI.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public ActionResult<User> Get(Guid id)
+        public ActionResult<Users> Get(Guid id)
         {
             var userRepo = new UserRepo();
 
@@ -56,14 +120,14 @@ namespace Moventure.WebAPI.Controllers
                 return NotFound();
             }
 
-            var mappedUser = mMapper.Map<User>(fetchedUser);
+            var mappedUser = mMapper.Map<Users>(fetchedUser);
 
             return Ok(mappedUser);
         }
 
         // POST api/values
         [HttpPost]
-        public IActionResult Post([FromBody] User user)
+        public IActionResult Post([FromBody] Users user)
         {
             var userRepo = new UserRepo();
             var userToAdd = new Users
