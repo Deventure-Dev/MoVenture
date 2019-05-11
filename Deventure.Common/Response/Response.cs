@@ -5,7 +5,7 @@ namespace Deventure.Common.Response
     {
         public Response()
         {
-            StatusCode = (int)ResponseCode.NotSet;
+			StatusCode = (int)ResponseCode.NotSet;
         }
 
         private Response(bool success) : this()
@@ -15,7 +15,7 @@ namespace Deventure.Common.Response
 
         internal Response(bool success, int statusCode) : this(success)
         {
-            StatusCode = (int)statusCode;
+			StatusCode = (int)statusCode;
         }
 
         public bool Success { get; set; }
@@ -28,11 +28,12 @@ namespace Deventure.Common.Response
         }
     }
 
-    public class Response<T> : Response where T : class
+    public class Response<T> : Response
+        where T : class
     {
         public Response()
         {
-            StatusCode = (int)ResponseCode.NotSet;
+			StatusCode = (int)ResponseCode.NotSet;
         }
 
         internal Response(bool success, int statusCode, T data) : base(success, statusCode)

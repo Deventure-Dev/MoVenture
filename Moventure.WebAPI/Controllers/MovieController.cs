@@ -24,20 +24,6 @@ namespace Moventure.WebAPI.Controllers
             mMapper = mapper;
         }
 
-        public IActionResult GetMoviesByCategories(Guid userId)
-        {
-            List<MinifiedMovie> movieList = new List<MinifiedMovie>();
-            movieList.Add(null);
-            movieList.Add(null);
-            movieList.Add(null);
-            movieList.Add(null);
-            movieList.Add(null);
-            movieList.Add(null);
-
-            //return Ok(ResponseFactory.Success(movieList));
-            return Ok(ResponseFactory.CreateResponse(true, ResponseCode.Success, movieList));
-        }
-
         #region WEBAPI specific
 
         // GET api/values/5
@@ -126,5 +112,20 @@ namespace Moventure.WebAPI.Controllers
 
         #region WEB specific
 
+        public IActionResult GetMoviesByCategories(Guid userId)
+        {
+            List<MinifiedMovie> movieList = new List<MinifiedMovie>();
+            movieList.Add(null);
+            movieList.Add(null);
+            movieList.Add(null);
+            movieList.Add(null);
+            movieList.Add(null);
+            movieList.Add(null);
+
+            //return Ok(ResponseFactory.Success(movieList));
+            return Ok(ResponseFactory.CreateResponse(true, ResponseCode.Success, movieList));
+        }
+
+        #endregion
     }
 }
