@@ -12,7 +12,7 @@ namespace Moventure.BusinessLogic.Models
         public int Status { get; set; }
         public DateTime SavedAt { get; set; }
 
-        public List<Actor> Actors { get; set; }
+        public List<ActorModel> Actors { get; set; }
         public List<Comment> Comments { get; set; }
         public List<Playlist> Playlists { get; set; }
     }

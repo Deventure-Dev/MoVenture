@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.489
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{27AB87AE-6FAF-474D-AFE1-7B54B6CE74B7}"
 EndProject
@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moventure.DataLayer", "Move
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moventure.BusinessLogic", "Moventure.BusinessLogic\Moventure.BusinessLogic.csproj", "{9E08E868-66D8-4C30-9D52-D9197E4465B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moventure.WebAPI", "Moventure.WebAPI\Moventure.WebAPI.csproj", "{8BB3DDFD-1F61-438D-9E21-DB2CBDA6F4D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moventure.WebAPI", "Moventure.WebAPI\Moventure.WebAPI.csproj", "{8BB3DDFD-1F61-438D-9E21-DB2CBDA6F4D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

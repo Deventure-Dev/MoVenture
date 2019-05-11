@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Moventure.DataLayer.Config;
+//using Moventure.DataLayer.Config;
 
 namespace Moventure.WebAPI
 {
@@ -27,7 +27,7 @@ namespace Moventure.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-            CustomDesignTimeServices.ConfigureDesignTimeServices(services);
+            //CustomDesignTimeServices.ConfigureDesignTimeServices(services);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddAutoMapper();
