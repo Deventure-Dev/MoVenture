@@ -71,7 +71,7 @@ namespace Moventure.WebAPI.Controllers
                 Id = new Guid(),
                 Name = playlist.Name,
                 SavedAt = DateTime.UtcNow,
-                UserId = new Guid()
+                UserId = Guid.Parse(Convert.ToString(playlist.UserId))
             };
 
             var playlistRep = new PlaylistRepo();

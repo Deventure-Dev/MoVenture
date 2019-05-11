@@ -64,18 +64,9 @@ namespace Moventure.WebAPI.Controllers
         [HttpPost]
         public IActionResult Post(Comment comment)
         {
-            var commentToAdd = new Comments
-            {
-                Id = new Guid(),
-                SavedAt = DateTime.UtcNow,
-                CommentMessage = "This is a comment",
-                Status = 0,
-                SavedBy = new Guid(),
-                MovieId = new Guid()
-            };
-
             var commentRepo = new CommentRepo();
-            var createdComment = commentRepo.Create(commentToAdd);
+            var mappedComment = mMapper.Map<Comments>(comment);
+            var createdComment = commentRepo.Create(mappedComment);
 
             if (createdComment == null)
             {

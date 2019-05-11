@@ -80,7 +80,8 @@ namespace Moventure.WebAPI.Controllers
                 RatingCount = (int)movie.Rating,
                 Status = 0,
                 TrailerUrl = movie.TrailerUrl,
-                LaunchDate = movie.LaunchDate
+                LaunchDate = DateTime.UtcNow
+               
             };
 
             var createdMovie = movieRepo.Create(movieToAdd);
