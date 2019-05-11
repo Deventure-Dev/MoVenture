@@ -11,8 +11,8 @@ using Moventure.DataLayer.Models;
 
 namespace Moventure.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+
+    //[ApiController]
     public class MovieController : ControllerBase
     {
         private static DateTime today = DateTime.Today;
@@ -28,6 +28,7 @@ namespace Moventure.WebAPI.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
+        [Route("api/[controller]")]
         public ActionResult<Movie> Get(Guid id)
         {
             var movieRepo = new MovieRepo();
@@ -44,9 +45,10 @@ namespace Moventure.WebAPI.Controllers
             return Ok(mappedMovie);
         }
 
-        // GET api/values/5
+        // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<Movie>> Get(int id)
+        [Route("api/[controller]")]
+        public ActionResult<IEnumerable<Movie>> Get()
         {
             var movieRepo = new MovieRepo();
             var fetchedMovies = movieRepo.GetAll();
