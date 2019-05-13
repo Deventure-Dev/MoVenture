@@ -29,13 +29,13 @@ namespace Moventure.WebAPI
             //CustomDesignTimeServices.ConfigureDesignTimeServices(services);
 
             //configure authorization
-            IdentityBuilder builder = services.AddIdentityCore<Users>(opt =>
-            {
-                opt.Password.RequireDigit = false;
-                opt.Password.RequiredLength = 4;
-                opt.Password.RequireNonAlphanumeric = false;
-                opt.Password.RequireUppercase = false;
-            });
+            //IdentityBuilder builder = services.AddIdentityCore<Users>(opt =>
+            //{
+            //    opt.Password.RequireDigit = false;
+            //    opt.Password.RequiredLength = 4;
+            //    opt.Password.RequireNonAlphanumeric = false;
+            //    opt.Password.RequireUppercase = false;
+            //});
 
             //builder = new IdentityBuilder(builder.UserType, typeof(Role), builder.Services);
             //builder.RoleType = typeof(Role);
