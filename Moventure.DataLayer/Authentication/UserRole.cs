@@ -6,7 +6,7 @@ namespace Moventure.DataLayer.Authentication
 {
     public class UserRole : IdentityUserRole<Guid>
     {
-        //public Users User { get; set; }
-        //public Role Role { get; set; }
+        public Users User { get; set; }
+        public Role Role { get; set; }
     }
 }

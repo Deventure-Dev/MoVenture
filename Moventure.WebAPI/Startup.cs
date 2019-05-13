@@ -26,7 +26,6 @@ namespace Moventure.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             //CustomDesignTimeServices.ConfigureDesignTimeServices(services);
 
             //configure authorization
@@ -38,22 +37,24 @@ namespace Moventure.WebAPI
                 opt.Password.RequireUppercase = false;
             });
 
-            builder = new IdentityBuilder(builder.UserType, typeof(Role), builder.Services);
-            builder.AddEntityFrameworkStores<Entities>();
-            builder.AddRoleValidator<RoleValidator<Role>>();
-            builder.AddRoleManager<RoleManager<Role>>();
-            builder.AddSignInManager<SignInManager<Users>>();
+            //builder = new IdentityBuilder(builder.UserType, typeof(Role), builder.Services);
+            //builder.RoleType = typeof(Role);
+            //builder.Services = services;
+            //builder.AddEntityFrameworkStores<Entities>();
+            //builder.AddRoleValidator<RoleValidator<Role>>();
+            //builder.AddRoleManager<RoleManager<Role>>();
+            //builder.AddSignInManager<SignInManager<Users>>();
+
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
+                .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
                             .GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
-                        ValidateIssuer = false,
-                        ValidateAudience = false,
-                    });
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                });
 
             //end of identity configuration
 
