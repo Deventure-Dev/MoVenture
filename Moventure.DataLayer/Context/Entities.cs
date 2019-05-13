@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Moventure.DataLayer.Authentication;
+using System;
 
 namespace Moventure.DataLayer.Models
 {
-    public partial class Entities : IdentityDbContext<LoginModel, Role, int, IdentityUserClaim<int>,
-        UserRole, IdentityUserLogin<int>,
-        IdentityRoleClaim<int>, IdentityUserToken<int>>
+    public partial class Entities : IdentityDbContext<LoginModel, Role, Guid, IdentityUserClaim<Guid>,
+        UserRole, IdentityUserLogin<Guid>, IdentityRoleClaim<Guid>, IdentityUserToken<Guid>>
     {
         public Entities()
         {
@@ -29,7 +29,7 @@ namespace Moventure.DataLayer.Models
         public virtual DbSet<Tags> Tags { get; set; }
         public virtual DbSet<TagsMovieAssignments> TagsMovieAssignments { get; set; }
         public virtual DbSet<UserMovieAssignments> UserMovieAssignments { get; set; }
-        public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<Users> Users { get; set; } //TODO: add new if we actually need this?
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

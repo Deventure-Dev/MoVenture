@@ -132,6 +132,7 @@ namespace Moventure.WebAPI.Controllers
             var userToAdd = new Users
             {
                 Id = new Guid(),
+             
                 Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
