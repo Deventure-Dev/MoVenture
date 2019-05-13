@@ -12,7 +12,14 @@ namespace Moventure.BusinessLogic.Mapper
         public CategoryMapping()
         {
             CreateMap<Categories, CategoryModel>()
-                .ForMember(m => m.SavedBy, opt => opt.Ignore());
+                .BeforeMap((source, destination) =>
+                {
+
+                }).ForMember(m => m.SavedBy, opt => opt.Ignore())
+                .AfterMap((source, destination) =>
+                {
+                    //destination.SavedBy = getFromDb(source.SavedBy)
+                });
 
             CreateMap<CategoryModel, Categories>();
         }

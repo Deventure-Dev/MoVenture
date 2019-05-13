@@ -9,9 +9,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Moventure.DataLayer;
 using Moventure.BusinessLogic.Helpers;
 using Moventure.DataLayer.Authentication;
 using Moventure.DataLayer.Models;
+using Moventure.BusinessLogic.Mapper;
 
 namespace Moventure.WebAPI
 {
@@ -27,17 +29,17 @@ namespace Moventure.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+
             //CustomDesignTimeServices.ConfigureDesignTimeServices(services);
 
             //configure authorization
-            //IdentityBuilder builder = services.AddIdentityCore<Users>(opt =>
-            //{
-            //    opt.Password.RequireDigit = false;
-            //    opt.Password.RequiredLength = 4;
-            //    opt.Password.RequireNonAlphanumeric = false;
-            //    opt.Password.RequireUppercase = false;
-            //});
+            IdentityBuilder builder = services.AddIdentityCore<Users>(opt =>
+            {
+                opt.Password.RequireDigit = false;
+                opt.Password.RequiredLength = 4;
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequireUppercase = false;
+            });
 
             //builder = new IdentityBuilder(builder.UserType, typeof(Role), builder.Services);
             //builder.RoleType = typeof(Role);
@@ -59,13 +61,19 @@ namespace Moventure.WebAPI
             //    });
 
             //end of identity configuration
-
+            AppConfiguration.Init();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            //services.AddMvc();
+            //services.AddAutoMapper();
+
+            //services.AddAutoMapper(typeof(CategoryMapping).GetA);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IMapper mapper)
         {
             if (env.IsDevelopment())
             {
@@ -80,6 +88,9 @@ namespace Moventure.WebAPI
             {
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
+
+            mapper.ConfigurationProvider.AssertConfigurationIsValid();
+
         }
     }
 }

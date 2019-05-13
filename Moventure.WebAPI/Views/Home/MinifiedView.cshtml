@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewData["Title"] = "MinifiedView";
+}
+
+<h2>MinifiedView</h2>
+
+
+<table id="minified-table" data-bind="foreach: MinifiedMovies">
+    <tr>
+        <td data-bind="text: Name"></td>
+        <td data-bind="text: SavedAt"></td>
+
+    </tr>
+</table>
+
+
+
+
+@section Scripts{
+    <script type="text/javascript">
+        var minifiedListViewModel = null;
+        $(document).ready(function () {
+            minifiedListViewModel = new MinifiedMoviesListViewModel();
+
+            ko.applyBindings(minifiedListViewModel, document.getElementById("minified-table"));
+
+            ajaxGet("Movie/GetMoviesByCategories", {}, function (data) {
+                minifiedListViewModel.init(data);
+            }, function () {
+                alert("An error occured");
+            });
+        });
+
+        function ajaxGet(url, postData, successCallback, failureCallBack, context, asyncCall) {
+            $.ajax({
+                url: url,
+                dataType: "json",
+                type: "GET",
+                contentType: 'application/json; charset=utf-8',
+                async: asyncCall === undefined ? true : asyncCall,
+                cache: false,
+                data: postData,
+                success: successCallback,
+                error: failureCallBack,
+                context: context
+            });
+        }
+
+    </script>
+}
