@@ -87,8 +87,9 @@ namespace Moventure.WebAPI.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Users>> Get()
         {
-            var userRepo = new UserRepo();
-            var fetchedUsers = userRepo.GetAll();
+            var userRepo = new UserRepo(null);
+            //var fetchedUsers = userRepo.GetAll();
+            var fetchedUsers = userRepo.GetUserData("silviu@yahoo.com");
             var userCount = userRepo.Count();
 
             if (fetchedUsers == null)
@@ -108,8 +109,8 @@ namespace Moventure.WebAPI.Controllers
         [HttpGet("{email}")]
         public ActionResult<Users> Get(string email)
         {
-            var userRepo = new UserRepo();
-            var fetchedUser = userRepo.GetUserData(email);
+            var userRepo = new UserRepo(null);
+            var fetchedUser = userRepo.GetUserData("silviu@yahoo.com");
             if (fetchedUser == null)
             {
                 return NotFound();
