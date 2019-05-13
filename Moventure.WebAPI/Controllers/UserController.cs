@@ -9,9 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Moventure.BusinessLogic.Models;
 using Moventure.BusinessLogic.Repo;
+using Moventure.DataLayer.Authentication;
 using Moventure.DataLayer.Models;
 using Moventure.WebAPI.Logic;
-using Moventure.WebAPI.Models;
 
 namespace Moventure.WebAPI.Controllers
 {

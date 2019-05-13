@@ -9,9 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Moventure.BusinessLogic.Models.Roles;
+using Moventure.DataLayer.Authentication;
 using Moventure.DataLayer.Models;
-//using Moventure.DataLayer.Config;
 
 namespace Moventure.WebAPI
 {

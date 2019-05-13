@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Moventure.DataLayer.Authentication;
 
 namespace Moventure.DataLayer.Models
 {
-    public partial class Entities : DbContext
-        //IdentityDbContext<LoginModel, Role, int, IdentityUserClaim<int>,
-        //UserRole, IdentityUserLogin<int>,
-        //IdentityRoleClaim<int>, IdentityUserToken<int>>
+    public partial class Entities : IdentityDbContext<LoginModel, Role, int, IdentityUserClaim<int>,
+        UserRole, IdentityUserLogin<int>,
+        IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
         public Entities()
         {

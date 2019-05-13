@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Moventure.DataLayer.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Moventure.BusinessLogic.Models.Roles
+namespace Moventure.DataLayer.Authentication
 {
     public class UserRole : IdentityUserRole<int>
     {
