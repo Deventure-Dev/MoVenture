@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Moventure.BusinessLogic.Helpers;
 using Moventure.BusinessLogic.Models;
 using Moventure.BusinessLogic.Repo;
 using Moventure.DataLayer.Models;
@@ -20,6 +21,7 @@ namespace Moventure.WebAPI.Controllers
         public CategoryController(IMapper mapper)
         {
             mMapper = mapper;
+      
         }
         // GET api/values
         [HttpGet]

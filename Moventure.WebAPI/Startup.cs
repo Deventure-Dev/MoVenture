@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Moventure.BusinessLogic.Helpers;
 using Moventure.DataLayer.Authentication;
 using Moventure.DataLayer.Models;
 
@@ -26,6 +27,7 @@ namespace Moventure.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             //CustomDesignTimeServices.ConfigureDesignTimeServices(services);
 
             //configure authorization
@@ -46,15 +48,15 @@ namespace Moventure.WebAPI
             //builder.AddSignInManager<SignInManager<Users>>();
 
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
-                            .GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                });
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //    .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        ValidateIssuerSigningKey = true,
+            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
+            //                .GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+            //        ValidateIssuer = false,
+            //        ValidateAudience = false,
+            //    });
 
             //end of identity configuration
 
@@ -69,6 +71,8 @@ namespace Moventure.WebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            ServiceProviderHelper.Init(app.ApplicationServices);
 
             app.UseAuthentication();
 

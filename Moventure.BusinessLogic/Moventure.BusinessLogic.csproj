@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Deventure.Common\Deventure.Common.csproj" />
     <ProjectReference Include="..\Moventure.DataLayer\Moventure.DataLayer.csproj" />
+    <ProjectReference Include="..\Moventure.Models\Moventure.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>

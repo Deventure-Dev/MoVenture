@@ -7,8 +7,14 @@ namespace UpWorky.DataLayer.Repositories
 {
     public abstract class BaseDataRepository : IDisposable
     {
+        #region private fields
+
         private const string CONTEXT_NULL_REFERENCE_EXCEPTION_MESSAGE = "Tried to use repository with null context";
         private Entities mContext;
+
+        #endregion
+        
+        public static IServiceProvider serviceProvider;
 
         public abstract bool IsEntityTrackingOn { get; set; }
 
