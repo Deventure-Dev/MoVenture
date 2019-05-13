@@ -69,13 +69,12 @@ namespace Moventure.WebAPI.Controllers
         }
 
 
-        [HttpPost(Name = "CreateUser")]
+        [HttpPost(Name = "Register")]
         public async Task<IActionResult> Register([FromBody] User userDto)
         {
             var user = mMapper.Map<Users>(userDto);
 
             var result = await mUserManager.CreateAsync(user, userDto.Password);
-
             if (result.Succeeded)
             {
                 return StatusCode(201);
@@ -106,14 +105,11 @@ namespace Moventure.WebAPI.Controllers
             });
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<Users> Get(Guid id)
+        [HttpGet("{email}")]
+        public ActionResult<Users> Get(string email)
         {
             var userRepo = new UserRepo();
-
-            var fetchedUser = userRepo.GetAll().FirstOrDefault(user => user.Id == id);
-
+            var fetchedUser = userRepo.GetUserData(email);
             if (fetchedUser == null)
             {
                 return NotFound();
@@ -132,7 +128,7 @@ namespace Moventure.WebAPI.Controllers
             var userToAdd = new Users
             {
                 Id = new Guid(),
-             
+
                 Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,

@@ -6,8 +6,9 @@ using System;
 
 namespace Moventure.DataLayer.Models
 {
-    public partial class Entities : IdentityDbContext<LoginModel, Role, Guid, IdentityUserClaim<Guid>,
-        UserRole, IdentityUserLogin<Guid>, IdentityRoleClaim<Guid>, IdentityUserToken<Guid>>
+    public partial class Entities : DbContext 
+        //IdentityDbContext<LoginModel, Role, Guid, IdentityUserClaim<Guid>,
+        //UserRole, IdentityUserLogin<Guid>, IdentityRoleClaim<Guid>, IdentityUserToken<Guid>>
     {
         public Entities()
         {

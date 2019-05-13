@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Deventure.Common.Response;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Moventure.BusinessLogic.Models;
 using Moventure.BusinessLogic.Repo;
