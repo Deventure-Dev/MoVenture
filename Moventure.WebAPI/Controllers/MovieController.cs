@@ -114,7 +114,7 @@ namespace Moventure.WebAPI.Controllers
 
         #region WEB specific
 
-        public IActionResult GetMoviesByCategories(Guid userId)
+        public IActionResult GetMoviesByCategories()
         {
             var category1 = new CategoryModel();
             category1.Id = Guid.Parse("a61ffbc0-4bc1-46f5-b1d7-19077911fe29");

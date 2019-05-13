@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Moventure.DataLayer;
 using Moventure.DataLayer.Authentication;
 using Moventure.DataLayer.Models;
 
@@ -56,7 +57,7 @@ namespace Moventure.WebAPI
             //        });
 
             //end of identity configuration
-
+            AppConfiguration.Init();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
