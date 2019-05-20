@@ -73,16 +73,46 @@ namespace Moventure.BusinessLogic.Repo
             tagsList.Add(tag2);
             movie2.Tags = tagsList.ToList();
 
-            //FullMovieList = new List<Movie>();
-            //var actorsList = new List<ActorModel>();
-            //var commentsList = new List<Comment>();
+            FullMovieList = new List<Movie>();
+            var actorsList = new List<ActorModel>();
+            var commentsList = new List<Comment>();
 
-            //var fullMovie1 = new Movie();
-            //var actor1 = new ActorModel();
-            //actor1.Id = Guid.Parse("cce76d9c-165a-4212-a6b9-f43a4704abf3");
-            //actor1.FirstName = "Brad";
-            //actor1
             
+
+            var actor1 = new ActorModel();
+            actor1.Id = Guid.Parse("cce76d9c-165a-4212-a6b9-f43a4704abf3");
+            actor1.FirstName = "Harrison";
+            actor1.LastName = "Ford";
+            actor1.PictureUrl = "https://www.imdb.com/name/nm0000148/mediaviewer/rm2178324224";
+            actorsList.Add(actor1);
+
+            var actor2 = new ActorModel();
+            actor1.Id = Guid.Parse("27339042-343f-4473-8ab1-dc5f17da15da");
+            actor1.FirstName = "Benedict";
+            actor1.LastName = "Cumberbatch";
+            actor1.PictureUrl = "https://www.imdb.com/name/nm1212722/mediaviewer/rm893516032";
+            actorsList.Add(actor2);
+
+            var comment1 = new Comment();
+            comment1.Id = Guid.Parse("f2e12640-0be9-4362-a976-0123159442f3");
+            comment1.CommentMessage = "Awesome movie";
+            comment1.MovieId = movie1.Id;
+            commentsList.Add(comment1);
+
+            var comment2 = new Comment();
+            comment1.Id = Guid.Parse("677c1505-5dd6-4529-89ad-43c4d30f31fe");
+            comment1.CommentMessage = "Great movie";
+            comment1.MovieId = movie1.Id;
+            commentsList.Add(comment2);
+
+
+            var fullMovie1 = new Movie();
+            fullMovie1.Id = Guid.Parse("95f90c86-2d30-42ff-bd0c-fadac0f26a14");
+            fullMovie1.TrailerUrl = "https://www.imdb.com/title/tt0485947/mediaviewer/rm161668608";
+            fullMovie1.Actors = actorsList;
+            fullMovie1.Comments = commentsList;
+            FullMovieList.Add(fullMovie1);
+
         }
 
         public UserData GetUserData(string email)
