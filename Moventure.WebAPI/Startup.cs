@@ -14,6 +14,7 @@ using Moventure.BusinessLogic.Helpers;
 using Moventure.DataLayer.Authentication;
 using Moventure.DataLayer.Models;
 using Moventure.BusinessLogic.Mapper;
+using Moventure.BusinessLogic.Repo;
 
 namespace Moventure.WebAPI
 {
@@ -64,6 +65,7 @@ namespace Moventure.WebAPI
             AppConfiguration.Init();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            UserRepo.Init();
 
             //services.AddMvc();
             //services.AddAutoMapper();
@@ -89,7 +91,8 @@ namespace Moventure.WebAPI
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
 
-            mapper.ConfigurationProvider.AssertConfigurationIsValid();
+            //TODO: Fix this
+            //mapper.ConfigurationProvider.AssertConfigurationIsValid();
 
         }
     }

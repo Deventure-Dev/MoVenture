@@ -33,17 +33,20 @@ namespace Moventure.WebAPI.Controllers
         public ActionResult<Movie> Get(Guid id)
         {
             var movieRepo = new MovieRepo();
-
-            var fetchedMovie = movieRepo.GetAll().FirstOrDefault(movie => movie.Id == id);
-
-            if (fetchedMovie == null)
+            var foundMovie = UserRepo.MinifiedMovieList.FirstOrDefault(movie => movie.Id == id);
+            if (foundMovie == null)
             {
-                return NotFound();
+                return Ok(ResponseFactory.ErrorReponse);
             }
+            //var fetchedMovie = movieRepo.GetAll().FirstOrDefault(movie => movie.Id == id);
+            //if (fetchedMovie == null)
+            //{
+            //    return NotFound();
+            //}
 
-            var mappedMovie = mMapper.Map<Movie>(fetchedMovie);
+            //var mappedMovie = mMapper.Map<Movie>(fetchedMovie);
 
-            return Ok(mappedMovie);
+            return Ok(foundMovie);
         }
 
         // GET api/values
@@ -117,47 +120,9 @@ namespace Moventure.WebAPI.Controllers
 
         public IActionResult GetMoviesByCategories()
         {
-            var category1 = new CategoryModel();
-            category1.Id = Guid.Parse("a61ffbc0-4bc1-46f5-b1d7-19077911fe29");
-            category1.Name = "Action";
-            category1.SavedAt = new DateTime();
-
-            var category2 = new CategoryModel();
-            category2.Id = Guid.Parse("4031ea58-b7b9-4dee-8e01-32b92d0e6367");
-            category2.Name = "Drama";
-            category2.SavedAt = new DateTime();
-
-
-
-
-            var movie1 = new MinifiedMovie();
-            movie1.Id = Guid.Parse("95f90c86-2d30-42ff-bd0c-fadac0f26a14");
-            movie1.Title = "Mr. Nobody";
-            movie1.Rating = 5;
-            movie1.PictureUrl = "https://m.media-amazon.com/images/M/MV5BMTg4ODkzMDQ3Nl5BMl5BanBnXkFtZTgwNTEwMTkxMDE@._V1_.jpg";
-
-            var movie2 = new MinifiedMovie();
-            movie2.Id = Guid.Parse("3d950a14-009a-4968-abf9-e940acf19be6");
-            movie2.Title = "Hary Potter";
-            movie2.Rating = 4;
-            movie2.PictureUrl = "https://timedotcom.files.wordpress.com/2014/07/301386_full1.jpg";
-
-            var tag1 = new Tag();
-            tag1.Id = Guid.Parse("9dbb38f3-b16f-4579-8b65-d3f5269484e3");
-            tag1.Name = "sci fi";
-            var tagsList = new List<Tag>();
-            tagsList.Add(tag1);
-            movie1.Tags = tagsList;
-            movie2.Tags = tagsList;
-
-
-
-            List<MinifiedMovie> movieList = new List<MinifiedMovie>();
-            movieList.Add(movie1);
-            movieList.Add(movie2);
-
+            var movieData = UserRepo.CategoryList;
             //return Ok(ResponseFactory.Success(movieList));
-            return Ok(ResponseFactory.CreateResponse(true, ResponseCode.Success, movieList));
+            return Ok(ResponseFactory.CreateResponse(true, ResponseCode.Success, movieData));
         }
 
         #endregion

@@ -11,6 +11,7 @@ using Moventure.BusinessLogic.Models;
 using Moventure.BusinessLogic.Repo;
 using Moventure.DataLayer.Authentication;
 using Moventure.DataLayer.Models;
+using Moventure.Models;
 using Moventure.WebAPI.Logic;
 
 namespace Moventure.WebAPI.Controllers
@@ -20,16 +21,16 @@ namespace Moventure.WebAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly IMapper mMapper;
-        private readonly UserManager<Users> mUserManager;
-        private readonly SignInManager<Users> mSignInManager;
-        private readonly IConfiguration mConfig;
+        //private readonly UserManager<Users> mUserManager;
+        //private readonly SignInManager<Users> mSignInManager;
+        //private readonly IConfiguration mConfig;
 
-        public UserController(IMapper mapper, UserManager<Users> userManager, SignInManager<Users> signInManager, IConfiguration config)
+        public UserController(IMapper mapper) //, UserManager<Users> userManager, SignInManager<Users> signInManager, IConfiguration config)
         {
             mMapper = mapper;
-            mUserManager = userManager;
-            mSignInManager = signInManager;
-            mConfig = config;
+            //mUserManager = userManager;
+            //mSignInManager = signInManager;
+            //mConfig = config;
         }
 
         [HttpPost("login", Name = "LoginUser")]
@@ -40,47 +41,49 @@ namespace Moventure.WebAPI.Controllers
                 return BadRequest();
             }
 
-            var user = await mUserManager.FindByEmailAsync(model.Email);
-            if (user == null)
-            {
-                return Unauthorized();
-            }
+            //var user = await mUserManager.FindByEmailAsync(model.Email);
+            //if (user == null)
+            //{
+            //    return Unauthorized();
+            //}
 
-            var result = await mSignInManager.CheckPasswordSignInAsync(user, model.Password, false);
-            if (result.Succeeded)
-            {
+            //var result = await mSignInManager.CheckPasswordSignInAsync(user, model.Password, false);
+            //if (result.Succeeded)
+            //{
 
-                //uncoment the section to add admins manually
-                //add user role to user
-                //await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "Admin")); 
+            //    //uncoment the section to add admins manually
+            //    //add user role to user
+            //    //await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "Admin")); 
 
-                await mUserManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "User"));
+            //    await mUserManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "User"));
 
-                var mappedUserToDto = mMapper.Map<User>(user);
+            //    //var mappedUserToDto = mMapper.Map<User>(user);
 
-                return Ok(new
-                {
-                    token = await TokenGenerator.GenerateJwtToken(user, mMapper, mConfig, mUserManager),
-                    user = mappedUserToDto,
-                });
-            }
+            //    return Ok();
+            //    //new
+            //    //{
+            //    //    token = await TokenGenerator.GenerateJwtToken(user, mMapper, mConfig, mUserManager),
+            //    //    user = mappedUserToDto,
+            //    //});
+            //}
 
             return Unauthorized();
         }
 
 
         [HttpPost(Name = "Register")]
-        public async Task<IActionResult> Register([FromBody] User userDto)
+        public async Task<IActionResult> Register([FromBody] BusinessLogic.Models.User userDto)
         {
-            var user = mMapper.Map<Users>(userDto);
+            //var user = mMapper.Map<Users>(userDto);
 
-            var result = await mUserManager.CreateAsync(user, userDto.Password);
-            if (result.Succeeded)
-            {
-                return StatusCode(201);
-            }
+            //var result = await mUserManager.CreateAsync(user, userDto.Password);
+            //if (result.Succeeded)
+            //{
+            //    return StatusCode(201);
+            //}
 
-            return BadRequest(result.Errors);
+            //return BadRequest(result.Errors);
+            return BadRequest();
         }
 
         // GET api/values
@@ -89,21 +92,17 @@ namespace Moventure.WebAPI.Controllers
         {
             var userRepo = new UserRepo(null);
             //var fetchedUsers = userRepo.GetAll();
-            var fetchedUsers = userRepo.GetUserData("silviu@yahoo.com");
+            var userData = userRepo.GetUserData("silviu@yahoo.com");
             var userCount = userRepo.Count();
 
-            if (fetchedUsers == null)
+            if (userData == null)
             {
                 return BadRequest("Failed to fetch users");
             }
 
-            var mappedUsers = mMapper.Map<Users>(fetchedUsers);
+            //var mappedUsers = mMapper.Map<Users>(fetchedUsers);
 
-            return Ok(new
-            {
-                Users = mappedUsers,
-                Count = userCount
-            });
+            return Ok(userData);
         }
 
         [HttpGet("{email}")]
@@ -117,7 +116,6 @@ namespace Moventure.WebAPI.Controllers
             }
 
             var mappedUser = mMapper.Map<Users>(fetchedUser);
-
             return Ok(mappedUser);
         }
 
