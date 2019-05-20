@@ -33,7 +33,8 @@ namespace Moventure.WebAPI.Controllers
         public ActionResult<Movie> Get(Guid id)
         {
             var movieRepo = new MovieRepo();
-            var foundMovie = UserRepo.MinifiedMovieList.FirstOrDefault(movie => movie.Id == id);
+            //var foundMovie = UserRepo.MinifiedMovieList.FirstOrDefault(movie => movie.Id == id);
+            var foundMovie = UserRepo.FullMovieList.FirstOrDefault(movie => movie.Id == id);
             if (foundMovie == null)
             {
                 return Ok(ResponseFactory.ErrorReponse);
@@ -50,28 +51,28 @@ namespace Moventure.WebAPI.Controllers
         }
 
         // GET api/values
-        [HttpGet]
-        [Route("api/[controller]")]
-        public ActionResult<IEnumerable<Movie>> Get()
-        {
-            var movieRepo = new MovieRepo();
-            var fetchedMovies = movieRepo.GetAll();
-            var movieCount = movieRepo.Count();
+        //[HttpGet]
+        //[Route("api/[controller]")]
+        //public ActionResult<IEnumerable<Movie>> Get()
+        //{
+        //    var movieRepo = new MovieRepo();
+        //    var fetchedMovies = movieRepo.GetAll();
+        //    var movieCount = movieRepo.Count();
 
-            if (fetchedMovies == null && movieCount < 0)
-            {
-                return BadRequest("Fetching movies failed....");
-            }
+        //    if (fetchedMovies == null && movieCount < 0)
+        //    {
+        //        return BadRequest("Fetching movies failed....");
+        //    }
 
-            var mappedMovies = mMapper.Map<Movie>(fetchedMovies);
+        //    var mappedMovies = mMapper.Map<Movie>(fetchedMovies);
 
-            return Ok(new
-            {
-                Movies = mappedMovies,
-                Count = movieCount
-            });
+        //    return Ok(new
+        //    {
+        //        Movies = mappedMovies,
+        //        Count = movieCount
+        //    });
 
-        }
+        //}
 
         // POST api/values
         [HttpPost]

@@ -42,6 +42,7 @@ namespace Moventure.BusinessLogic.Repo
             category1.SavedAt = new DateTime();
             category1.MovieList.Add(movie1);
             MinifiedMovieList.Add(movie1);
+            //movie1.MainCategory = category1;
             CategoryList.Add(category1);
 
             var movie2 = new MinifiedMovie();
@@ -56,6 +57,7 @@ namespace Moventure.BusinessLogic.Repo
             category2.SavedAt = new DateTime();
             category2.MovieList.Add(movie2);
             MinifiedMovieList.Add(movie2);
+            //movie2.MainCategory = category2;
             CategoryList.Add(category2);
 
             tag1 = new Tag();
@@ -70,6 +72,17 @@ namespace Moventure.BusinessLogic.Repo
             tag2.Name = "thriller";
             tagsList.Add(tag2);
             movie2.Tags = tagsList.ToList();
+
+            //FullMovieList = new List<Movie>();
+            //var actorsList = new List<ActorModel>();
+            //var commentsList = new List<Comment>();
+
+            //var fullMovie1 = new Movie();
+            //var actor1 = new ActorModel();
+            //actor1.Id = Guid.Parse("cce76d9c-165a-4212-a6b9-f43a4704abf3");
+            //actor1.FirstName = "Brad";
+            //actor1
+            
         }
 
         public UserData GetUserData(string email)
