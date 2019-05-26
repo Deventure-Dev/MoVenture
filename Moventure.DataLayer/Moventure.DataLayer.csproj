@@ -23,4 +23,8 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Partial\Context\" />
+  </ItemGroup>
+
 </Project>

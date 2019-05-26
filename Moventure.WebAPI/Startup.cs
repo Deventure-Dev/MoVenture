@@ -15,6 +15,7 @@ using Moventure.DataLayer.Authentication;
 using Moventure.DataLayer.Models;
 using Moventure.BusinessLogic.Mapper;
 using Moventure.BusinessLogic.Repo;
+using Microsoft.EntityFrameworkCore;
 
 namespace Moventure.WebAPI
 {
@@ -66,6 +67,39 @@ namespace Moventure.WebAPI
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             UserRepo.Init();
+
+            services.AddDbContext<Entities>(
+                option => option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddIdentity<IdentityUser, IdentityRole>(
+                   option =>
+                   {
+                       option.Password.RequireDigit = false;
+                       option.Password.RequiredLength = 6;
+                       option.Password.RequireNonAlphanumeric = false;
+                       option.Password.RequireUppercase = false;
+                       option.Password.RequireLowercase = false;
+                   }
+               ).AddEntityFrameworkStores<Entities>()
+               .AddDefaultTokenProviders();
+
+            services.AddAuthentication(option => {
+                option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options => {
+                options.SaveToken = true;
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidAudience = Configuration["Jwt:Site"],
+                    ValidIssuer = Configuration["Jwt:Site"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:SigningKey"]))
+                };
+            });
+
 
             //services.AddMvc();
             //services.AddAutoMapper();
