@@ -42,7 +42,7 @@ namespace Moventure.BusinessLogic.Repo
             category1.SavedAt = new DateTime();
             category1.MovieList.Add(movie1);
             MinifiedMovieList.Add(movie1);
-            //movie1.MainCategory = category1;
+            movie1.MainCategory = category1;
             CategoryList.Add(category1);
 
             var movie2 = new MinifiedMovie();
@@ -87,10 +87,10 @@ namespace Moventure.BusinessLogic.Repo
             actorsList.Add(actor1);
 
             var actor2 = new ActorModel();
-            actor1.Id = Guid.Parse("27339042-343f-4473-8ab1-dc5f17da15da");
-            actor1.FirstName = "Benedict";
-            actor1.LastName = "Cumberbatch";
-            actor1.PictureUrl = "https://www.imdb.com/name/nm1212722/mediaviewer/rm893516032";
+            actor2.Id = Guid.Parse("27339042-343f-4473-8ab1-dc5f17da15da");
+            actor2.FirstName = "Benedict";
+            actor2.LastName = "Cumberbatch";
+            actor2.PictureUrl = "https://www.imdb.com/name/nm1212722/mediaviewer/rm893516032";
             actorsList.Add(actor2);
 
             var comment1 = new Moventure.Models.Comment();
@@ -107,8 +107,10 @@ namespace Moventure.BusinessLogic.Repo
 
 
             var fullMovie1 = new Moventure.Models.Movie();
+            fullMovie1.Title = "Mr. Nobody";            
             fullMovie1.Id = Guid.Parse("95f90c86-2d30-42ff-bd0c-fadac0f26a14");
             fullMovie1.TrailerUrl = "https://www.imdb.com/title/tt0485947/mediaviewer/rm161668608";
+            fullMovie1.PictureUrl = "https://m.media-amazon.com/images/M/MV5BMTg4ODkzMDQ3Nl5BMl5BanBnXkFtZTgwNTEwMTkxMDE@._V1_.jpg";
             fullMovie1.Actors = actorsList;
             fullMovie1.Comments = commentsList;
             FullMovieList.Add(fullMovie1);
