@@ -1,0 +1,36 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://moventure.api",
+      "sslPort": 0
+    },
+    "iisExpress": {
+      "applicationUrl": "http://localhost:55686/",
+      "sslPort": 0
+    }
+  },
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "Moventure.WebAPI": {
+      "commandName": "IIS",
+      "workingDirectory": "C:\\Projects\\Moventure\\Moventure.WebAPI",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://moventure.api/"
+    },
+    "Moventure API IID": {
+      "commandName": "IIS",
+      "workingDirectory": "C:\\Projects\\Moventure\\Moventure.WebAPI"
+    }
+  }
+}
