@@ -58,13 +58,13 @@ namespace Moventure.DataLayer.Context
             modelBuilder.Entity<Movie>()
                 .HasKey(x => x.Id);
 
-            modelBuilder.Entity<MovieActorIntermediate>()
+            modelBuilder.Entity<MovieActorAssignment>()
                 .HasKey(x => new { x.ActorId, x.MovieId });
-            modelBuilder.Entity<MovieActorIntermediate>()
+            modelBuilder.Entity<MovieActorAssignment>()
                 .HasOne(x => x.Actor)
                 .WithMany(m => m.MovieList)
                 .HasForeignKey(x => x.ActorId);
-            modelBuilder.Entity<MovieActorIntermediate>()
+            modelBuilder.Entity<MovieActorAssignment>()
                 .HasOne(x => x.Movie)
                 .WithMany(e => e.ActorList)
                 .HasForeignKey(x => x.MovieId);
@@ -75,13 +75,13 @@ namespace Moventure.DataLayer.Context
             modelBuilder.Entity<Movie>()
                 .HasKey(x => x.Id);
 
-            modelBuilder.Entity<MoviePlaylistIntermediate>()
+            modelBuilder.Entity<PlaylistMovieAssignment>()
                 .HasKey(x => new { x.PlaylistId, x.MovieId });
-            modelBuilder.Entity<MoviePlaylistIntermediate>()
+            modelBuilder.Entity<PlaylistMovieAssignment>()
                 .HasOne(x => x.Playlist)
                 .WithMany(m => m.MovieList)
                 .HasForeignKey(x => x.PlaylistId);
-            modelBuilder.Entity<MoviePlaylistIntermediate>()
+            modelBuilder.Entity<PlaylistMovieAssignment>()
                 .HasOne(x => x.Movie)
                 .WithMany(e => e.PlaylistList)
                 .HasForeignKey(x => x.MovieId);
@@ -92,13 +92,13 @@ namespace Moventure.DataLayer.Context
             modelBuilder.Entity<Movie>()
                 .HasKey(x => x.Id);
 
-            modelBuilder.Entity<MovieTagIntermediate>()
+            modelBuilder.Entity<TagsMovieAssignment>()
                 .HasKey(x => new { x.TagId, x.MovieId });
-            modelBuilder.Entity<MovieTagIntermediate>()
+            modelBuilder.Entity<TagsMovieAssignment>()
                 .HasOne(x => x.Tag)
                 .WithMany(m => m.MovieList)
                 .HasForeignKey(x => x.TagId);
-            modelBuilder.Entity<MovieTagIntermediate>()
+            modelBuilder.Entity<TagsMovieAssignment>()
                 .HasOne(x => x.Movie)
                 .WithMany(e => e.TagList)
                 .HasForeignKey(x => x.MovieId);

@@ -11,6 +11,6 @@ namespace Moventure.DataLayer.Models
         public DateTime SavedAt { get; set; }
 
         public virtual User User { get; set; }
-        public virtual ICollection<MoviePlaylistIntermediate> MovieList { get; set; }
+        public virtual ICollection<PlaylistMovieAssignment> MovieList { get; set; }
     }
 }

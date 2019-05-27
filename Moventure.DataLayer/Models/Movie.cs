@@ -18,9 +18,9 @@ namespace Moventure.DataLayer.Models
 
         public virtual User SavedBy { get; set; }
         public virtual Category Category { get; set; }
-        public virtual ICollection<MovieActorIntermediate> ActorList { get; set; }
-        public virtual ICollection<MoviePlaylistIntermediate> PlaylistList { get; set; }
-        public virtual ICollection<MovieTagIntermediate> TagList { get; set; }
+        public virtual ICollection<MovieActorAssignment> ActorList { get; set; }
+        public virtual ICollection<PlaylistMovieAssignment> PlaylistList { get; set; }
+        public virtual ICollection<TagsMovieAssignment> TagList { get; set; }
         //public ICollection<User> UserList { get; set; }
     }
 }

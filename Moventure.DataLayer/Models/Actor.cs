@@ -12,7 +12,7 @@ namespace Moventure.DataLayer.Models
         public string LastName { get; set; }
         public int Status { get; set; }
         public DateTime SavedAt { get; set; }
-        public virtual ICollection<MovieActorIntermediate> MovieList { get; set; }
+        public virtual ICollection<MovieActorAssignment> MovieList { get; set; }
 
     }
 }

@@ -5,12 +5,18 @@ using System.Text;
 
 namespace Moventure.BusinessLogic.Models
 {
-    public class CategoryModel
+
+    public class PostCategoryModel
+    {
+        public string Name { get; set; }
+
+    }
+
+    public class CategoryModel : PostCategoryModel
     {
         public Guid Id { get; set; }
-        public string Name { get; set; }
         public DateTime SavedAt { get; set; }
-        public User SavedBy { get; set; }
+        public string SavedBy { get; set; }
 
     }
 }

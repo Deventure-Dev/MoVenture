@@ -11,6 +11,6 @@ namespace Moventure.DataLayer.Models
         public int Status { get; set; }
 
         public virtual User SavedBy { get; set; }
-        public virtual ICollection<MovieTagIntermediate> MovieList { get; set; }
+        public virtual ICollection<TagsMovieAssignment> MovieList { get; set; }
     }
 }

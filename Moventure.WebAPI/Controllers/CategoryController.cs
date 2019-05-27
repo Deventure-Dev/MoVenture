@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -11,21 +12,21 @@ using Moventure.DataLayer.Models;
 
 namespace Moventure.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    //[Route("api/[controller]")]
+    //[ApiController]
     public class CategoryController : ControllerBase
     {
-        
+
         private readonly IMapper mMapper;
 
         public CategoryController(IMapper mapper)
         {
             mMapper = mapper;
-      
+
         }
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<CategoryModel>> Get()
+        public IActionResult GetAll()
         {
             var categoryRepo = new CategoryRepo();
             var fetchedCategories = categoryRepo.GetAll();
@@ -36,9 +37,10 @@ namespace Moventure.WebAPI.Controllers
                 return BadRequest("Fetching categories failed...!");
             }
 
-            var mappedCategories = mMapper.Map<CategoryModel>(fetchedCategories);
+            var mappedCategories = mMapper.Map<IList<CategoryModel>>(fetchedCategories);
 
-            return Ok(new {
+            return Ok(new
+            {
                 Categories = mappedCategories,
                 Count = categoriesCount
             });
@@ -48,7 +50,7 @@ namespace Moventure.WebAPI.Controllers
         [HttpGet("{id}")]
         public ActionResult<CategoryModel> Get(Guid id)
         {
-           
+
             var categoryRepo = new CategoryRepo();
             var fetchedCategory = categoryRepo.GetAll().FirstOrDefault(category => category.Id == id);
 
@@ -64,16 +66,20 @@ namespace Moventure.WebAPI.Controllers
 
         // POST api/values
         [HttpPost]
-        public IActionResult Post(CategoryModel model)
+        public IActionResult Create([FromBody]CategoryModel model)
         {
-            var categoryToAdd = new Category
+            if (!ModelState.IsValid)
             {
-                Name = model.Name,
-                Status = 0,
-                SavedAt = DateTime.UtcNow,
-                Savedby = Guid.Parse("06E6C8A6-96E6-40A5-8767-7F4D536A2049")
-            };
+                return BadRequest("invalid input!");
+            }
 
+            var categoryToAdd = mMapper.Map<Category>(model);
+            categoryToAdd.Status = (int)EntityStatus.ACTIVE;
+            categoryToAdd.SavedAt = DateTime.UtcNow;
+
+
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            categoryToAdd.Savedby = Guid.Parse("06e6c8a6-96e6-40a5-8767-7f4d536a2049"); // User.Claims[0];
             var categoryRepo = new CategoryRepo();
             var createdCategory = categoryRepo.Create(categoryToAdd);
 
