@@ -31,37 +31,6 @@ namespace Moventure.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            //CustomDesignTimeServices.ConfigureDesignTimeServices(services);
-
-            //configure authorization
-            //IdentityBuilder builder = services.AddIdentityCore<Users>(opt =>
-            //{
-            //    opt.Password.RequireDigit = false;
-            //    opt.Password.RequiredLength = 4;
-            //    opt.Password.RequireNonAlphanumeric = false;
-            //    opt.Password.RequireUppercase = false;
-            //});
-
-            //builder = new IdentityBuilder(builder.UserType, typeof(Role), builder.Services);
-            //builder.RoleType = typeof(Role);
-            //builder.Services = services;
-            //builder.AddEntityFrameworkStores<Entities>();
-            //builder.AddRoleValidator<RoleValidator<Role>>();
-            //builder.AddRoleManager<RoleManager<Role>>();
-            //builder.AddSignInManager<SignInManager<Users>>();
-
-
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //    .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
-            //    {
-            //        ValidateIssuerSigningKey = true,
-            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
-            //                .GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
-            //        ValidateIssuer = false,
-            //        ValidateAudience = false,
-            //    });
-
             //end of identity configuration
             services.AddDbContext<Entities>(
                option => option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -78,11 +47,13 @@ namespace Moventure.WebAPI
                 ).AddEntityFrameworkStores<Entities>()
                 .AddDefaultTokenProviders();
 
-            services.AddAuthentication(option => {
+            services.AddAuthentication(option =>
+            {
                 option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options => {
+            }).AddJwtBearer(options =>
+            {
                 options.SaveToken = true;
                 options.RequireHttpsMetadata = false;
                 options.TokenValidationParameters = new TokenValidationParameters()
@@ -94,49 +65,11 @@ namespace Moventure.WebAPI
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:SigningKey"]))
                 };
             });
+
             AppConfiguration.Init();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             UserRepo.Init();
-
-            //services.AddDbContext<Entities>(
-            //    option => option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            //services.AddIdentity<IdentityUser, IdentityRole>(
-            //       option =>
-            //       {
-            //           option.Password.RequireDigit = false;
-            //           option.Password.RequiredLength = 6;
-            //           option.Password.RequireNonAlphanumeric = false;
-            //           option.Password.RequireUppercase = false;
-            //           option.Password.RequireLowercase = false;
-            //       }
-            //   ).AddEntityFrameworkStores<Entities>()
-            //   .AddDefaultTokenProviders();
-
-            //services.AddAuthentication(option => {
-            //    option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            //}).AddJwtBearer(options => {
-            //    options.SaveToken = true;
-            //    options.RequireHttpsMetadata = false;
-            //    options.TokenValidationParameters = new TokenValidationParameters()
-            //    {
-            //        ValidateIssuer = true,
-            //        ValidateAudience = true,
-            //        ValidAudience = Configuration["Jwt:Site"],
-            //        ValidIssuer = Configuration["Jwt:Site"],
-            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:SigningKey"]))
-            //    };
-            //});
-
-
-            //services.AddMvc();
-            //services.AddAutoMapper();
-
-            //services.AddAutoMapper(typeof(CategoryMapping).GetA);
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

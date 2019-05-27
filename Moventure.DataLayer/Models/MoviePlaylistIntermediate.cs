@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Moventure.DataLayer.Models
 {
@@ -9,7 +6,7 @@ namespace Moventure.DataLayer.Models
     {
         public Guid PlaylistId { get; set; }
         public Guid MovieId { get; set; }
-        public Movie Movie { get; set; }
-        public Playlist Playlist { get; set; }
+        public virtual Movie Movie { get; set; }
+        public virtual Playlist Playlist { get; set; }
     }
 }

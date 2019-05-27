@@ -13,6 +13,6 @@ namespace Moventure.DataLayer.Models
         public int Status { get; set; }
         public Guid Savedby { get; set; }
 
-        public List<Movie> MovieList { get; set; }
+        public virtual ICollection<Movie> MovieList { get; set; }
     }
 }

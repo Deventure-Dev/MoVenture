@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Moventure.DataLayer.Models
 {
@@ -12,7 +10,7 @@ namespace Moventure.DataLayer.Models
         //public Guid UserId { get; set; }
         public DateTime SavedAt { get; set; }
 
-        public User User { get; set; }
-        public List<MoviePlaylistIntermediate> MovieList { get; set; }
+        public virtual User User { get; set; }
+        public virtual ICollection<MoviePlaylistIntermediate> MovieList { get; set; }
     }
 }

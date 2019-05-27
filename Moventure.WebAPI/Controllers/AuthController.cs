@@ -28,7 +28,7 @@ namespace Moventure.WebAPI.Controllers
         // /register
         [Route("register")]
         [HttpPost]
-        public async Task<ActionResult> InsertUser([FromBody] RegisterViewModel model)
+        public async Task<ActionResult> Register([FromBody] RegisterViewModel model)
         {
             var user = new IdentityUser
             {

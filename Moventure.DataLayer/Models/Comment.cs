@@ -11,10 +11,10 @@ namespace Moventure.DataLayer.Models
         public string CommentMessage { get; set; }
         public int Status { get; set; }
         public DateTime SavedAt { get; set; }
-       // public Guid MovieId { get; set; }
+        // public Guid MovieId { get; set; }
         //public Guid SavedBy { get; set; }
 
-        public User SavedByNavigation { get; set; }
-        public Movie SavedAtMovie { get; set; }
+        public virtual User SavedByNavigation { get; set; }
+        public virtual Movie SavedAtMovie { get; set; }
     }
 }

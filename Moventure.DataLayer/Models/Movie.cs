@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Moventure.DataLayer.Models
 {
     public partial class Movie
     {
         public Guid Id { get; set; }
-       // public Guid CategoryId { get; set; }
+        // public Guid CategoryId { get; set; }
         public string Title { get; set; }
         public DateTime LaunchDate { get; set; }
         public string PictureUrl { get; set; }
@@ -17,12 +15,12 @@ namespace Moventure.DataLayer.Models
         public double Rating { get; set; }
         public int Status { get; set; }
         public DateTime SavedAt { get; set; }
-        public User SavedBy { get; set; }
 
-        public Category Category { get; set; }
-        public List<MovieActorIntermediate> ActorList { get; set; }
-        public List<MoviePlaylistIntermediate> PlaylistList { get; set; }
-        public List<MovieTagIntermediate> TagList { get; set; }
+        public virtual User SavedBy { get; set; }
+        public virtual Category Category { get; set; }
+        public virtual ICollection<MovieActorIntermediate> ActorList { get; set; }
+        public virtual ICollection<MoviePlaylistIntermediate> PlaylistList { get; set; }
+        public virtual ICollection<MovieTagIntermediate> TagList { get; set; }
         //public ICollection<User> UserList { get; set; }
     }
 }
