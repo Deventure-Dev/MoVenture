@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Moventure.DataLayer.Models
 {
-    public partial class ActorMovieAssignments
+    public class MovieActorIntermediate
     {
         public Guid ActorId { get; set; }
         public Guid MovieId { get; set; }
-
-        public virtual Actors Actor { get; set; }
-        public virtual Movies Movie { get; set; }
+        public Movie Movie { get; set; }
+        public Actor Actor { get; set; }
     }
 }

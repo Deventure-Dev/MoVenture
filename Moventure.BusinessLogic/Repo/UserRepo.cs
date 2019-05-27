@@ -9,17 +9,17 @@ using UpWorky.DataLayer.Repositories;
 
 namespace Moventure.BusinessLogic.Repo
 {
-    public class UserRepo : BaseSinglePkRepository<Users>
+    public class UserRepo : BaseSinglePkRepository<DataLayer.Models.User>
     {
         private readonly IMapper mMapper;
 
         public static List<MinifiedMovie> MinifiedMovieList = new List<MinifiedMovie>();
-        public static List<Movie> FullMovieList = new List<Movie>();
+        public static List<Moventure.Models.Movie> FullMovieList = new List<Moventure.Models.Movie>();
         //public static List<MinifiedMovie> movieList;
 
         public static List<CategoryModel> CategoryList = new List<CategoryModel>();
 
-        public static Tag tag1, tag2;
+        public static Moventure.Models.Tag tag1, tag2;
 
         public UserRepo(IMapper mapper = null)
         {
@@ -60,22 +60,22 @@ namespace Moventure.BusinessLogic.Repo
             //movie2.MainCategory = category2;
             CategoryList.Add(category2);
 
-            tag1 = new Tag();
+            tag1 = new Moventure.Models.Tag();
             tag1.Id = Guid.Parse("9dbb38f3-b16f-4579-8b65-d3f5269484e3");
             tag1.Name = "sci fi";
-            var tagsList = new List<Tag>();
+            var tagsList = new List<Moventure.Models.Tag>();
             tagsList.Add(tag1);
             movie1.Tags = tagsList.ToList();
 
-            tag2 = new Tag();
+            tag2 = new Moventure.Models.Tag();
             tag2.Id = Guid.Parse("4031ea58-b7b9-4dee-8e01-32b92d0e6367");
             tag2.Name = "thriller";
             tagsList.Add(tag2);
             movie2.Tags = tagsList.ToList();
 
-            FullMovieList = new List<Movie>();
+            FullMovieList = new List<Moventure.Models.Movie>();
             var actorsList = new List<ActorModel>();
-            var commentsList = new List<Comment>();
+            var commentsList = new List<Moventure.Models.Comment>();
 
             
 
@@ -93,20 +93,20 @@ namespace Moventure.BusinessLogic.Repo
             actor1.PictureUrl = "https://www.imdb.com/name/nm1212722/mediaviewer/rm893516032";
             actorsList.Add(actor2);
 
-            var comment1 = new Comment();
+            var comment1 = new Moventure.Models.Comment();
             comment1.Id = Guid.Parse("f2e12640-0be9-4362-a976-0123159442f3");
             comment1.CommentMessage = "Awesome movie";
             comment1.MovieId = movie1.Id;
             commentsList.Add(comment1);
 
-            var comment2 = new Comment();
+            var comment2 = new Moventure.Models.Comment();
             comment1.Id = Guid.Parse("677c1505-5dd6-4529-89ad-43c4d30f31fe");
             comment1.CommentMessage = "Great movie";
             comment1.MovieId = movie1.Id;
             commentsList.Add(comment2);
 
 
-            var fullMovie1 = new Movie();
+            var fullMovie1 = new Moventure.Models.Movie();
             fullMovie1.Id = Guid.Parse("95f90c86-2d30-42ff-bd0c-fadac0f26a14");
             fullMovie1.TrailerUrl = "https://www.imdb.com/title/tt0485947/mediaviewer/rm161668608";
             fullMovie1.Actors = actorsList;

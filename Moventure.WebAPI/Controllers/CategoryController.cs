@@ -66,7 +66,7 @@ namespace Moventure.WebAPI.Controllers
         [HttpPost]
         public IActionResult Post(CategoryModel model)
         {
-            var categoryToAdd = new Categories
+            var categoryToAdd = new Category
             {
                 Name = model.Name,
                 Status = 0,

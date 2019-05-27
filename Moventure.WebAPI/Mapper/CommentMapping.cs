@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Moventure.BusinessLogic.Models;
+//using Moventure.BusinessLogic.Models;
 using Moventure.DataLayer.Models;
 using System;
 using System.Collections.Generic;
@@ -11,8 +11,8 @@ namespace Moventure.BusinessLogic.Mapper
     {
         public CommentMapping()
         {
-            CreateMap<Comments, Comment>();
-            CreateMap<Comment, Comments>();
+            CreateMap<Moventure.BusinessLogic.Models.Comment, Comment>();
+            CreateMap<Comment, Moventure.BusinessLogic.Models.Comment>();
         }
     }
 }

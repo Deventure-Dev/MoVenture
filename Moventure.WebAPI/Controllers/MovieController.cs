@@ -6,7 +6,7 @@ using AutoMapper;
 using Deventure.Common.Response;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Moventure.BusinessLogic.Models;
+//using Moventure.BusinessLogic.Models;
 using Moventure.BusinessLogic.Repo;
 using Moventure.DataLayer.Models;
 
@@ -79,7 +79,7 @@ namespace Moventure.WebAPI.Controllers
         public IActionResult Post([FromBody] Movie movie)
         {
             var movieRepo = new MovieRepo();
-            var movieToAdd = new Movies
+            var movieToAdd = new Movie
             {
                 Id = new Guid(),
                 Title = movie.Title,

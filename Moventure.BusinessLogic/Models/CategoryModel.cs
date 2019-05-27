@@ -10,7 +10,7 @@ namespace Moventure.BusinessLogic.Models
         public Guid Id { get; set; }
         public string Name { get; set; }
         public DateTime SavedAt { get; set; }
-        public Users SavedBy { get; set; }
+        public User SavedBy { get; set; }
 
     }
 }

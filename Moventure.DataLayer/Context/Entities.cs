@@ -1,50 +1,42 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Moventure.BusinessLogic.Models;
-using Moventure.DataLayer.Authentication;
+//using Moventure.BusinessLogic.Models;
+using Moventure.DataLayer.Models;
 using System;
 
-namespace Moventure.DataLayer.Models
+namespace Moventure.DataLayer.Context
 {
-    public partial class Entities : IdentityDbContext<IdentityUser>
-        //IdentityDbContext<LoginModel, Role, Guid, IdentityUserClaim<Guid>,
-        //UserRole, IdentityUserLogin<Guid>, IdentityRoleClaim<Guid>, IdentityUserToken<Guid>>
+    public class Entities : IdentityDbContext<IdentityUser>
     {
+        public Entities(DbContextOptions<Entities> options) : base(options)
+        {
+
+        }
+
         public Entities()
         {
 
         }
 
-        public Entities(DbContextOptions<Entities> options)
-            : base(options)
-        {
-        }
+        public DbSet<Actor> Actors { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Movie> Movies { get; set; }
+        public DbSet<Playlist> Playlists { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<User> Users { get; set; }
 
-        // -c name of entity
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    if (!optionsBuilder.IsConfigured)
+        //    {
+        //        optionsBuilder.UseSqlServer(AppConfiguration.ConnectionString);
 
-        public virtual DbSet<ActorMovieAssignments> ActorMovieAssignments { get; set; }
-        public virtual DbSet<Actors> Actors { get; set; }
-        public virtual DbSet<Categories> Categories { get; set; }
-        public virtual DbSet<Comments> Comments { get; set; }
-        public virtual DbSet<Movies> Movies { get; set; }
-        public virtual DbSet<PlaylistMovieAssignments> PlaylistMovieAssignments { get; set; }
-        public virtual DbSet<Playlists> Playlists { get; set; }
-        public virtual DbSet<Tags> Tags { get; set; }
-        public virtual DbSet<TagsMovieAssignments> TagsMovieAssignments { get; set; }
-        public virtual DbSet<UserMovieAssignments> UserMovieAssignments { get; set; }
-        public virtual DbSet<Users> Users { get; set; } //TODO: add new if we actually need this?
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer(AppConfiguration.ConnectionString);
-
-            }
-            //TODO: fix this
-            optionsBuilder.UseLazyLoadingProxies();
-        }
+        //    }
+        //    //TODO: fix this
+        //    optionsBuilder.UseLazyLoadingProxies();
+        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -60,190 +52,56 @@ namespace Moventure.DataLayer.Models
 
             #endregion
 
-            modelBuilder.Entity<ActorMovieAssignments>(entity =>
-            {
-                entity.HasKey(e => new { e.ActorId, e.MovieId });
+            modelBuilder.Entity<Actor>()
+                .HasKey(x => x.Id);
 
-                entity.HasOne(d => d.Actor)
-                    .WithMany(p => p.ActorMovieAssignments)
-                    .HasForeignKey(d => d.ActorId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ActorMovieAssignments_Actor");
+            modelBuilder.Entity<Movie>()
+                .HasKey(x => x.Id);
 
-                entity.HasOne(d => d.Movie)
-                    .WithMany(p => p.ActorMovieAssignments)
-                    .HasForeignKey(d => d.MovieId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ActorMovieAssignments_Movie");
-            });
+            modelBuilder.Entity<MovieActorIntermediate>()
+                .HasKey(x => new { x.ActorId, x.MovieId });
+            modelBuilder.Entity<MovieActorIntermediate>()
+                .HasOne(x => x.Actor)
+                .WithMany(m => m.MovieList)
+                .HasForeignKey(x => x.ActorId);
+            modelBuilder.Entity<MovieActorIntermediate>()
+                .HasOne(x => x.Movie)
+                .WithMany(e => e.ActorList)
+                .HasForeignKey(x => x.MovieId);
 
-            modelBuilder.Entity<Actors>(entity =>
-            {
-                entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
+            modelBuilder.Entity<Playlist>()
+                .HasKey(x => x.Id);
 
-                entity.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasMaxLength(150);
+            modelBuilder.Entity<Movie>()
+                .HasKey(x => x.Id);
 
-                entity.Property(e => e.LastName)
-                    .IsRequired()
-                    .HasMaxLength(150);
+            modelBuilder.Entity<MoviePlaylistIntermediate>()
+                .HasKey(x => new { x.PlaylistId, x.MovieId });
+            modelBuilder.Entity<MoviePlaylistIntermediate>()
+                .HasOne(x => x.Playlist)
+                .WithMany(m => m.MovieList)
+                .HasForeignKey(x => x.PlaylistId);
+            modelBuilder.Entity<MoviePlaylistIntermediate>()
+                .HasOne(x => x.Movie)
+                .WithMany(e => e.PlaylistList)
+                .HasForeignKey(x => x.MovieId);
 
-                entity.Property(e => e.PictureUrl).HasMaxLength(255);
+            modelBuilder.Entity<Tag>()
+                .HasKey(x => x.Id);
 
-                entity.Property(e => e.SavedAt).HasDefaultValueSql("(getutcdate())");
-            });
+            modelBuilder.Entity<Movie>()
+                .HasKey(x => x.Id);
 
-            modelBuilder.Entity<Categories>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(150);
-            });
-
-            modelBuilder.Entity<Comments>(entity =>
-            {
-                entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
-
-                entity.Property(e => e.CommentMessage)
-                    .IsRequired()
-                    .HasMaxLength(4000);
-
-                entity.Property(e => e.SavedAt).HasDefaultValueSql("(getutcdate())");
-
-                entity.HasOne(d => d.SavedByNavigation)
-                    .WithMany(p => p.Comments)
-                    .HasForeignKey(d => d.SavedBy)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Comment_Movie");
-            });
-
-            modelBuilder.Entity<Movies>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.LaunchDate).HasColumnType("datetime");
-
-                entity.Property(e => e.PictureUrl)
-                    .IsRequired()
-                    .HasColumnName("PictureURL")
-                    .HasMaxLength(250);
-
-                entity.Property(e => e.SavedAt).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.Title)
-                    .IsRequired()
-                    .HasMaxLength(150);
-
-                entity.Property(e => e.TrailerUrl)
-                    .HasColumnName("TrailerURL")
-                    .HasMaxLength(250);
-
-                entity.HasOne(d => d.Category)
-                    .WithMany(p => p.Movies)
-                    .HasForeignKey(d => d.CategoryId)
-                    .HasConstraintName("FK_Movies_Category");
-            });
-
-            modelBuilder.Entity<PlaylistMovieAssignments>(entity =>
-            {
-                entity.HasKey(e => new { e.PlaylistId, e.MovieId });
-
-                entity.HasOne(d => d.Movie)
-                    .WithMany(p => p.PlaylistMovieAssignments)
-                    .HasForeignKey(d => d.MovieId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_PlaylistMovieAssignments_Movies");
-            });
-
-            modelBuilder.Entity<Playlists>(entity =>
-            {
-                entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(150);
-
-                entity.Property(e => e.SavedAt).HasDefaultValueSql("(getutcdate())");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.Playlists)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Playlists_User");
-            });
-
-            modelBuilder.Entity<Tags>(entity =>
-            {
-                entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(150);
-
-                entity.Property(e => e.SavedAt).HasDefaultValueSql("(getutcdate())");
-            });
-
-            modelBuilder.Entity<TagsMovieAssignments>(entity =>
-            {
-                entity.HasKey(e => new { e.CategoryId, e.MovieId });
-
-                entity.HasOne(d => d.Category)
-                    .WithMany(p => p.TagsMovieAssignments)
-                    .HasForeignKey(d => d.CategoryId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CategoryMovieAssignments_Category");
-
-                entity.HasOne(d => d.Movie)
-                    .WithMany(p => p.TagsMovieAssignments)
-                    .HasForeignKey(d => d.MovieId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CategoryMovieAssignments_Movie");
-            });
-
-            modelBuilder.Entity<UserMovieAssignments>(entity =>
-            {
-                entity.HasKey(e => new { e.MovieId, e.UserId });
-
-                entity.HasOne(d => d.Movie)
-                    .WithMany(p => p.UserMovieAssignments)
-                    .HasForeignKey(d => d.MovieId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_UserMovieAssignments_UserMovieAssignments");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserMovieAssignments)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_UserMovieAssignments_User");
-            });
-
-            modelBuilder.Entity<Users>(entity =>
-            {
-                entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
-
-                entity.Property(e => e.Email)
-                    .IsRequired()
-                    .HasMaxLength(255);
-
-                entity.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasMaxLength(150);
-
-                entity.Property(e => e.LastName)
-                    .IsRequired()
-                    .HasMaxLength(150);
-
-                entity.Property(e => e.Password)
-                    .IsRequired()
-                    .HasMaxLength(150);
-
-                entity.Property(e => e.SavedAt).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.Status).HasDefaultValueSql("((1))");
-            });
+            modelBuilder.Entity<MovieTagIntermediate>()
+                .HasKey(x => new { x.TagId, x.MovieId });
+            modelBuilder.Entity<MovieTagIntermediate>()
+                .HasOne(x => x.Tag)
+                .WithMany(m => m.MovieList)
+                .HasForeignKey(x => x.TagId);
+            modelBuilder.Entity<MovieTagIntermediate>()
+                .HasOne(x => x.Movie)
+                .WithMany(e => e.TagList)
+                .HasForeignKey(x => x.MovieId);
         }
     }
 }

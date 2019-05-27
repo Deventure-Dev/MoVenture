@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Moventure.BusinessLogic.Models;
 using Moventure.DataLayer.Models;
 using System;
 using System.Collections.Generic;
@@ -11,8 +10,8 @@ namespace Moventure.BusinessLogic.Mapper
     {
         public PlaylistMapping()
         {
-            CreateMap<Playlists, Playlist>();
-            CreateMap<Playlist, Playlists>();
+            CreateMap< Moventure.BusinessLogic.Models.Playlist, Playlist >();
+            CreateMap<Playlist, Moventure.BusinessLogic.Models.Playlist> ();
         }
     }
 }

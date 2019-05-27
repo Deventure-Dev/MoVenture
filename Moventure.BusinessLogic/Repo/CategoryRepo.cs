@@ -4,7 +4,7 @@ using UpWorky.DataLayer.Repositories;
 
 namespace Moventure.BusinessLogic.Repo
 {
-    public class CategoryRepo : BaseSinglePkRepository<Categories>
+    public class CategoryRepo : BaseSinglePkRepository<Category>
     {
         /*
          *         protected override AspNetRole FetchFromDb(AspNetRole entity, IList<string> navigationProperties = null)

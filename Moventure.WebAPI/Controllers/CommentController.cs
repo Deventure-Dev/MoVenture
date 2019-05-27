@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Moventure.BusinessLogic.Models;
+//using Moventure.BusinessLogic.Models;
 using Moventure.BusinessLogic.Repo;
 using Moventure.DataLayer.Models;
 
@@ -65,7 +65,7 @@ namespace Moventure.WebAPI.Controllers
         public IActionResult Post(Comment comment)
         {
             var commentRepo = new CommentRepo();
-            var mappedComment = mMapper.Map<Comments>(comment);
+            var mappedComment = mMapper.Map<Comment>(comment);
             var createdComment = commentRepo.Create(mappedComment);
 
             if (createdComment == null)

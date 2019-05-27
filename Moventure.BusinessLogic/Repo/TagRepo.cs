@@ -4,7 +4,7 @@ using UpWorky.DataLayer.Repositories;
 
 namespace Moventure.BusinessLogic.Repo
 {
-    public class TagRepo : BaseSinglePkRepository<Tags>
+    public class TagRepo : BaseSinglePkRepository<Tag>
     {
     }
 }

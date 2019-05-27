@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Moventure.DataLayer.Models
 {
-    public partial class Comments : ISinglePkDataAccessObject
+    public partial class Comment : ISinglePkDataAccessObject
     {
     }
 }

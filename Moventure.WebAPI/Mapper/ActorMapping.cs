@@ -11,8 +11,8 @@ namespace Moventure.BusinessLogic.Mapper
     {
         public ActorMapping()
         {
-            CreateMap<Actors, ActorModel>();
-            CreateMap<ActorModel, Actors>();
+            CreateMap<Actor, ActorModel>();
+            CreateMap<ActorModel, Actor>();
         }
     }
 }

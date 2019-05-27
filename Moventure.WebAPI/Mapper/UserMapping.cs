@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Moventure.BusinessLogic.Models;
 using Moventure.DataLayer.Models;
 using System;
 using System.Collections.Generic;
@@ -11,8 +10,8 @@ namespace Moventure.BusinessLogic.Mapper
     {
         public UserMapping()
         {
-            CreateMap<Users, User>();
-            CreateMap<User, Users>();
+            CreateMap< Moventure.BusinessLogic.Models.User, User >();
+            CreateMap<User, Moventure.BusinessLogic.Models.User> ();
         }
     }
 }

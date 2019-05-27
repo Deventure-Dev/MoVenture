@@ -64,12 +64,11 @@ namespace Moventure.WebAPI.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] ActorModel actor)
         {
-            var actorToAdd = new Actors
+            var actorToAdd = new Actor
             {
                 Id = new Guid(),
                 FirstName = actor.FirstName,
                 LastName = actor.LastName,
-                PictureUrl = actor.PictureUrl,
                 SavedAt = DateTime.UtcNow,
                 Status = 0
             };

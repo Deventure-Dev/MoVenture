@@ -4,7 +4,7 @@ using UpWorky.DataLayer.Repositories;
 
 namespace Moventure.BusinessLogic.Repo
 {
-    public class CommentRepo : BaseSinglePkRepository<Comments>
+    public class CommentRepo : BaseSinglePkRepository<Comment>
     {
     }
 }

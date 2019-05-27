@@ -11,7 +11,7 @@ namespace Moventure.BusinessLogic.Mapper
     {
         public CategoryMapping()
         {
-            CreateMap<Categories, CategoryModel>()
+            CreateMap<Category, CategoryModel>()
                 .BeforeMap((source, destination) =>
                 {
 
@@ -21,7 +21,7 @@ namespace Moventure.BusinessLogic.Mapper
                     //destination.SavedBy = getFromDb(source.SavedBy)
                 });
 
-            CreateMap<CategoryModel, Categories>();
+            CreateMap<CategoryModel, Category>();
         }
     }
 }

@@ -7,12 +7,10 @@ using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Moventure.BusinessLogic.Models;
+//using Moventure.BusinessLogic.Models;
 using Moventure.BusinessLogic.Repo;
-using Moventure.DataLayer.Authentication;
 using Moventure.DataLayer.Models;
-using Moventure.Models;
-using Moventure.WebAPI.Logic;
+//using Moventure.Models;
 
 namespace Moventure.WebAPI.Controllers
 {
@@ -33,62 +31,12 @@ namespace Moventure.WebAPI.Controllers
             //mConfig = config;
         }
 
-        [HttpPost("login", Name = "LoginUser")]
-        public async Task<IActionResult> LoginUser([FromBody] LoginModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
+  
 
-            //var user = await mUserManager.FindByEmailAsync(model.Email);
-            //if (user == null)
-            //{
-            //    return Unauthorized();
-            //}
-
-            //var result = await mSignInManager.CheckPasswordSignInAsync(user, model.Password, false);
-            //if (result.Succeeded)
-            //{
-
-            //    //uncoment the section to add admins manually
-            //    //add user role to user
-            //    //await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "Admin")); 
-
-            //    await mUserManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "User"));
-
-            //    //var mappedUserToDto = mMapper.Map<User>(user);
-
-            //    return Ok();
-            //    //new
-            //    //{
-            //    //    token = await TokenGenerator.GenerateJwtToken(user, mMapper, mConfig, mUserManager),
-            //    //    user = mappedUserToDto,
-            //    //});
-            //}
-
-            return Unauthorized();
-        }
-
-
-        [HttpPost(Name = "Register")]
-        public async Task<IActionResult> Register([FromBody] BusinessLogic.Models.User userDto)
-        {
-            //var user = mMapper.Map<Users>(userDto);
-
-            //var result = await mUserManager.CreateAsync(user, userDto.Password);
-            //if (result.Succeeded)
-            //{
-            //    return StatusCode(201);
-            //}
-
-            //return BadRequest(result.Errors);
-            return BadRequest();
-        }
 
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<Users>> Get()
+        public ActionResult<IEnumerable<User>> Get()
         {
             var userRepo = new UserRepo(null);
             //var fetchedUsers = userRepo.GetAll();
@@ -106,7 +54,7 @@ namespace Moventure.WebAPI.Controllers
         }
 
         [HttpGet("{email}")]
-        public ActionResult<Users> Get(string email)
+        public ActionResult<User> Get(string email)
         {
             var userRepo = new UserRepo(null);
             var fetchedUser = userRepo.GetUserData("silviu@yahoo.com");
@@ -115,16 +63,16 @@ namespace Moventure.WebAPI.Controllers
                 return NotFound();
             }
 
-            var mappedUser = mMapper.Map<Users>(fetchedUser);
+            var mappedUser = mMapper.Map<User>(fetchedUser);
             return Ok(mappedUser);
         }
 
         // POST api/values
         [HttpPost]
-        public IActionResult Post([FromBody] Users user)
+        public IActionResult Post([FromBody] User user)
         {
             var userRepo = new UserRepo();
-            var userToAdd = new Users
+            var userToAdd = new User
             {
                 Id = new Guid(),
 

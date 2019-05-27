@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Moventure.BusinessLogic.Models;
+//using Moventure.BusinessLogic.Models;
 using Moventure.DataLayer.Models;
 using System;
 using System.Collections.Generic;
@@ -11,8 +11,8 @@ namespace Moventure.BusinessLogic.Mapper
     {
         public MovieMapping()
         {
-            CreateMap<Movies, Movie>();
-            CreateMap<Movie, Movies>();
+            CreateMap<Moventure.BusinessLogic.Models.Movie, Movie>();
+            CreateMap<Movie, Moventure.BusinessLogic.Models.Movie> ();
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Moventure.BusinessLogic.Models;
+//using Moventure.BusinessLogic.Models;
 using Moventure.BusinessLogic.Repo;
 using Moventure.DataLayer.Models;
 
@@ -66,12 +66,12 @@ namespace Moventure.WebAPI.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] Playlist playlist)
         {
-            var playlistToAdd = new Playlists
+            var playlistToAdd = new Playlist
             {
                 Id = new Guid(),
                 Name = playlist.Name,
-                SavedAt = DateTime.UtcNow,
-                UserId = Guid.Parse(Convert.ToString(playlist.UserId))
+                SavedAt = DateTime.UtcNow
+               
             };
 
             var playlistRep = new PlaylistRepo();

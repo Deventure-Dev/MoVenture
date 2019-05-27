@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Moventure.DataLayer.Migrations
 {
-    public partial class testauthmigration : Migration
+    public partial class testme : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,12 +12,11 @@ namespace Moventure.DataLayer.Migrations
                 name: "Actors",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false, defaultValueSql: "(newid())"),
-                    FirstName = table.Column<string>(maxLength: 150, nullable: false),
-                    LastName = table.Column<string>(maxLength: 150, nullable: false),
-                    PictureUrl = table.Column<string>(maxLength: 255, nullable: true),
-                    SavedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "(getutcdate())"),
-                    Status = table.Column<int>(nullable: false)
+                    Id = table.Column<Guid>(nullable: false),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    Status = table.Column<int>(nullable: false),
+                    SavedAt = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -68,7 +67,7 @@ namespace Moventure.DataLayer.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(maxLength: 150, nullable: false),
+                    Name = table.Column<string>(nullable: true),
                     SavedAt = table.Column<DateTime>(nullable: false),
                     Status = table.Column<int>(nullable: false),
                     Savedby = table.Column<Guid>(nullable: false)
@@ -79,31 +78,16 @@ namespace Moventure.DataLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tags",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false, defaultValueSql: "(newid())"),
-                    Name = table.Column<string>(maxLength: 150, nullable: false),
-                    SavedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "(getutcdate())"),
-                    Status = table.Column<int>(nullable: false),
-                    SavedBy = table.Column<Guid>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tags", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false, defaultValueSql: "(newid())"),
-                    FirstName = table.Column<string>(maxLength: 150, nullable: false),
-                    LastName = table.Column<string>(maxLength: 150, nullable: false),
-                    Email = table.Column<string>(maxLength: 255, nullable: false),
-                    Password = table.Column<string>(maxLength: 150, nullable: false),
-                    Status = table.Column<int>(nullable: false, defaultValueSql: "((1))"),
-                    SavedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "(getutcdate())")
+                    Id = table.Column<Guid>(nullable: false),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true),
+                    Status = table.Column<int>(nullable: false),
+                    SavedAt = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -221,45 +205,29 @@ namespace Moventure.DataLayer.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    CategoryId = table.Column<Guid>(nullable: true),
-                    Title = table.Column<string>(maxLength: 150, nullable: false),
-                    LaunchDate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    PictureURL = table.Column<string>(maxLength: 250, nullable: false),
-                    TrailerURL = table.Column<string>(maxLength: 250, nullable: true),
+                    Title = table.Column<string>(nullable: true),
+                    LaunchDate = table.Column<DateTime>(nullable: false),
+                    PictureUrl = table.Column<string>(nullable: true),
+                    TrailerUrl = table.Column<string>(nullable: true),
                     RatingCount = table.Column<int>(nullable: false),
                     Rating = table.Column<double>(nullable: false),
                     Status = table.Column<int>(nullable: false),
-                    SavedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "(getutcdate())"),
-                    SavedBy = table.Column<Guid>(nullable: false)
+                    SavedAt = table.Column<DateTime>(nullable: false),
+                    SavedById = table.Column<Guid>(nullable: true),
+                    CategoryId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Movies", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Movies_Category",
+                        name: "FK_Movies_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Comments",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false, defaultValueSql: "(newid())"),
-                    CommentMessage = table.Column<string>(maxLength: 4000, nullable: false),
-                    Status = table.Column<int>(nullable: false),
-                    SavedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "(getutcdate())"),
-                    MovieId = table.Column<Guid>(nullable: false),
-                    SavedBy = table.Column<Guid>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Comments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Comment_Movie",
-                        column: x => x.SavedBy,
+                        name: "FK_Movies_Users_SavedById",
+                        column: x => x.SavedById,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -269,16 +237,16 @@ namespace Moventure.DataLayer.Migrations
                 name: "Playlists",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false, defaultValueSql: "(newid())"),
-                    Name = table.Column<string>(maxLength: 150, nullable: false),
-                    UserId = table.Column<Guid>(nullable: false),
-                    SavedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "(getutcdate())")
+                    Id = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    SavedAt = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Playlists", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Playlists_User",
+                        name: "FK_Playlists_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -286,7 +254,56 @@ namespace Moventure.DataLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ActorMovieAssignments",
+                name: "Tags",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    SavedAt = table.Column<DateTime>(nullable: false),
+                    Status = table.Column<int>(nullable: false),
+                    SavedById = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tags", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tags_Users_SavedById",
+                        column: x => x.SavedById,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CommentMessage = table.Column<string>(nullable: true),
+                    Status = table.Column<int>(nullable: false),
+                    SavedAt = table.Column<DateTime>(nullable: false),
+                    SavedByNavigationId = table.Column<Guid>(nullable: true),
+                    SavedAtMovieId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comments_Movies_SavedAtMovieId",
+                        column: x => x.SavedAtMovieId,
+                        principalTable: "Movies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Comments_Users_SavedByNavigationId",
+                        column: x => x.SavedByNavigationId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MovieActorIntermediate",
                 columns: table => new
                 {
                     ActorId = table.Column<Guid>(nullable: false),
@@ -294,23 +311,23 @@ namespace Moventure.DataLayer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ActorMovieAssignments", x => new { x.ActorId, x.MovieId });
+                    table.PrimaryKey("PK_MovieActorIntermediate", x => new { x.ActorId, x.MovieId });
                     table.ForeignKey(
-                        name: "FK_ActorMovieAssignments_Actor",
+                        name: "FK_MovieActorIntermediate_Actors_ActorId",
                         column: x => x.ActorId,
                         principalTable: "Actors",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ActorMovieAssignments_Movie",
+                        name: "FK_MovieActorIntermediate_Movies_MovieId",
                         column: x => x.MovieId,
                         principalTable: "Movies",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "PlaylistMovieAssignments",
+                name: "MoviePlaylistIntermediate",
                 columns: table => new
                 {
                     PlaylistId = table.Column<Guid>(nullable: false),
@@ -318,61 +335,43 @@ namespace Moventure.DataLayer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PlaylistMovieAssignments", x => new { x.PlaylistId, x.MovieId });
+                    table.PrimaryKey("PK_MoviePlaylistIntermediate", x => new { x.PlaylistId, x.MovieId });
                     table.ForeignKey(
-                        name: "FK_PlaylistMovieAssignments_Movies",
+                        name: "FK_MoviePlaylistIntermediate_Movies_MovieId",
                         column: x => x.MovieId,
                         principalTable: "Movies",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MoviePlaylistIntermediate_Playlists_PlaylistId",
+                        column: x => x.PlaylistId,
+                        principalTable: "Playlists",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "TagsMovieAssignments",
+                name: "MovieTagIntermediate",
                 columns: table => new
                 {
-                    CategoryId = table.Column<Guid>(nullable: false),
+                    TagId = table.Column<Guid>(nullable: false),
                     MovieId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TagsMovieAssignments", x => new { x.CategoryId, x.MovieId });
+                    table.PrimaryKey("PK_MovieTagIntermediate", x => new { x.TagId, x.MovieId });
                     table.ForeignKey(
-                        name: "FK_CategoryMovieAssignments_Category",
-                        column: x => x.CategoryId,
+                        name: "FK_MovieTagIntermediate_Movies_MovieId",
+                        column: x => x.MovieId,
+                        principalTable: "Movies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MovieTagIntermediate_Tags_TagId",
+                        column: x => x.TagId,
                         principalTable: "Tags",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_CategoryMovieAssignments_Movie",
-                        column: x => x.MovieId,
-                        principalTable: "Movies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserMovieAssignments",
-                columns: table => new
-                {
-                    MovieId = table.Column<Guid>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserMovieAssignments", x => new { x.MovieId, x.UserId });
-                    table.ForeignKey(
-                        name: "FK_UserMovieAssignments_UserMovieAssignments",
-                        column: x => x.MovieId,
-                        principalTable: "Movies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_UserMovieAssignments_User",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -384,11 +383,6 @@ namespace Moventure.DataLayer.Migrations
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[] { "2", null, "Customer", "CUSTOMER" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ActorMovieAssignments_MovieId",
-                table: "ActorMovieAssignments",
-                column: "MovieId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -430,9 +424,24 @@ namespace Moventure.DataLayer.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_SavedBy",
+                name: "IX_Comments_SavedAtMovieId",
                 table: "Comments",
-                column: "SavedBy");
+                column: "SavedAtMovieId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_SavedByNavigationId",
+                table: "Comments",
+                column: "SavedByNavigationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MovieActorIntermediate_MovieId",
+                table: "MovieActorIntermediate",
+                column: "MovieId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MoviePlaylistIntermediate_MovieId",
+                table: "MoviePlaylistIntermediate",
+                column: "MovieId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Movies_CategoryId",
@@ -440,8 +449,13 @@ namespace Moventure.DataLayer.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PlaylistMovieAssignments_MovieId",
-                table: "PlaylistMovieAssignments",
+                name: "IX_Movies_SavedById",
+                table: "Movies",
+                column: "SavedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MovieTagIntermediate_MovieId",
+                table: "MovieTagIntermediate",
                 column: "MovieId");
 
             migrationBuilder.CreateIndex(
@@ -450,21 +464,13 @@ namespace Moventure.DataLayer.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TagsMovieAssignments_MovieId",
-                table: "TagsMovieAssignments",
-                column: "MovieId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserMovieAssignments_UserId",
-                table: "UserMovieAssignments",
-                column: "UserId");
+                name: "IX_Tags_SavedById",
+                table: "Tags",
+                column: "SavedById");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "ActorMovieAssignments");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -484,19 +490,13 @@ namespace Moventure.DataLayer.Migrations
                 name: "Comments");
 
             migrationBuilder.DropTable(
-                name: "PlaylistMovieAssignments");
+                name: "MovieActorIntermediate");
 
             migrationBuilder.DropTable(
-                name: "Playlists");
+                name: "MoviePlaylistIntermediate");
 
             migrationBuilder.DropTable(
-                name: "TagsMovieAssignments");
-
-            migrationBuilder.DropTable(
-                name: "UserMovieAssignments");
-
-            migrationBuilder.DropTable(
-                name: "Actors");
+                name: "MovieTagIntermediate");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -505,16 +505,22 @@ namespace Moventure.DataLayer.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Tags");
+                name: "Actors");
+
+            migrationBuilder.DropTable(
+                name: "Playlists");
 
             migrationBuilder.DropTable(
                 name: "Movies");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Tags");
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

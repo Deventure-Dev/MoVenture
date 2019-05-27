@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Moventure.BusinessLogic.Models;
 using Moventure.DataLayer.Models;
 using System;
 using System.Collections.Generic;
@@ -11,8 +10,8 @@ namespace Moventure.BusinessLogic.Mapper
     {
         public TagMapping()
         {
-            CreateMap<Tags, Tag>();
-            CreateMap<Tag, Tags>();
+            CreateMap< Moventure.BusinessLogic.Models.Tag, Tag >();
+            CreateMap<Tag, Moventure.BusinessLogic.Models.Tag>();
         }
     }
 }

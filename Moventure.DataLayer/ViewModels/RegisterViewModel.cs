@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Moventure.DataLayer.Models
+namespace Moventure.DataLayer.ViewModels
 {
     public class RegisterViewModel
     {
+        [Required]
         [EmailAddress]
         public string Email { get; set; }
 
+        [Required]
         public string Password { get; set; }
     }
 }

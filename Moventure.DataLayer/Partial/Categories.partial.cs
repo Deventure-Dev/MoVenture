@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Moventure.DataLayer.Models
 {
-    public partial class Categories : ISinglePkDataAccessObject
+    public partial class Category : ISinglePkDataAccessObject
     {
     }
 }

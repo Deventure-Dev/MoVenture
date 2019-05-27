@@ -4,7 +4,7 @@ using UpWorky.DataLayer.Repositories;
 
 namespace Moventure.BusinessLogic.Repo
 {
-    public class ActorRepo : BaseSinglePkRepository<Actors>
+    public class ActorRepo : BaseSinglePkRepository<Actor>
     {
     }
 }

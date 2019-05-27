@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Moventure.BusinessLogic.Models;
+//using Moventure.BusinessLogic.Models;
 using Moventure.BusinessLogic.Repo;
 using Moventure.DataLayer.Models;
 
@@ -64,12 +64,11 @@ namespace Moventure.WebAPI.Controllers
         [HttpPost]
         public IActionResult Post(Tag tag)
         {
-            var tagToAdd = new Tags
+            var tagToAdd = new Tag
             {
                 Id = new Guid(),
                 Name = tag.Name,
                 SavedAt = DateTime.UtcNow,
-                SavedBy = new Guid(),
                 Status = 0
             };
 

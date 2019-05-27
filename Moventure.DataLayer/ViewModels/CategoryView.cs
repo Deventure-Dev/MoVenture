@@ -1,21 +1,20 @@
-﻿using System;
+﻿
+using Moventure.DataLayer.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Moventure.DataLayer.Models
+namespace Moventure.DataLayer.ViewModels
 {
-    public partial class Categories
+    public class CategoryView
     {
-        public Categories()
-        {
-            Movies = new HashSet<Movies>();
-        }
-
         public Guid Id { get; set; }
         public string Name { get; set; }
         public DateTime SavedAt { get; set; }
         public int Status { get; set; }
         public Guid Savedby { get; set; }
 
-        public virtual ICollection<Movies> Movies { get; set; }
+        public List<Movie> MovieList { get; set; }
     }
 }

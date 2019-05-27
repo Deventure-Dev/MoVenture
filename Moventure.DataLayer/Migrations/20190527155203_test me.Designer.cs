@@ -5,19 +5,19 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Moventure.DataLayer.Models;
+using Moventure.DataLayer.Context;
 
 namespace Moventure.DataLayer.Migrations
 {
     [DbContext(typeof(Entities))]
-    [Migration("20190526155512_test auth migration123")]
-    partial class testauthmigration123
+    [Migration("20190527155203_test me")]
+    partial class testme
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -187,39 +187,16 @@ namespace Moventure.DataLayer.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Moventure.DataLayer.Models.ActorMovieAssignments", b =>
-                {
-                    b.Property<Guid>("ActorId");
-
-                    b.Property<Guid>("MovieId");
-
-                    b.HasKey("ActorId", "MovieId");
-
-                    b.HasIndex("MovieId");
-
-                    b.ToTable("ActorMovieAssignments");
-                });
-
-            modelBuilder.Entity("Moventure.DataLayer.Models.Actors", b =>
+            modelBuilder.Entity("Moventure.DataLayer.Models.Actor", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("(newid())");
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(150);
+                    b.Property<string>("FirstName");
 
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(150);
+                    b.Property<string>("LastName");
 
-                    b.Property<string>("PictureUrl")
-                        .HasMaxLength(255);
-
-                    b.Property<DateTime>("SavedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("(getutcdate())");
+                    b.Property<DateTime>("SavedAt");
 
                     b.Property<int>("Status");
 
@@ -228,13 +205,12 @@ namespace Moventure.DataLayer.Migrations
                     b.ToTable("Actors");
                 });
 
-            modelBuilder.Entity("Moventure.DataLayer.Models.Categories", b =>
+            modelBuilder.Entity("Moventure.DataLayer.Models.Category", b =>
                 {
-                    b.Property<Guid>("Id");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(150);
+                    b.Property<string>("Name");
 
                     b.Property<DateTime>("SavedAt");
 
@@ -247,75 +223,78 @@ namespace Moventure.DataLayer.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("Moventure.DataLayer.Models.Comments", b =>
+            modelBuilder.Entity("Moventure.DataLayer.Models.Comment", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("(newid())");
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<string>("CommentMessage")
-                        .IsRequired()
-                        .HasMaxLength(4000);
+                    b.Property<string>("CommentMessage");
 
-                    b.Property<Guid>("MovieId");
+                    b.Property<DateTime>("SavedAt");
 
-                    b.Property<DateTime>("SavedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("(getutcdate())");
+                    b.Property<Guid?>("SavedAtMovieId");
 
-                    b.Property<Guid>("SavedBy");
+                    b.Property<Guid?>("SavedByNavigationId");
 
                     b.Property<int>("Status");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SavedBy");
+                    b.HasIndex("SavedAtMovieId");
+
+                    b.HasIndex("SavedByNavigationId");
 
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("Moventure.DataLayer.Models.Movies", b =>
+            modelBuilder.Entity("Moventure.DataLayer.Models.Movie", b =>
                 {
-                    b.Property<Guid>("Id");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<Guid?>("CategoryId");
 
-                    b.Property<DateTime>("LaunchDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("LaunchDate");
 
-                    b.Property<string>("PictureUrl")
-                        .IsRequired()
-                        .HasColumnName("PictureURL")
-                        .HasMaxLength(250);
+                    b.Property<string>("PictureUrl");
 
                     b.Property<double>("Rating");
 
                     b.Property<int>("RatingCount");
 
-                    b.Property<DateTime>("SavedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("(getutcdate())");
+                    b.Property<DateTime>("SavedAt");
 
-                    b.Property<Guid>("SavedBy");
+                    b.Property<Guid?>("SavedById");
 
                     b.Property<int>("Status");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(150);
+                    b.Property<string>("Title");
 
-                    b.Property<string>("TrailerUrl")
-                        .HasColumnName("TrailerURL")
-                        .HasMaxLength(250);
+                    b.Property<string>("TrailerUrl");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("SavedById");
+
                     b.ToTable("Movies");
                 });
 
-            modelBuilder.Entity("Moventure.DataLayer.Models.PlaylistMovieAssignments", b =>
+            modelBuilder.Entity("Moventure.DataLayer.Models.MovieActorIntermediate", b =>
+                {
+                    b.Property<Guid>("ActorId");
+
+                    b.Property<Guid>("MovieId");
+
+                    b.HasKey("ActorId", "MovieId");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("MovieActorIntermediate");
+                });
+
+            modelBuilder.Entity("Moventure.DataLayer.Models.MoviePlaylistIntermediate", b =>
                 {
                     b.Property<Guid>("PlaylistId");
 
@@ -325,24 +304,32 @@ namespace Moventure.DataLayer.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("PlaylistMovieAssignments");
+                    b.ToTable("MoviePlaylistIntermediate");
                 });
 
-            modelBuilder.Entity("Moventure.DataLayer.Models.Playlists", b =>
+            modelBuilder.Entity("Moventure.DataLayer.Models.MovieTagIntermediate", b =>
+                {
+                    b.Property<Guid>("TagId");
+
+                    b.Property<Guid>("MovieId");
+
+                    b.HasKey("TagId", "MovieId");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("MovieTagIntermediate");
+                });
+
+            modelBuilder.Entity("Moventure.DataLayer.Models.Playlist", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("(newid())");
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(150);
+                    b.Property<string>("Name");
 
-                    b.Property<DateTime>("SavedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("(getutcdate())");
+                    b.Property<DateTime>("SavedAt");
 
-                    b.Property<Guid>("UserId");
+                    b.Property<Guid?>("UserId");
 
                     b.HasKey("Id");
 
@@ -351,84 +338,42 @@ namespace Moventure.DataLayer.Migrations
                     b.ToTable("Playlists");
                 });
 
-            modelBuilder.Entity("Moventure.DataLayer.Models.Tags", b =>
+            modelBuilder.Entity("Moventure.DataLayer.Models.Tag", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("(newid())");
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(150);
+                    b.Property<string>("Name");
 
-                    b.Property<DateTime>("SavedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("(getutcdate())");
+                    b.Property<DateTime>("SavedAt");
 
-                    b.Property<Guid>("SavedBy");
+                    b.Property<Guid?>("SavedById");
 
                     b.Property<int>("Status");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("SavedById");
+
                     b.ToTable("Tags");
                 });
 
-            modelBuilder.Entity("Moventure.DataLayer.Models.TagsMovieAssignments", b =>
-                {
-                    b.Property<Guid>("CategoryId");
-
-                    b.Property<Guid>("MovieId");
-
-                    b.HasKey("CategoryId", "MovieId");
-
-                    b.HasIndex("MovieId");
-
-                    b.ToTable("TagsMovieAssignments");
-                });
-
-            modelBuilder.Entity("Moventure.DataLayer.Models.UserMovieAssignments", b =>
-                {
-                    b.Property<Guid>("MovieId");
-
-                    b.Property<Guid>("UserId");
-
-                    b.HasKey("MovieId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserMovieAssignments");
-                });
-
-            modelBuilder.Entity("Moventure.DataLayer.Models.Users", b =>
+            modelBuilder.Entity("Moventure.DataLayer.Models.User", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("(newid())");
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(255);
+                    b.Property<string>("Email");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(150);
+                    b.Property<string>("FirstName");
 
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(150);
+                    b.Property<string>("LastName");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(150);
+                    b.Property<string>("Password");
 
-                    b.Property<DateTime>("SavedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("(getutcdate())");
+                    b.Property<DateTime>("SavedAt");
 
-                    b.Property<int>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("((1))");
+                    b.Property<int>("Status");
 
                     b.HasKey("Id");
 
@@ -480,75 +425,79 @@ namespace Moventure.DataLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Moventure.DataLayer.Models.ActorMovieAssignments", b =>
+            modelBuilder.Entity("Moventure.DataLayer.Models.Comment", b =>
                 {
-                    b.HasOne("Moventure.DataLayer.Models.Actors", "Actor")
-                        .WithMany("ActorMovieAssignments")
-                        .HasForeignKey("ActorId")
-                        .HasConstraintName("FK_ActorMovieAssignments_Actor");
+                    b.HasOne("Moventure.DataLayer.Models.Movie", "SavedAtMovie")
+                        .WithMany()
+                        .HasForeignKey("SavedAtMovieId");
 
-                    b.HasOne("Moventure.DataLayer.Models.Movies", "Movie")
-                        .WithMany("ActorMovieAssignments")
-                        .HasForeignKey("MovieId")
-                        .HasConstraintName("FK_ActorMovieAssignments_Movie");
-                });
-
-            modelBuilder.Entity("Moventure.DataLayer.Models.Comments", b =>
-                {
-                    b.HasOne("Moventure.DataLayer.Models.Users", "SavedByNavigation")
+                    b.HasOne("Moventure.DataLayer.Models.User", "SavedByNavigation")
                         .WithMany("Comments")
-                        .HasForeignKey("SavedBy")
-                        .HasConstraintName("FK_Comment_Movie");
+                        .HasForeignKey("SavedByNavigationId");
                 });
 
-            modelBuilder.Entity("Moventure.DataLayer.Models.Movies", b =>
+            modelBuilder.Entity("Moventure.DataLayer.Models.Movie", b =>
                 {
-                    b.HasOne("Moventure.DataLayer.Models.Categories", "Category")
-                        .WithMany("Movies")
-                        .HasForeignKey("CategoryId")
-                        .HasConstraintName("FK_Movies_Category");
+                    b.HasOne("Moventure.DataLayer.Models.Category", "Category")
+                        .WithMany("MovieList")
+                        .HasForeignKey("CategoryId");
+
+                    b.HasOne("Moventure.DataLayer.Models.User", "SavedBy")
+                        .WithMany("MovieList")
+                        .HasForeignKey("SavedById");
                 });
 
-            modelBuilder.Entity("Moventure.DataLayer.Models.PlaylistMovieAssignments", b =>
+            modelBuilder.Entity("Moventure.DataLayer.Models.MovieActorIntermediate", b =>
                 {
-                    b.HasOne("Moventure.DataLayer.Models.Movies", "Movie")
-                        .WithMany("PlaylistMovieAssignments")
+                    b.HasOne("Moventure.DataLayer.Models.Actor", "Actor")
+                        .WithMany("MovieList")
+                        .HasForeignKey("ActorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Moventure.DataLayer.Models.Movie", "Movie")
+                        .WithMany("ActorList")
                         .HasForeignKey("MovieId")
-                        .HasConstraintName("FK_PlaylistMovieAssignments_Movies");
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Moventure.DataLayer.Models.Playlists", b =>
+            modelBuilder.Entity("Moventure.DataLayer.Models.MoviePlaylistIntermediate", b =>
                 {
-                    b.HasOne("Moventure.DataLayer.Models.Users", "User")
+                    b.HasOne("Moventure.DataLayer.Models.Movie", "Movie")
+                        .WithMany("PlaylistList")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Moventure.DataLayer.Models.Playlist", "Playlist")
+                        .WithMany("MovieList")
+                        .HasForeignKey("PlaylistId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Moventure.DataLayer.Models.MovieTagIntermediate", b =>
+                {
+                    b.HasOne("Moventure.DataLayer.Models.Movie", "Movie")
+                        .WithMany("TagList")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Moventure.DataLayer.Models.Tag", "Tag")
+                        .WithMany("MovieList")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Moventure.DataLayer.Models.Playlist", b =>
+                {
+                    b.HasOne("Moventure.DataLayer.Models.User", "User")
                         .WithMany("Playlists")
-                        .HasForeignKey("UserId")
-                        .HasConstraintName("FK_Playlists_User");
+                        .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("Moventure.DataLayer.Models.TagsMovieAssignments", b =>
+            modelBuilder.Entity("Moventure.DataLayer.Models.Tag", b =>
                 {
-                    b.HasOne("Moventure.DataLayer.Models.Tags", "Category")
-                        .WithMany("TagsMovieAssignments")
-                        .HasForeignKey("CategoryId")
-                        .HasConstraintName("FK_CategoryMovieAssignments_Category");
-
-                    b.HasOne("Moventure.DataLayer.Models.Movies", "Movie")
-                        .WithMany("TagsMovieAssignments")
-                        .HasForeignKey("MovieId")
-                        .HasConstraintName("FK_CategoryMovieAssignments_Movie");
-                });
-
-            modelBuilder.Entity("Moventure.DataLayer.Models.UserMovieAssignments", b =>
-                {
-                    b.HasOne("Moventure.DataLayer.Models.Movies", "Movie")
-                        .WithMany("UserMovieAssignments")
-                        .HasForeignKey("MovieId")
-                        .HasConstraintName("FK_UserMovieAssignments_UserMovieAssignments");
-
-                    b.HasOne("Moventure.DataLayer.Models.Users", "User")
-                        .WithMany("UserMovieAssignments")
-                        .HasForeignKey("UserId")
-                        .HasConstraintName("FK_UserMovieAssignments_User");
+                    b.HasOne("Moventure.DataLayer.Models.User", "SavedBy")
+                        .WithMany()
+                        .HasForeignKey("SavedById");
                 });
 #pragma warning restore 612, 618
         }

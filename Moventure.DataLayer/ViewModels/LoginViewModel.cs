@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Moventure.DataLayer.Models
+namespace Moventure.DataLayer.ViewModels
 {
     public class LoginViewModel
     {
         public string Username { get; set; }
         public string Password { get; set; }
     }
-
 }
