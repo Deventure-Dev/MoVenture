@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Moventure.BusinessLogic.Models
 {
-    public class Movie : MinifiedMovie
+    public class MovieModel : MinifiedMovie
     {
         public string Description { get; set; }
         public DateTime LaunchDate { get; set; }
@@ -12,8 +12,8 @@ namespace Moventure.BusinessLogic.Models
         public int Status { get; set; }
         public DateTime SavedAt { get; set; }
 
-        public List<ActorModel> Actors { get; set; }
-        public List<Comment> Comments { get; set; }
-        public List<Playlist> Playlists { get; set; }
+        public ICollection<ActorModel> Actors { get; set; }
+        public ICollection<Comment> Comments { get; set; }
+        public ICollection<Playlist> Playlists { get; set; }
     }
 }

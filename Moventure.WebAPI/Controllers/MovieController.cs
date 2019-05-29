@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using Deventure.Common.Response;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-//using Moventure.BusinessLogic.Models;
+using Moventure.BusinessLogic.Models;
 using Moventure.BusinessLogic.Repo;
 using Moventure.DataLayer.Models;
 
 namespace Moventure.WebAPI.Controllers
 {
 
-    //[ApiController]
     public class MovieController : ControllerBase
     {
         private static DateTime today = DateTime.Today;
@@ -28,76 +28,97 @@ namespace Moventure.WebAPI.Controllers
         #region WEBAPI specific
 
         // GET api/values/5
-        [HttpGet("{id}")]
-        [Route("api/[controller]")]
-        public ActionResult<Movie> Get(Guid id)
+        [HttpGet]
+        public ActionResult<Movie> GetAll()
         {
             var movieRepo = new MovieRepo();
-            //var foundMovie = UserRepo.MinifiedMovieList.FirstOrDefault(movie => movie.Id == id);
-            var foundMovie = UserRepo.FullMovieList.FirstOrDefault(movie => movie.Id == id);
-            if (foundMovie == null)
+            var fetchedMovies = movieRepo.GetAll(new [] { nameof (Movie.TagList) });
+            var moviesCount = movieRepo.Count();
+
+            if (fetchedMovies == null && moviesCount < 0)
             {
-                return Ok(ResponseFactory.ErrorReponse);
+                return BadRequest("Fetching movies failed...!");
             }
-            //var fetchedMovie = movieRepo.GetAll().FirstOrDefault(movie => movie.Id == id);
-            //if (fetchedMovie == null)
-            //{
-            //    return NotFound();
-            //}
 
-            //var mappedMovie = mMapper.Map<Movie>(fetchedMovie);
+            var mappedMovies = mMapper.Map<IList<MovieModel>>(fetchedMovies);
 
-            return Ok(foundMovie);
+            return Ok(new
+            {
+                Movies = mappedMovies,
+                Count = moviesCount
+            });
         }
 
-        // GET api/values
-        //[HttpGet]
-        //[Route("api/[controller]")]
-        //public ActionResult<IEnumerable<Movie>> Get()
-        //{
-        //    var movieRepo = new MovieRepo();
-        //    var fetchedMovies = movieRepo.GetAll();
-        //    var movieCount = movieRepo.Count();
+        [HttpGet]
+        public ActionResult<MovieModel> GetById([FromQuery] Guid id)
+        {
 
-        //    if (fetchedMovies == null && movieCount < 0)
-        //    {
-        //        return BadRequest("Fetching movies failed....");
-        //    }
+            var movieRepo = new MovieRepo();
+            var fetchedMovie = movieRepo.GetAll().FirstOrDefault(movie => movie.Id == id);
 
-        //    var mappedMovies = mMapper.Map<Movie>(fetchedMovies);
+            if (fetchedMovie == null)
+            {
+                return NotFound("Movie with this id doesn't exist...!");
+            }
 
-        //    return Ok(new
-        //    {
-        //        Movies = mappedMovies,
-        //        Count = movieCount
-        //    });
+            var mappedMovie = mMapper.Map<MovieModel>(fetchedMovie);
 
-        //}
+            return Ok(mappedMovie);
+        }
+
+        [HttpPost]
+        public IActionResult AddTagToMovie([FromQuery] Guid movieId, [FromQuery] Guid tagId)
+        {
+            var movieRepo = new MovieRepo();
+            var tagRepo = new TagRepo();
+            var fetchedMovie = movieRepo.Get(movieId);
+            if (fetchedMovie == null)
+            {
+                return NotFound("Movie with this id doesn't exist...!");
+            }
+
+            var fetchedTag = tagRepo.Get(tagId);
+            if (fetchedTag == null)
+            {
+                return NotFound("Tag with this id doesn't exist...!");
+            }
+
+
+            var tagMovieRepo = new TagMovieAssignmentRepo();
+            var toAdd = new TagsMovieAssignment()
+            {
+                MovieId = movieId,
+                TagId = tagId
+
+            };
+            tagMovieRepo.Create(toAdd);
+
+            return Ok(fetchedMovie);
+        }
 
         // POST api/values
         [HttpPost]
-        public IActionResult Post([FromBody] Movie movie)
+        public IActionResult Create([FromBody] MovieModel movie)
         {
-            var movieRepo = new MovieRepo();
-            var movieToAdd = new Movie
+            if (!ModelState.IsValid)
             {
-                Id = new Guid(),
-                Title = movie.Title,
-                PictureUrl = movie.PictureUrl,
-                Rating = movie.Rating,
-                SavedAt = DateTime.UtcNow,
-                RatingCount = (int)movie.Rating,
-                Status = 0,
-                TrailerUrl = movie.TrailerUrl,
-                LaunchDate = DateTime.UtcNow
+                return BadRequest("invalid input!");
+            }
 
-            };
+            var movieToAdd = mMapper.Map<Movie>(movie);
+            movieToAdd.Status = (int)EntityStatus.ACTIVE;
+            movieToAdd.SavedAt = DateTime.UtcNow;
 
+
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+
+            //tagToAdd.SavedBy = Guid.Parse("06e6c8a6-96e6-40a5-8767-7f4d536a2049"); // User.Claims[0];
+            var movieRepo = new MovieRepo();
             var createdMovie = movieRepo.Create(movieToAdd);
 
             if (createdMovie == null)
             {
-                return BadRequest("Movie was not created!");
+                return BadRequest("Failed to create movie");
             }
 
             return Ok(createdMovie);
@@ -110,9 +131,20 @@ namespace Moventure.WebAPI.Controllers
         }
 
         // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        public IActionResult Delete([FromQuery] Guid id)
         {
+            var movieRepo = new MovieRepo();
+            var fetchedMovie = movieRepo.GetAll().FirstOrDefault(movie => movie.Id == id);
+
+            if (fetchedMovie == null)
+            {
+                return NotFound("Movie with this id doesn't exist...!");
+            }
+
+            movieRepo.Delete(fetchedMovie);
+
+            return Ok(fetchedMovie);
         }
 
         #endregion
