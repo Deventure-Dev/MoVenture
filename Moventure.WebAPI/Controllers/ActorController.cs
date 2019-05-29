@@ -10,11 +10,10 @@ using Moventure.DataLayer.Models;
 
 namespace Moventure.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+
     public class ActorController : ControllerBase
     {
-        
+
         private readonly IMapper mMapper;
 
         public ActorController(IMapper mapper)
@@ -23,7 +22,7 @@ namespace Moventure.WebAPI.Controllers
         }
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<ActorModel>> Get()
+        public IActionResult GetAll()
         {
             var actorRepo = new ActorRepo();
             var fetchedActors = actorRepo.GetAll();
@@ -34,19 +33,20 @@ namespace Moventure.WebAPI.Controllers
                 return BadRequest("Fetching actors failed...!");
             }
 
-            var mappedActors = mMapper.Map<ActorModel>(fetchedActors);
+            var mappedActors = mMapper.Map<IList<ActorModel>>(fetchedActors);
 
-            return Ok(new {
+            return Ok(new
+            {
                 Actors = mappedActors,
                 Count = actorsCount
             });
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<ActorModel> Get(Guid id)
+        [HttpGet]
+        public ActionResult<ActorModel> GetById([FromQuery] Guid id)
         {
-           
+
             var actorRepo = new ActorRepo();
             var fetchedActor = actorRepo.GetAll().FirstOrDefault(actor => actor.Id == id);
 
@@ -62,16 +62,19 @@ namespace Moventure.WebAPI.Controllers
 
         // POST api/values
         [HttpPost]
-        public IActionResult Post([FromBody] ActorModel actor)
+        public IActionResult Create([FromBody] ActorModel model)
         {
-            var actorToAdd = new Actor
+
+            if (!ModelState.IsValid)
             {
-                Id = new Guid(),
-                FirstName = actor.FirstName,
-                LastName = actor.LastName,
-                SavedAt = DateTime.UtcNow,
-                Status = 0
-            };
+                return BadRequest("invalid input!");
+            }
+
+            var actorToAdd = mMapper.Map<Actor>(model);
+
+            actorToAdd.Id = new Guid();
+            actorToAdd.Status = (int)EntityStatus.ACTIVE;
+            actorToAdd.SavedAt = DateTime.UtcNow;
 
             var actorRepo = new ActorRepo();
             var createdActor = actorRepo.Create(actorToAdd);
@@ -85,15 +88,46 @@ namespace Moventure.WebAPI.Controllers
         }
 
         // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public IActionResult Put(Guid id)
         {
+            ActorModel actorUpdate = new ActorModel();
+            actorUpdate.Id = Guid.Parse("dbff522a-fcff-409f-a34d-2834db37aeb9");
+            actorUpdate.LastName = "Micea";
+            actorUpdate.FirstName = "Floare";
+
+            var actorRepo = new ActorRepo();
+            var fetchedActor = actorRepo.GetAll().FirstOrDefault(actor => actor.Id == id);
+
+            if(fetchedActor == null)
+            {
+                return NotFound("Actor with this id doesnt'n exist");
+            }
+
+            var actorToUpdate = mMapper.Map<Actor>(actorUpdate);
+            actorRepo.Update(actorToUpdate);
+            //var cucu = mMapper.Map<Actor>(actorToAdd);
+            //var actorToUpdate = actorRepo.Create(cucu);
+
+
+            return Ok(true);
         }
 
         // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        public IActionResult Delete(Guid id)
         {
+            var actorRepo = new ActorRepo();
+            var fetchedActor = actorRepo.GetAll().FirstOrDefault(actor => actor.Id == id);
+
+            if(fetchedActor == null)
+            {
+                return NotFound("Actor with this id doesn't exist");
+            }
+
+            actorRepo.Delete(fetchedActor);
+
+            return Ok(fetchedActor);
         }
     }
 }
