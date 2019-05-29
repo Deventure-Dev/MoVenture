@@ -85,17 +85,17 @@ namespace UpWorky.DataLayer.Repositories
             return base.Create(entities, refreshFromDb, navigationProperties);
         }
 
-        protected override async Task<T> FetchFromDbAsync(T entity, IList<string> navigationProperties = null)
+        public override async Task<T> FetchFromDbAsync(T entity, IList<string> navigationProperties = null)
         {
             return await GetAsync(entity.Id, navigationProperties).ConfigureAwait(false);
         }
 
-        protected override T FetchFromDb(T entity, IList<string> navigationProperties = null)
+        public override T FetchFromDb(T entity, IList<string> navigationProperties = null)
         {
             return Get(entity.Id, navigationProperties);
         }
 
-        protected override bool ValidateEntity(T entity)
+        public override bool ValidateEntity(T entity)
         {
             if (entity != null && entity.Id != Guid.Empty)
             {

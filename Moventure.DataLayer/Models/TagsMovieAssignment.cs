@@ -2,7 +2,7 @@
 
 namespace Moventure.DataLayer.Models
 {
-    public class TagsMovieAssignment
+    public partial class TagsMovieAssignment
     {
         public Guid TagId { get; set; }
         public Guid MovieId { get; set; }

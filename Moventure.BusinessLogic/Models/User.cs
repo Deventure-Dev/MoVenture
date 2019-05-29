@@ -12,6 +12,6 @@ namespace Moventure.BusinessLogic.Models
         public string Password { get; set; }
         public bool Status { get; set; }
         public DateTime SavedAt { get; set; }
-        public List<Movie> Movies { get; set; }
+        public List<MovieModel> Movies { get; set; }
     }
 }

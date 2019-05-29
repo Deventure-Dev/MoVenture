@@ -201,11 +201,11 @@ namespace UpWorky.DataLayer.Repositories
 
         #region Abstract methods 
 
-        protected abstract Task<T> FetchFromDbAsync(T entity, IList<string> navigationProperties = null);
+        public abstract Task<T> FetchFromDbAsync(T entity, IList<string> navigationProperties = null);
 
-        protected abstract T FetchFromDb(T entity, IList<string> navigationProperties = null);
+        public abstract T FetchFromDb(T entity, IList<string> navigationProperties = null);
 
-        protected abstract bool ValidateEntity(T entity);
+        public abstract bool ValidateEntity(T entity);
 
         #endregion
     }
