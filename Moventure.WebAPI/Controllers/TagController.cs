@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Moventure.BusinessLogic.Models;
 //using Moventure.BusinessLogic.Models;
 using Moventure.BusinessLogic.Repo;
 using Moventure.DataLayer.Models;
 
 namespace Moventure.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class TagController : ControllerBase
     {
         
@@ -23,7 +23,7 @@ namespace Moventure.WebAPI.Controllers
         }
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<Tag>> Get()
+        public ActionResult GetAll()
         {
             var tagRepo = new TagRepo();
             var fetchedTags = tagRepo.GetAll();
@@ -34,50 +34,54 @@ namespace Moventure.WebAPI.Controllers
                 return BadRequest("Fetching tags failed...!");
             }
 
-            var mappedTags = mMapper.Map<Tag>(fetchedTags);
+            var mappedTags = mMapper.Map<IList<TagModel>>(fetchedTags);
 
-            return Ok(new {
+            return Ok(new
+            {
                 Tags = mappedTags,
                 Count = tagsCount
             });
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<Tag> Get(Guid id)
-        {
-           
+        [HttpGet]
+        public ActionResult<Tag> GetById([FromQuery] Guid id)
+        { 
             var tagRepo = new TagRepo();
             var fetchedTag = tagRepo.GetAll().FirstOrDefault(tag => tag.Id == id);
 
             if (fetchedTag == null)
             {
-                return BadRequest("Fetching tag failed...!");
+                return NotFound("Tag with this id doesn't exist...!");
             }
 
-            var mappedTag = mMapper.Map<Tag>(fetchedTag);
+            var mappedTag = mMapper.Map<TagModel>(fetchedTag);
 
             return Ok(mappedTag);
         }
 
         // POST api/values
         [HttpPost]
-        public IActionResult Post(Tag tag)
+        public IActionResult Create([FromBody] TagModel tag)
         {
-            var tagToAdd = new Tag
+            if (!ModelState.IsValid)
             {
-                Id = new Guid(),
-                Name = tag.Name,
-                SavedAt = DateTime.UtcNow,
-                Status = 0
-            };
+                return BadRequest("invalid input!");
+            }
 
+            var tagToAdd = mMapper.Map<Tag>(tag);
+            tagToAdd.Status = (int)EntityStatus.ACTIVE;
+            tagToAdd.SavedAt = DateTime.UtcNow;
+
+
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            //tagToAdd.SavedBy = Guid.Parse("06e6c8a6-96e6-40a5-8767-7f4d536a2049"); // User.Claims[0];
             var tagRepo = new TagRepo();
             var createdTag = tagRepo.Create(tagToAdd);
 
             if (createdTag == null)
             {
-                return BadRequest("Failed to create tag");
+                return BadRequest("Failed to create category");
             }
 
             return Ok(createdTag);
@@ -90,9 +94,20 @@ namespace Moventure.WebAPI.Controllers
         }
 
         // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        public IActionResult Delete([FromQuery] Guid id)
         {
+            var tagRepo = new TagRepo();
+            var fetchedTag = tagRepo.GetAll().FirstOrDefault(tag => tag.Id == id);
+
+            if (fetchedTag == null)
+            {
+                return NotFound("Tag with this id doesn't exist...!");
+            }
+
+            tagRepo.Delete(fetchedTag);
+
+            return Ok(fetchedTag);
         }
     }
 }

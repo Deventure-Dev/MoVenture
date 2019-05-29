@@ -12,8 +12,6 @@ using Moventure.DataLayer.Models;
 
 namespace Moventure.WebAPI.Controllers
 {
-    //[Route("api/[controller]")]
-    //[ApiController]
     public class CategoryController : ControllerBase
     {
 
@@ -26,7 +24,7 @@ namespace Moventure.WebAPI.Controllers
         }
         // GET api/values
         [HttpGet]
-        public IActionResult GetAllCategories()
+        public IActionResult GetAll()
         {
             var categoryRepo = new CategoryRepo();
             var fetchedCategories = categoryRepo.GetAll();
@@ -48,7 +46,7 @@ namespace Moventure.WebAPI.Controllers
 
         // GET api/values/5
         [HttpGet]
-        public ActionResult<CategoryModel> GetCategoryById([FromQuery] Guid id)
+        public ActionResult<CategoryModel> GetById([FromQuery] Guid id)
         {
 
             var categoryRepo = new CategoryRepo();

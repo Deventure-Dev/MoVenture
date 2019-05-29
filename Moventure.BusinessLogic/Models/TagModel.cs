@@ -5,12 +5,14 @@ using System.Text;
 
 namespace Moventure.BusinessLogic.Models
 {
-    public class Tag
+    public class PostTagModel
+    {
+        public string Name { get; set; }
+    }
+    public class TagModel : PostTagModel
     {
         public Guid Id { get; set; }
-        public string Name { get; set; }
-        public int Status { get; set; }
         public DateTime SavedAt { get; set; }
-        public User SavedBy { get; set; }
+        public string SavedBy { get; set; }
     }
 }
