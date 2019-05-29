@@ -26,7 +26,7 @@ namespace Moventure.WebAPI.Controllers
         }
         // GET api/values
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAllCategories()
         {
             var categoryRepo = new CategoryRepo();
             var fetchedCategories = categoryRepo.GetAll();
@@ -47,8 +47,8 @@ namespace Moventure.WebAPI.Controllers
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<CategoryModel> Get(Guid id)
+        [HttpGet]
+        public ActionResult<CategoryModel> GetCategoryById([FromQuery] Guid id)
         {
 
             var categoryRepo = new CategoryRepo();
@@ -56,7 +56,7 @@ namespace Moventure.WebAPI.Controllers
 
             if (fetchedCategory == null)
             {
-                return BadRequest("Fetching category failed...!");
+                return NotFound("Category with this id doesn't exist...!");
             }
 
             var mappedCategory = mMapper.Map<CategoryModel>(fetchedCategory);
@@ -98,9 +98,20 @@ namespace Moventure.WebAPI.Controllers
         }
 
         // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        public IActionResult Delete([FromQuery] Guid id)
         {
+            var categoryRepo = new CategoryRepo();
+            var fetchedCategory = categoryRepo.GetAll().FirstOrDefault(category => category.Id == id);
+
+            if (fetchedCategory == null)
+            {
+                return NotFound("Category with this id doesn't exist...!");
+            }
+
+            categoryRepo.Delete(fetchedCategory);
+
+            return Ok(fetchedCategory);
         }
     }
 }
