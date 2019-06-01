@@ -32,10 +32,8 @@ namespace Moventure.DataLayer.Context
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseSqlServer(AppConfiguration.ConnectionString);
-
+                optionsBuilder.UseLazyLoadingProxies(false);
             }
-            //TODO: fix this
-            optionsBuilder.UseLazyLoadingProxies();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

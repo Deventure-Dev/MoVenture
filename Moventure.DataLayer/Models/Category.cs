@@ -7,6 +7,11 @@ namespace Moventure.DataLayer.Models
 {
     public partial class Category
     {
+        public Category()
+        {
+            MovieList = new List<Movie>();
+        }
+
         public Guid Id { get; set; }
         public string Name { get; set; }
         public DateTime SavedAt { get; set; }

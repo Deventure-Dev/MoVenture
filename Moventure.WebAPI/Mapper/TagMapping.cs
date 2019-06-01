@@ -24,6 +24,7 @@ namespace Moventure.BusinessLogic.Mapper
                     destination.SavedBy = "Silviu";
                 });
             CreateMap<TagModel, Tag>();
+
         }
     }
 }

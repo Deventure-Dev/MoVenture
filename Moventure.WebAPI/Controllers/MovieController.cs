@@ -150,10 +150,10 @@ namespace Moventure.WebAPI.Controllers
         #endregion
 
         #region WEB specific
-
+        
         public IActionResult GetMoviesByCategories()
         {
-            var movieData = UserRepo.CategoryList;
+            var movieData = new CategoryRepo(mMapper).GetMoviesByCategories(); //UserRepo.CategoryList;
             //return Ok(ResponseFactory.Success(movieList));
             return Ok(ResponseFactory.CreateResponse(true, ResponseCode.Success, movieData));
         }

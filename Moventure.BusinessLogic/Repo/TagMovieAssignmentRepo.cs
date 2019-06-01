@@ -11,13 +11,14 @@ namespace Moventure.BusinessLogic.Repo
     {
         public override TagsMovieAssignment FetchFromDb(TagsMovieAssignment entity, IList<string> navigationProperties = null)
         {
-            return GetSingle(e => e.MovieId == entity.MovieId && e.TagId == entity.TagId, navigationProperties);
+            return GetSingle(assignment => assignment.MovieId == entity.MovieId && 
+                                           assignment.TagId == entity.TagId, navigationProperties);
         }
 
         public override async Task<TagsMovieAssignment> FetchFromDbAsync(TagsMovieAssignment entity, IList<string> navigationProperties = null)
         {
-            return await GetSingleAsync(e => e.MovieId == entity.MovieId && e.TagId == entity.TagId, navigationProperties).ConfigureAwait(false);
-            throw new NotImplementedException();
+            return await GetSingleAsync(assignment => assignment.MovieId == entity.MovieId && 
+                                                      assignment.TagId == entity.TagId, navigationProperties).ConfigureAwait(false);
         }
 
         public override bool ValidateEntity(TagsMovieAssignment entity)

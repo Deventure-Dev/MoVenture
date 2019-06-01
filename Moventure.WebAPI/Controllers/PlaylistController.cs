@@ -50,7 +50,7 @@ namespace Moventure.WebAPI.Controllers
         public ActionResult<Playlist> Get(Guid id)
         {
             var playlistRepo = new PlaylistRepo();
-            var fetchedPlaylist = playlistRepo.GetAll().FirstOrDefault(pl => pl.Id == id);
+            var fetchedPlaylist = playlistRepo.Get(id);
 
             if (fetchedPlaylist == null)
             {

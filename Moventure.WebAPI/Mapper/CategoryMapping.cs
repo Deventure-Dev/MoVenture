@@ -25,6 +25,10 @@ namespace Moventure.BusinessLogic.Mapper
                 });
 
             CreateMap<CategoryModel, Category>();
+
+            CreateMap<Category, DisplayCategory>()
+                 .ForMember(m => m.Title, opt => opt.MapFrom(m => m.Name));
+                 //.ForMember(m => m.MovieList, opt => opt.Ignore())
         }
     }
 }

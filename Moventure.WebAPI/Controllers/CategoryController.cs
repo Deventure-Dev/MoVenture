@@ -26,7 +26,7 @@ namespace Moventure.WebAPI.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var categoryRepo = new CategoryRepo();
+            var categoryRepo = new CategoryRepo(mMapper);
             var fetchedCategories = categoryRepo.GetAll();
             var categoriesCount = categoryRepo.Count();
 
@@ -49,7 +49,7 @@ namespace Moventure.WebAPI.Controllers
         public ActionResult<CategoryModel> GetById([FromQuery] Guid id)
         {
 
-            var categoryRepo = new CategoryRepo();
+            var categoryRepo = new CategoryRepo(mMapper);
             var fetchedCategory = categoryRepo.GetAll().FirstOrDefault(category => category.Id == id);
 
             if (fetchedCategory == null)
@@ -78,7 +78,7 @@ namespace Moventure.WebAPI.Controllers
 
             var claimsIdentity = User.Identity as ClaimsIdentity;
             categoryToAdd.Savedby = Guid.Parse("06e6c8a6-96e6-40a5-8767-7f4d536a2049"); // User.Claims[0];
-            var categoryRepo = new CategoryRepo();
+            var categoryRepo = new CategoryRepo(mMapper);
             var createdCategory = categoryRepo.Create(categoryToAdd);
 
             if (createdCategory == null)
@@ -100,7 +100,7 @@ namespace Moventure.WebAPI.Controllers
         [HttpDelete]
         public IActionResult Delete([FromQuery] Guid id)
         {
-            var categoryRepo = new CategoryRepo();
+            var categoryRepo = new CategoryRepo(mMapper);
             var fetchedCategory = categoryRepo.GetAll().FirstOrDefault(category => category.Id == id);
 
             if (fetchedCategory == null)
