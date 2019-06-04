@@ -43,7 +43,8 @@ namespace Moventure.BusinessLogic.Repo
             IList<DisplayCategory> mappedCategory = new List<DisplayCategory>();
             var categoryList = GetList(category => category.Status == (int)EntityStatus.ACTIVE, new string[]
                                 {
-                                    $"{nameof(Category.MovieList)}.{nameof(Movie.TagList)}.{nameof(TagsMovieAssignment.Tag)}"
+                                    $"{nameof(Category.MovieList)}.{nameof(Movie.TagList)}.{nameof(TagsMovieAssignment.Tag)}",
+                                    $"{nameof(Category.MovieList)}.{nameof(Movie.ActorList)}.{nameof(MovieActorAssignment.Actor)}"
                                 });
 
             try

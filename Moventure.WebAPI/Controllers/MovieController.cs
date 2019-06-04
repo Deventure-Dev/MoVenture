@@ -32,7 +32,7 @@ namespace Moventure.WebAPI.Controllers
         public ActionResult<Movie> GetAll()
         {
             var movieRepo = new MovieRepo();
-            var fetchedMovies = movieRepo.GetAll(new [] { nameof (Movie.TagList) });
+            var fetchedMovies = movieRepo.GetAll(new [] { $"{nameof(Movie.TagList)}.{nameof(TagsMovieAssignment.Tag)}", $"{nameof(Movie.ActorList)}.{nameof(MovieActorAssignment.Actor)}" });
             var moviesCount = movieRepo.Count();
 
             if (fetchedMovies == null && moviesCount < 0)
@@ -40,7 +40,7 @@ namespace Moventure.WebAPI.Controllers
                 return BadRequest("Fetching movies failed...!");
             }
 
-            var mappedMovies = mMapper.Map<IList<MovieModel>>(fetchedMovies);
+            var mappedMovies = mMapper.Map<IList<DisplayMovie>>(fetchedMovies);
 
             return Ok(new
             {
@@ -54,14 +54,14 @@ namespace Moventure.WebAPI.Controllers
         {
 
             var movieRepo = new MovieRepo();
-            var fetchedMovie = movieRepo.GetAll().FirstOrDefault(movie => movie.Id == id);
+            var fetchedMovie = movieRepo.GetAll(new[] { $"{nameof(Movie.TagList)}.{nameof(TagsMovieAssignment.Tag)}", $"{nameof(Movie.ActorList)}.{nameof(MovieActorAssignment.Actor)}" }).FirstOrDefault(movie => movie.Id == id);
 
             if (fetchedMovie == null)
             {
                 return NotFound("Movie with this id doesn't exist...!");
             }
 
-            var mappedMovie = mMapper.Map<MovieModel>(fetchedMovie);
+            var mappedMovie = mMapper.Map<DisplayMovie>(fetchedMovie);
 
             return Ok(mappedMovie);
         }
@@ -92,6 +92,35 @@ namespace Moventure.WebAPI.Controllers
 
             };
             tagMovieRepo.Create(toAdd);
+
+            return Ok(fetchedMovie);
+        }
+
+        public IActionResult AddActorToMovie([FromQuery] Guid movieId, [FromQuery] Guid actorId)
+        {
+            var movieRepo = new MovieRepo();
+            var actorRepo = new ActorRepo();
+            var fetchedMovie = movieRepo.Get(movieId);
+            if (fetchedMovie == null)
+            {
+                return NotFound("Movie with this id doesn't exist...!");
+            }
+
+            var fetchedActor = actorRepo.Get(actorId);
+            if (fetchedActor == null)
+            {
+                return NotFound("Actor with this id doesn't exist...!");
+            }
+
+
+            var actorMovieRepo = new ActorMovieAssignmentRepo();
+            var toAdd = new MovieActorAssignment()
+            {
+                MovieId = movieId,
+                ActorId = actorId
+
+            };
+            actorMovieRepo.Create(toAdd);
 
             return Ok(fetchedMovie);
         }
