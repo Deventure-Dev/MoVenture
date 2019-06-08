@@ -1,6 +1,7 @@
 ﻿
 @{
     ViewData["Title"] = "MinifiedView";
+    Layout = "_Layout";
 }
 
 <h2>MinifiedView</h2>
@@ -8,26 +9,30 @@
 
 <table id="minified-table" data-bind="foreach: MinifiedMovies">
     <tr>
-        <td data-bind="text: Name"></td>
-        <td data-bind="text: SavedAt"></td>
+        <td data-bind="text: Id"></td>
+        <td data-bind="text: Title"></td>
 
     </tr>
 </table>
 
-<link rel="stylesheet" href="~/js/knockout.js">
-
+<script type="text/javascript" src="~/js/knockout.js"></script>
+<script type="text/javascript" src="~/js/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="~/Scripts/ViewModels/MinifiedMoviesViewModel.js"></script>
 
 @section Scripts{
     <script type="text/javascript">
         var minifiedListViewModel = null;
         $(document).ready(function () {
-            minifiedListViewModel = new MinifiedMoviesListViewModel();
+            var minifiedListViewModel = new MinifiedMoviesListViewModel();
+            console.log(minifiedListViewModel);
 
             ko.applyBindings(minifiedListViewModel, document.getElementById("minified-table"));
 
-            ajaxGet("Movie/GetMoviesByCategories", {}, function (data) {
+            ajaxGet("/Movie/GetMoviesByCategories", {}, function (data) {
                 minifiedListViewModel.init(data);
-            }, function () {
+                console.log("Data", data);
+            }, function (err) {
+                console.log(err);
                 alert("An error occured");
             });
         });

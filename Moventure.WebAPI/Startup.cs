@@ -83,7 +83,7 @@ namespace Moventure.WebAPI
             ServiceProviderHelper.Init(app.ApplicationServices);
 
             app.UseAuthentication();
-
+            app.UseStaticFiles();
             app.UseMvc(routes =>
             {
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");

@@ -6,8 +6,10 @@
 
     self.init = function (categories) {
         var categoriesList = [];
-        for (var i = 0; i < categories.length; i++)
+        console.log(categories,"aici");
+        for (var i = 0; i < categories.data.length; i++)
         {
+            console.log(categories.data[0])
             var categoryVM = new CategoryViewModel();
             var currentCategory = categories[i];
             categoryVM.init(currentCategory.Id, currentCategory.Name,
@@ -17,3 +19,5 @@
         self.Categories(categoriesList);
     }
 }
+
+ko.applyBindings(HomeViewModel, document.getElementById("minified-table"))
