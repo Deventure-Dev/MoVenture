@@ -2,9 +2,10 @@
     var self = this;
     self.Id = ko.observable();
     self.Name = ko.observable();
-    self.MinifiedMovies = ko.observableArray();
+    self.MinifiedMoviesListViewModel = ko.observableArray();
 
     self.init = function (id, name, minifiedMovies) {
+        debugger
         self.Id(id);
         self.Name(name);
 
@@ -13,11 +14,11 @@
         {
             var minifiedVm = new MinifiedMovieViewModel();
             var currentMinifiedMovie = minifiedMovies[i];
-            minifiedVm.init(currentMinifiedMovie.Id, currentMinifiedMovie.Title, currentMinifiedMovie.PictureUrl, currentMinifiedMovie.Rating, currentMinifiedMovie.MainCategory);
+            minifiedVm.init(currentMinifiedMovie.id, currentMinifiedMovie.title, currentMinifiedMovie.pictureUrl, currentMinifiedMovie.rating, currentMinifiedMovie.mainCategory);
             minifiedMovieList.push(minifiedVm);
         }
 
-        self.MinifiedMovies(minifiedMovieList);
+        self.MinifiedMoviesListViewModel(minifiedMovieList);
     }
 
 

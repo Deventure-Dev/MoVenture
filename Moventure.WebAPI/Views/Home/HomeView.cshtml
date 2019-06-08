@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewData["Title"] = "HomeView";
+    Layout = "_Layout";
+}
+
+<h2>HomeView</h2>
+
+
+<table id="minified-table" data-bind="foreach: CategoriesListViewModel">
+    <tr>
+        <td data-bind="text: Name"></td>
+    </tr>
+    <tr data-bind="foreach: MinifiedMoviesListViewModel">
+        <td data-bind="text: Title"></td>
+        <td><img style = "height: 200px; width: 200px;" data-bind="attr: {src: PictureUrl}"/></td>
+        <td data-bind="text: Rating"></td>
+        <td data-bind="text: Tags"></td>
+    </tr>
+</table>
+
+
+
+@section Scripts{
+    <script type="text/javascript" src="~/js/knockout.js"></script>
+    <script type="text/javascript" src="~/js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="~/Scripts/ViewModels/MinifiedMoviesViewModel.js"></script>
+    <script type="text/javascript" src="~/Scripts/ViewModels/CategoriesViewModel.js"></script>
+    <script type="text/javascript" src="~/Scripts/ViewModels/CategoryViewModel.js"></script>
+
+    <script type="text/javascript">
+        var categoryListViewModel = null;
+        $(document).ready(function () {
+            var categoryListViewModel = new CategoriesViewModel();
+            console.log(categoryListViewModel);
+            ko.applyBindings(categoryListViewModel, document.getElementById("minified-table"));
+
+            ajaxGet("/Movie/GetMoviesByCategories", {}, function (data) {
+                categoryListViewModel.init(data);
+                console.log("Data", data);
+            }, function (err) {
+                console.log(err);
+                alert("An error occured");
+            });
+        });
+
+        function ajaxGet(url, postData, successCallback, failureCallBack, context, asyncCall) {
+            $.ajax({
+                url: url,
+                dataType: "json",
+                type: "GET",
+                contentType: 'application/json; charset=utf-8',
+                async: asyncCall === undefined ? true : asyncCall,
+                cache: false,
+                data: postData,
+                success: successCallback,
+                error: failureCallBack,
+                context: context
+            });
+        }
+
+    </script>
+}

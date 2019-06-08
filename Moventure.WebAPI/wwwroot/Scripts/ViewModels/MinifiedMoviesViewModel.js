@@ -1,4 +1,5 @@
 ﻿var MinifiedMovieViewModel = function () {
+    debugger
     var self = this;
     self.Id = ko.observable();
     self.Title = ko.observable();
@@ -17,18 +18,20 @@
     }
 }
 
+
 var MinifiedMoviesListViewModel = function () {
+    debugger
     var self = this;
     self.MinifiedMovies = ko.observableArray();
 
     self.init = function (minifiedMovies) {
         var minifiedMovieList = [];
         console.log(minifiedMovies);
-        for (var i = 0; i < minifiedMovies.data.length; i++)
+        for (var i = 0; i < minifiedMovies.length; i++)
         {
             var minifiedVm = new MinifiedMovieViewModel();
-            var currentMinifiedMovie = minifiedMovies.data[i];
-            minifiedVm.init(currentMinifiedMovie.id, currentMinifiedMovie.movieList[0].title, currentMinifiedMovie.movieList[0].pictureUrl, currentMinifiedMovie.movieList[0].rating, currentMinifiedMovie.movieList[0].mainCategory);
+            var currentMinifiedMovie = minifiedMovies[i];
+            minifiedVm.init(currentMinifiedMovie.id, currentMinifiedMovie.title, currentMinifiedMovie.pictureUrl, currentMinifiedMovie.rating, currentMinifiedMovie.mainCategory);
             minifiedMovieList.push(minifiedVm);
         }
         self.MinifiedMovies(minifiedMovieList);

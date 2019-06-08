@@ -10,7 +10,7 @@ namespace Moventure.WebAPI.Controllers
     {
         public IActionResult Index()
         {
-            return View("MinifiedView");
+            return View("HomeView");
         }
     }
 }
