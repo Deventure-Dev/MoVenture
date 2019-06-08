@@ -2,7 +2,7 @@
 
 namespace Moventure.DataLayer.Models
 {
-    public class MovieActorAssignment
+    public partial class MovieActorAssignment
     {
         public Guid ActorId { get; set; }
         public Guid MovieId { get; set; }

@@ -18,6 +18,7 @@ namespace Moventure.BusinessLogic.Mapper
                 .AfterMap((source, destination) =>
                 {
                     destination.CreatedBy = "Silviu";
+
                 });
             CreateMap<MovieModel, Movie>();
 
@@ -32,12 +33,26 @@ namespace Moventure.BusinessLogic.Mapper
                     }
 
                     foreach (var assignment in source.TagList)
-                    {
+                    { 
                         if (assignment.Tag == null)
                         {
                             continue;
                         }
                         destination.Tags.Add(assignment.Tag.Name);
+                    }
+
+                    if (source.ActorList == null || source.ActorList.Count == 0)
+                    {
+                        return;
+                    }
+
+                    foreach (var assignment in source.ActorList)
+                    {
+                        if (assignment.Actor == null)
+                        {
+                            continue;
+                        }
+                        destination.Actors.Add(assignment.Actor.FirstName);
                     }
                 });
         }

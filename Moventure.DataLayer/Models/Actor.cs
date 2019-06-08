@@ -10,6 +10,9 @@ namespace Moventure.DataLayer.Models
         public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+
+        public string Bio { get; set; }
+
         public int Status { get; set; }
         public DateTime SavedAt { get; set; }
         public virtual ICollection<MovieActorAssignment> MovieList { get; set; }

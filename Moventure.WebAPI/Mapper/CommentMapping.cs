@@ -11,8 +11,14 @@ namespace Moventure.BusinessLogic.Mapper
     {
         public CommentMapping()
         {
-            CreateMap<Moventure.BusinessLogic.Models.Comment, Comment>();
-            CreateMap<Comment, Moventure.BusinessLogic.Models.Comment>();
+            CreateMap<Moventure.BusinessLogic.Models.CommentModel, Comment>()
+                            .BeforeMap((source, destination) =>
+                             {
+                             })
+                .ForMember(m => m.SavedAtMovie, opt => opt.Ignore())
+                .ForMember(m => m.SavedByNavigation, opt => opt.Ignore());
+
+            CreateMap<Comment, Moventure.BusinessLogic.Models.CommentModel>();
         }
     }
 }
