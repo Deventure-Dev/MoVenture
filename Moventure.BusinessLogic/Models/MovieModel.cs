@@ -11,6 +11,7 @@ namespace Moventure.BusinessLogic.Models
         public string TrailerUrl { get; set; }
         public int Status { get; set; }
         public DateTime SavedAt { get; set; }
+        public string CategoryName { get; set; }
 
         public ICollection<ActorModel> Actors { get; set; }
         public ICollection<Comment> Comments { get; set; }

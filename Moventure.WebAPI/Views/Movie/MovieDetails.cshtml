@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewData["Title"] = "MovieDetails";
+    Layout = "_Layout";
+}
+
+<script type="text/javascript" src="~/js/knockout.js"></script>
+<script type="text/javascript" src="~/js/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="~/Scripts/ViewModels/MovieDetailsViewModel.js"></script>
+
+
+<h2>MovieDetails</h2>
+
+<!--<div id="detailsContent">
+    <div class="movieDetails">
+        <div class="router">
+            <p>Details</p>
+            <p>Rating</p>
+            <p>Cast</p>
+        </div>
+        <div class="details">
+            <h1 data-bind="text: Title"></h1>
+            <table id="tags-table" data-bind="foreach: Tags">
+                <tr>
+                    <td data-bind="text: Name"></td>
+                </tr>
+            </table>
+            <h2 data-bind="text: Description"></h2>
+        </div>
+    </div>
+</div>-->
+
+<div id="detailsContent" style="background-color:red">
+    <table id="minified-table" data-bind="foreach: FetchedMovie">
+        <tr>
+            <td data-bind="text: Id"></td>
+            <td data-bind="text: Title"></td>
+        </tr>
+    </table>
+</div>
+
+
+@section Scripts{
+    <script type="text/javascript">
+        var movieDetailsViewModel = null;
+        $(document).ready(function () {
+            movieDetailsViewModel = new MovieDetailsViewModel();
+            ko.applyBindings(movieDetailsViewModel, document.getElementById("detailsContent"));
+            ajaxGet("/Movie/GetById?id=43cfb413-4c40-4d5c-96d6-3b0d4863dbb7", {}, function (data) {
+                movieDetailsViewModel.init(data);
+            }, function (err) {
+                alert("An error occured");
+                console.log("ERR", err);
+            });
+        });
+
+        function ajaxGet(url, postData, successCallback, failureCallBack, context, asyncCall) {
+            $.ajax({
+                url: url,
+                dataType: "json",
+                type: "GET",
+                contentType: 'application/json; charset=utf-8',
+                async: asyncCall === undefined ? true : asyncCall,
+                cache: false,
+                data: postData,
+                success: successCallback,
+                error: failureCallBack,
+                context: context
+            });
+        }
+
+    </script>
+}
+
