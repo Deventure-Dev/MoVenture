@@ -4,14 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Moventure.BusinessLogic.Models;
 //using Moventure.BusinessLogic.Models;
 using Moventure.BusinessLogic.Repo;
 using Moventure.DataLayer.Models;
 
 namespace Moventure.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class CommentController : ControllerBase
     {
         
@@ -23,7 +22,7 @@ namespace Moventure.WebAPI.Controllers
         }
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<Comment>> Get()
+        public IActionResult GetAll()
         {
             var commentRepo = new CommentRepo();
             var fetchedComments = commentRepo.GetAll();
@@ -33,8 +32,8 @@ namespace Moventure.WebAPI.Controllers
             {
                 return BadRequest("Fetching comments failed...!");
             }
-
-            var mappedComments = mMapper.Map<Comment>(fetchedComments);
+            
+            var mappedComments = mMapper.Map<IList<CommentModel>>(fetchedComments);
 
             return Ok(new {
                 Comments = mappedComments,
@@ -43,29 +42,48 @@ namespace Moventure.WebAPI.Controllers
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<Comment> Get(Guid id)
+        [HttpGet]
+        public ActionResult<CommentModel> GetById([FromQuery] Guid commentId)
         {
            
             var commentRepo = new CommentRepo();
-            var fetchedComment = commentRepo.GetAll().FirstOrDefault(comment => comment.Id == id);
+            var fetchedComment = commentRepo.GetAll().FirstOrDefault(comment => comment.Id == commentId);
 
             if (fetchedComment == null)
             {
                 return BadRequest("Fetching comment failed...!");
             }
 
-            var mappedComment = mMapper.Map<Comment>(fetchedComment);
+            var mappedComment = mMapper.Map<CommentModel>(fetchedComment);
 
             return Ok(mappedComment);
         }
 
         // POST api/values
         [HttpPost]
-        public IActionResult Post(Comment comment)
+        public IActionResult Create([FromQuery] Guid movieId, [FromBody] CommentModel comment)
         {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("invalid input!");
+            }
+
+            var movieRepo = new MovieRepo();
+
+            var fetchedMovie = movieRepo.Get(movieId);
+
+            if(fetchedMovie == null)
+            {
+                return BadRequest("Sorry this movie doesn't exist...");
+            }
+
             var commentRepo = new CommentRepo();
-            var mappedComment = mMapper.Map<Comment>(comment);
+            var mappedComment = mMapper.Map<DataLayer.Models.Comment>(comment);
+            //mappedComment.SavedAtMovie = fetchedMovie;
+            mappedComment.Id = new Guid();
+            mappedComment.Status = (int)EntityStatus.ACTIVE;
+            mappedComment.SavedAt = DateTime.UtcNow;
             var createdComment = commentRepo.Create(mappedComment);
 
             if (createdComment == null)

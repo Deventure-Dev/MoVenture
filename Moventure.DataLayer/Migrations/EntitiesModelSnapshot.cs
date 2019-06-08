@@ -190,11 +190,11 @@ namespace Moventure.DataLayer.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Bio");
+
                     b.Property<string>("FirstName");
 
                     b.Property<string>("LastName");
-
-                    b.Property<string>("PictureUrl");
 
                     b.Property<DateTime>("SavedAt");
 

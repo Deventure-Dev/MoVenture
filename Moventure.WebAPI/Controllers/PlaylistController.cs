@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
+using Deventure.Common.Enums;
 using Microsoft.AspNetCore.Mvc;
+using Moventure.BusinessLogic.Models;
 //using Moventure.BusinessLogic.Models;
 using Moventure.BusinessLogic.Repo;
 using Moventure.DataLayer.Models;
 
 namespace Moventure.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class PlaylistController : ControllerBase
     {
 
@@ -24,7 +25,7 @@ namespace Moventure.WebAPI.Controllers
 
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<Playlist>> Get()
+        public IActionResult GetAll()
         {
             var playlistRepo = new PlaylistRepo();
             var fetchedPlaylists = playlistRepo.GetAll();
@@ -35,7 +36,7 @@ namespace Moventure.WebAPI.Controllers
                 return BadRequest("Fetching playlists failed...!");
             }
 
-            var mappedPlaylists = mMapper.Map<Playlist>(fetchedPlaylists);
+            var mappedPlaylists = mMapper.Map<IList<PlaylistModel>>(fetchedPlaylists);
 
             return Ok(new
             {
@@ -46,40 +47,44 @@ namespace Moventure.WebAPI.Controllers
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<Playlist> Get(Guid id)
+        [HttpGet]
+        public ActionResult<Playlist> GetById([FromQuery] Guid playlistId)
         {
             var playlistRepo = new PlaylistRepo();
-            var fetchedPlaylist = playlistRepo.Get(id);
+            var fetchedPlaylist = playlistRepo.Get(playlistId);
 
             if (fetchedPlaylist == null)
             {
                 return BadRequest("Fetching playlist failed...!");
             }
 
-            var mappedPlaylist = mMapper.Map<Playlist>(fetchedPlaylist);
+            var mappedPlaylist = mMapper.Map<PlaylistModel>(fetchedPlaylist);
 
             return Ok(mappedPlaylist);
         }
 
         // POST api/values
         [HttpPost]
-        public ActionResult Post([FromBody] Playlist playlist)
+        public ActionResult Create([FromBody] PlaylistModel playlist)
         {
-            var playlistToAdd = new Playlist
+            if (!ModelState.IsValid)
             {
-                Id = new Guid(),
-                Name = playlist.Name,
-                SavedAt = DateTime.UtcNow
-               
-            };
+                return BadRequest("invalid input!");
+            }
 
-            var playlistRep = new PlaylistRepo();
-            var createdPlaylist = playlistRep.Create(playlistToAdd);
+            var playlistToAdd = mMapper.Map<DataLayer.Models.Playlist>(playlist);
+            playlistToAdd.SavedAt = DateTime.UtcNow;
+
+
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+
+            //tagToAdd.SavedBy = Guid.Parse("06e6c8a6-96e6-40a5-8767-7f4d536a2049"); // User.Claims[0];
+            var playlistRepo = new PlaylistRepo();
+            var createdPlaylist = playlistRepo.Create(playlistToAdd);
 
             if (createdPlaylist == null)
             {
-                return BadRequest("Creating playlist failed...!");
+                return BadRequest("Failed to create playlist");
             }
 
             return Ok(createdPlaylist);

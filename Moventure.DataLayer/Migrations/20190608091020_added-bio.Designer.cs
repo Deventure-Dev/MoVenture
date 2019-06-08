@@ -10,8 +10,8 @@ using Moventure.DataLayer.Context;
 namespace Moventure.DataLayer.Migrations
 {
     [DbContext(typeof(Entities))]
-    [Migration("20190527155203_test me")]
-    partial class testme
+    [Migration("20190608091020_added-bio")]
+    partial class addedbio
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -192,6 +192,8 @@ namespace Moventure.DataLayer.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Bio");
+
                     b.Property<string>("FirstName");
 
                     b.Property<string>("LastName");
@@ -281,7 +283,7 @@ namespace Moventure.DataLayer.Migrations
                     b.ToTable("Movies");
                 });
 
-            modelBuilder.Entity("Moventure.DataLayer.Models.MovieActorIntermediate", b =>
+            modelBuilder.Entity("Moventure.DataLayer.Models.MovieActorAssignment", b =>
                 {
                     b.Property<Guid>("ActorId");
 
@@ -291,33 +293,7 @@ namespace Moventure.DataLayer.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("MovieActorIntermediate");
-                });
-
-            modelBuilder.Entity("Moventure.DataLayer.Models.MoviePlaylistIntermediate", b =>
-                {
-                    b.Property<Guid>("PlaylistId");
-
-                    b.Property<Guid>("MovieId");
-
-                    b.HasKey("PlaylistId", "MovieId");
-
-                    b.HasIndex("MovieId");
-
-                    b.ToTable("MoviePlaylistIntermediate");
-                });
-
-            modelBuilder.Entity("Moventure.DataLayer.Models.MovieTagIntermediate", b =>
-                {
-                    b.Property<Guid>("TagId");
-
-                    b.Property<Guid>("MovieId");
-
-                    b.HasKey("TagId", "MovieId");
-
-                    b.HasIndex("MovieId");
-
-                    b.ToTable("MovieTagIntermediate");
+                    b.ToTable("MovieActorAssignment");
                 });
 
             modelBuilder.Entity("Moventure.DataLayer.Models.Playlist", b =>
@@ -338,6 +314,19 @@ namespace Moventure.DataLayer.Migrations
                     b.ToTable("Playlists");
                 });
 
+            modelBuilder.Entity("Moventure.DataLayer.Models.PlaylistMovieAssignment", b =>
+                {
+                    b.Property<Guid>("PlaylistId");
+
+                    b.Property<Guid>("MovieId");
+
+                    b.HasKey("PlaylistId", "MovieId");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("PlaylistMovieAssignment");
+                });
+
             modelBuilder.Entity("Moventure.DataLayer.Models.Tag", b =>
                 {
                     b.Property<Guid>("Id")
@@ -356,6 +345,19 @@ namespace Moventure.DataLayer.Migrations
                     b.HasIndex("SavedById");
 
                     b.ToTable("Tags");
+                });
+
+            modelBuilder.Entity("Moventure.DataLayer.Models.TagsMovieAssignment", b =>
+                {
+                    b.Property<Guid>("TagId");
+
+                    b.Property<Guid>("MovieId");
+
+                    b.HasKey("TagId", "MovieId");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("TagsMovieAssignment");
                 });
 
             modelBuilder.Entity("Moventure.DataLayer.Models.User", b =>
@@ -447,7 +449,7 @@ namespace Moventure.DataLayer.Migrations
                         .HasForeignKey("SavedById");
                 });
 
-            modelBuilder.Entity("Moventure.DataLayer.Models.MovieActorIntermediate", b =>
+            modelBuilder.Entity("Moventure.DataLayer.Models.MovieActorAssignment", b =>
                 {
                     b.HasOne("Moventure.DataLayer.Models.Actor", "Actor")
                         .WithMany("MovieList")
@@ -460,7 +462,14 @@ namespace Moventure.DataLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Moventure.DataLayer.Models.MoviePlaylistIntermediate", b =>
+            modelBuilder.Entity("Moventure.DataLayer.Models.Playlist", b =>
+                {
+                    b.HasOne("Moventure.DataLayer.Models.User", "User")
+                        .WithMany("Playlists")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Moventure.DataLayer.Models.PlaylistMovieAssignment", b =>
                 {
                     b.HasOne("Moventure.DataLayer.Models.Movie", "Movie")
                         .WithMany("PlaylistList")
@@ -473,7 +482,14 @@ namespace Moventure.DataLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Moventure.DataLayer.Models.MovieTagIntermediate", b =>
+            modelBuilder.Entity("Moventure.DataLayer.Models.Tag", b =>
+                {
+                    b.HasOne("Moventure.DataLayer.Models.User", "SavedBy")
+                        .WithMany()
+                        .HasForeignKey("SavedById");
+                });
+
+            modelBuilder.Entity("Moventure.DataLayer.Models.TagsMovieAssignment", b =>
                 {
                     b.HasOne("Moventure.DataLayer.Models.Movie", "Movie")
                         .WithMany("TagList")
@@ -484,20 +500,6 @@ namespace Moventure.DataLayer.Migrations
                         .WithMany("MovieList")
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Moventure.DataLayer.Models.Playlist", b =>
-                {
-                    b.HasOne("Moventure.DataLayer.Models.User", "User")
-                        .WithMany("Playlists")
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("Moventure.DataLayer.Models.Tag", b =>
-                {
-                    b.HasOne("Moventure.DataLayer.Models.User", "SavedBy")
-                        .WithMany()
-                        .HasForeignKey("SavedById");
                 });
 #pragma warning restore 612, 618
         }

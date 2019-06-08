@@ -14,6 +14,6 @@ namespace Moventure.BusinessLogic.Models
 
         public ICollection<ActorModel> Actors { get; set; }
         public ICollection<Comment> Comments { get; set; }
-        public ICollection<Playlist> Playlists { get; set; }
+        public ICollection<PlaylistModel> Playlists { get; set; }
     }
 }

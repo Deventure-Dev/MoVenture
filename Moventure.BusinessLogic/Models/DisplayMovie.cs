@@ -18,6 +18,7 @@ namespace Moventure.BusinessLogic.Models
         public double Rating { get; set; }
         public string PictureUrl { get; set; }
         public string Title { get; set; }
+        public string CategoryName { get; set; }
         public ICollection<string> Tags { get; set; }
         public ICollection<string> Actors { get; set; }
     }

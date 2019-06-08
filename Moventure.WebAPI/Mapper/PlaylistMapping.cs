@@ -10,8 +10,8 @@ namespace Moventure.BusinessLogic.Mapper
     {
         public PlaylistMapping()
         {
-            CreateMap< Moventure.BusinessLogic.Models.Playlist, Playlist >();
-            CreateMap<Playlist, Moventure.BusinessLogic.Models.Playlist> ();
+            CreateMap< Moventure.BusinessLogic.Models.PlaylistModel, Playlist >();
+            CreateMap<Playlist, Moventure.BusinessLogic.Models.PlaylistModel> ();
         }
     }
 }

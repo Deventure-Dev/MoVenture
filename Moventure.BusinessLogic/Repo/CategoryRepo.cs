@@ -10,6 +10,11 @@ namespace Moventure.BusinessLogic.Repo
     public class CategoryRepo : BaseSinglePkRepository<Category>
     {
         private readonly IMapper mMapper;
+        
+        public CategoryRepo()
+        {
+
+        }
         public CategoryRepo(IMapper mapper)
         {
             mMapper = mapper;

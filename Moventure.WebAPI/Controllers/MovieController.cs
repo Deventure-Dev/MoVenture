@@ -32,7 +32,11 @@ namespace Moventure.WebAPI.Controllers
         public ActionResult<Movie> GetAll()
         {
             var movieRepo = new MovieRepo();
-            var fetchedMovies = movieRepo.GetAll(new [] { $"{nameof(Movie.TagList)}.{nameof(TagsMovieAssignment.Tag)}", $"{nameof(Movie.ActorList)}.{nameof(MovieActorAssignment.Actor)}" });
+            var fetchedMovies = movieRepo.GetList(movie => movie.Status == (int)EntityStatus.ACTIVE, new [] 
+                                {
+                                    $"{nameof(Movie.TagList)}.{nameof(TagsMovieAssignment.Tag)}",
+                                    $"{nameof(Movie.ActorList)}.{nameof(MovieActorAssignment.Actor)}"
+                                });
             var moviesCount = movieRepo.Count();
 
             if (fetchedMovies == null && moviesCount < 0)
@@ -127,12 +131,16 @@ namespace Moventure.WebAPI.Controllers
 
         // POST api/values
         [HttpPost]
-        public IActionResult Create([FromBody] MovieModel movie)
+        public IActionResult Create([FromBody] DisplayMovie movie)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest("invalid input!");
             }
+
+            var categoryRepo = new CategoryRepo();
+            var fetchedCategory = categoryRepo.GetAll();
+            
 
             var movieToAdd = mMapper.Map<Movie>(movie);
             movieToAdd.Status = (int)EntityStatus.ACTIVE;
