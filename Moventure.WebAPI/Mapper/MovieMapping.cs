@@ -21,6 +21,7 @@ namespace Moventure.BusinessLogic.Mapper
 
                 });
             CreateMap<MovieModel, Movie>();
+      
 
             CreateMap<Movie, DisplayMovie>()
                 .ForMember(m => m.Tags, opt => opt.Ignore())

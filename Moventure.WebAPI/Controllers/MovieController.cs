@@ -14,7 +14,7 @@ using Moventure.DataLayer.Models;
 namespace Moventure.WebAPI.Controllers
 {
 
-    public class MovieController : ControllerBase
+    public class MovieController : Controller
     {
         private static DateTime today = DateTime.Today;
 
@@ -23,6 +23,11 @@ namespace Moventure.WebAPI.Controllers
         public MovieController(IMapper mapper)
         {
             mMapper = mapper;
+        }
+
+        public IActionResult Index()
+        {
+            return View("MovieDetails");
         }
 
         #region WEBAPI specific
@@ -35,7 +40,8 @@ namespace Moventure.WebAPI.Controllers
             var fetchedMovies = movieRepo.GetList(movie => movie.Status == (int)EntityStatus.ACTIVE, new [] 
                                 {
                                     $"{nameof(Movie.TagList)}.{nameof(TagsMovieAssignment.Tag)}",
-                                    $"{nameof(Movie.ActorList)}.{nameof(MovieActorAssignment.Actor)}"
+                                    $"{nameof(Movie.ActorList)}.{nameof(MovieActorAssignment.Actor)}",
+                                    $"{nameof(Movie.Category)}"
                                 });
             var moviesCount = movieRepo.Count();
 
@@ -54,18 +60,22 @@ namespace Moventure.WebAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<MovieModel> GetById([FromQuery] Guid id)
+        public ActionResult<DisplayMovie> GetById([FromQuery] Guid id)
         {
-
+            //movie => movie.Status == (int)EntityStatus.ACTIVE
             var movieRepo = new MovieRepo();
-            var fetchedMovie = movieRepo.GetAll(new[] { $"{nameof(Movie.TagList)}.{nameof(TagsMovieAssignment.Tag)}", $"{nameof(Movie.ActorList)}.{nameof(MovieActorAssignment.Actor)}" }).FirstOrDefault(movie => movie.Id == id);
-
+            var fetchedMovie = movieRepo.GetList(movie => movie.Id == id, new[]
+                                {
+                                    $"{nameof(Movie.TagList)}.{nameof(TagsMovieAssignment.Tag)}",
+                                    $"{nameof(Movie.ActorList)}.{nameof(MovieActorAssignment.Actor)}",
+                                    $"{nameof(Movie.Category)}"
+                                });
             if (fetchedMovie == null)
             {
                 return NotFound("Movie with this id doesn't exist...!");
             }
 
-            var mappedMovie = mMapper.Map<DisplayMovie>(fetchedMovie);
+            var mappedMovie = mMapper.Map<IList<DisplayMovie>>(fetchedMovie);
 
             return Ok(mappedMovie);
         }
@@ -131,7 +141,7 @@ namespace Moventure.WebAPI.Controllers
 
         // POST api/values
         [HttpPost]
-        public IActionResult Create([FromBody] DisplayMovie movie)
+        public IActionResult Create([FromBody] MovieModel movie)
         {
             if (!ModelState.IsValid)
             {
@@ -139,7 +149,12 @@ namespace Moventure.WebAPI.Controllers
             }
 
             var categoryRepo = new CategoryRepo();
-            var fetchedCategory = categoryRepo.GetAll();
+            var fetchedCategory = categoryRepo.GetAll().FirstOrDefault(c => c.Name == movie.CategoryName);
+
+            if (fetchedCategory == null)
+            {
+                return BadRequest("This category doesn't exit!");
+            }
             
 
             var movieToAdd = mMapper.Map<Movie>(movie);

@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewData["Title"] = "MovieDetails";
+}
+
+<link rel="stylesheet" type="text/css" href="~/css/movie-details.css">
+<link rel="stylesheet" href="~/js/knockout.js">
+
+<h2>MovieDetails</h2>
+
+<div class="detailsContent">
+    <div class="movieImage">
+        <h3 data-bind="text: PictureUrl"></h3>
+    </div>
+    <div class="movieDetails">
+        <div class="router">
+            <p>Details</p>
+            <p>Rating</p>
+            <p>Cast</p>
+        </div>
+        <div class="details">
+            <h1 data-bind="text: Title"></h1>
+            <table id="tags-table" data-bind="foreach: Tags">
+                <tr>
+                    <td data-bind="text: Name"></td>
+                </tr>
+            </table>
+            <h2 data-bind="text: Description"></h2>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        var movieDetailsViewModel = null;
+        $(document).ready(function () {
+            movieDetailsViewModel = new MovieDetailsViewModel();
+
+            ko.applyBindings(minifiedListViewModel, document.getElementById("minified-table"));
+
+            ajaxGet("Movie/GetMoviesByCategories", {}, function (data) {
+                minifiedListViewModel.init(data);
+            }, function () {
+                alert("An error occured");
+            });
+        });
+
+        function ajaxGet(url, postData, successCallback, failureCallBack, context, asyncCall) {
+            $.ajax({
+                url: url,
+                dataType: "json",
+                type: "GET",
+                contentType: 'application/json; charset=utf-8',
+                async: asyncCall === undefined ? true : asyncCall,
+                cache: false,
+                data: postData,
+                success: successCallback,
+                error: failureCallBack,
+                context: context
+            });
+        }
+
+    </script>
+}
+
