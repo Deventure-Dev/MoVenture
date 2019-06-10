@@ -2,6 +2,139 @@
 
 }
 
-.movieDetails {
-    background-color: red;
+.movie {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 50%;
 }
+
+.header {
+    height: 56px;
+    background-color: #0f1954;
+}
+
+.header-title {
+    margin: auto;
+    width: 156px;
+    height: 35px;
+    font-size: 24px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.21;
+    letter-spacing: normal;
+    text-align: left;
+    color: #ffffff;
+}
+
+.footer {
+    height: 56px;
+    background-color: #004191;
+}
+
+.movie-details {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 80%;
+    width: inherit;
+}
+
+.image-content {
+    padding: 25px;
+}
+
+.routing {
+    padding: 25px;
+}
+
+.routing ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.routing li {
+    float: left;
+    margin-right: 5px;
+    border-bottom: 2px solid blue;
+}
+
+.routing li a {
+  display: block;
+  color: cornflowerblue;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.title {
+    width: 186px;
+    height: 42px;
+    font-size: 36px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.17;
+    letter-spacing: normal;
+    text-align: left;
+    color: #004191;
+}
+
+.tags {
+    width: 132px;
+    height: 21px;
+    font-size: 18px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.17;
+    letter-spacing: normal;
+    text-align: left;
+    color: #004191;
+}
+
+.rating {
+    width: 23px;
+    height: 19px;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.19;
+    letter-spacing: normal;
+    text-align: left;
+    color: #ffc400;
+}
+
+.description {
+    width: 339px;
+    height: 111px;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.13;
+    letter-spacing: normal;
+    text-align: left;
+    color: #004191;
+}
+
+.screen-title {
+    width: 101px;
+    height: 21px;
+    font-size: 18px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-align: left;
+    color: #004191;
+}
+
+
+

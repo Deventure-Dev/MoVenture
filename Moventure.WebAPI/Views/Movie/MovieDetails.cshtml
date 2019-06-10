@@ -7,36 +7,47 @@
 <script type="text/javascript" src="~/js/knockout.js"></script>
 <script type="text/javascript" src="~/js/jquery-3.3.1.js"></script>
 <script type="text/javascript" src="~/Scripts/ViewModels/MovieDetailsViewModel.js"></script>
+<link rel="stylesheet" type="text/css" href="~/css/movie-details.css" media="screen" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/knockout/2.2.1/knockout-min.js"></script>
 
-
-<h2>MovieDetails</h2>
-
-<!--<div id="detailsContent">
-    <div class="movieDetails">
-        <div class="router">
-            <p>Details</p>
-            <p>Rating</p>
-            <p>Cast</p>
+<div id="content" style="display: flex; flex-flow: column wrap; font-weight: bold; text-align: center;">
+    <header class="header">
+        <p class="header-title">MOVENTURE</p>
+    </header>
+    <div class="movie">
+        <div class="image-content">
+            <!--<img class="image-url" style="width: 299px; height: 550px; border-radius: 15px; border: solid 1px #f0f0f0" data-bind="attr: {src: FetchedMovie().PictureUrl}" />-->
         </div>
-        <div class="details">
-            <h1 data-bind="text: Title"></h1>
-            <table id="tags-table" data-bind="foreach: Tags">
-                <tr>
-                    <td data-bind="text: Name"></td>
-                </tr>
-            </table>
-            <h2 data-bind="text: Description"></h2>
+        <div class="movie-details">
+            <div class="routing">
+                <ul data-bind="foreach: self.routes">
+                    <li data-bind="text: $data" style="color: black;"></li>
+                </ul>
+            </div>
+            <div class="details">
+                <h2 class="title" data-bind="text: FetchedMovie().Title"></h2>
+                <h2 class="tags" data-bind="text: FetchedMovie().Tags"></h2>
+                <h2 class="rating" data-bind="text: FetchedMovie().Rating"></h2>
+                <h2 class="description">
+                    This is description
+                    Of movie
+                    Lets do it
+                    hahahaha
+                    hahahaS
+                </h2>
+                <h1 class="screen-title">Screenshots</h1>
+                <div class="screnshots">
+                    <!--<img class="image-url-screen" style="width: 100px; height: 100px; border-radius: 15px;" data-bind="attr: {src: FetchedMovie().PictureUrl}" />
+    <img class="image-url-screen" style="width: 100px; height: 100px; border-radius: 15px; " data-bind="attr: {src: FetchedMovie().PictureUrl}" />
+    <img class="image-url-screen" style="width: 100px; height: 100px; border-radius: 15px; " data-bind="attr: {src: FetchedMovie().PictureUrl}" />
+    <img class="image-url-screen" style="width: 100px; height: 100px; border-radius: 15px; " data-bind="attr: {src: FetchedMovie().PictureUrl}" />-->
+                </div>
+            </div>
         </div>
     </div>
-</div>-->
+    <footer class="footer">
 
-<div id="detailsContent" style="background-color:red">
-    <table id="minified-table" data-bind="foreach: FetchedMovie">
-        <tr>
-            <td data-bind="text: Id"></td>
-            <td data-bind="text: Title"></td>
-        </tr>
-    </table>
+    </footer>
 </div>
 
 
@@ -45,13 +56,14 @@
         var movieDetailsViewModel = null;
         $(document).ready(function () {
             movieDetailsViewModel = new MovieDetailsViewModel();
-            ko.applyBindings(movieDetailsViewModel, document.getElementById("detailsContent"));
+            ko.applyBindings(movieDetailsViewModel, document.getElementById("content"));
             ajaxGet("/Movie/GetById?id=43cfb413-4c40-4d5c-96d6-3b0d4863dbb7", {}, function (data) {
+                console.log("FROM GET", data)
                 movieDetailsViewModel.init(data);
             }, function (err) {
                 alert("An error occured");
                 console.log("ERR", err);
-            });
+                });
         });
 
         function ajaxGet(url, postData, successCallback, failureCallBack, context, asyncCall) {
