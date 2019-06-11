@@ -4,21 +4,28 @@
     Layout = "_Layout";
 }
 
-<h2>HomeView</h2>
+<div class="category-container" data-bind="foreach: CategoriesListViewModel" id="minified">
+    <div class="category-item">
+        <div class="category-name">
+            <span data-bind="text: Name"></span>
+        </div>
+        <div class="movie-items" data-bind="foreach: MinifiedMoviesListViewModel">
+            <div class="movie-item">
+                <img class="item-photo" alt="movie-photo" data-bind="attr: {src: PictureUrl}" />
+                <div class="item-rating">
+                    <img class="photo-star" />
+                    <span data-bind="text: Rating"></span>
+                </div>
+                <span data-bind="text: Tags"></span>
+                @*<span data-bind="text: Actors"></span>*@
+                <span data-bind="text: Title"></span>
 
+            </div>
+        </div>
+    </div>
+</div>
 
-<table id="minified-table" data-bind="foreach: CategoriesListViewModel">
-    <tr>
-        <td data-bind="text: Name"></td>
-    </tr>
-    <tr data-bind="foreach: MinifiedMoviesListViewModel">
-        <td data-bind="text: Title"></td>
-        <td><img style = "height: 200px; width: 200px;" data-bind="attr: {src: PictureUrl}"/></td>
-        <td data-bind="text: Rating"></td>
-        <td data-bind="text: Tags"></td>
-        <td data-bind="text: Actors"></td>
-    </tr>
-</table>
+<link rel="stylesheet" type="text/css" href="~/css/home.css" media="screen" />
 
 
 
@@ -34,7 +41,7 @@
         $(document).ready(function () {
             var categoryListViewModel = new CategoriesViewModel();
             console.log(categoryListViewModel);
-            ko.applyBindings(categoryListViewModel, document.getElementById("minified-table"));
+            ko.applyBindings(categoryListViewModel, document.getElementById("minified"));
 
             ajaxGet("/Movie/GetMoviesByCategories", {}, function (data) {
                 categoryListViewModel.init(data);

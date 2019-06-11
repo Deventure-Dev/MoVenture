@@ -1,6 +1,5 @@
 ﻿var MinifiedMovieViewModel = function () {
-    debugger
-    var self = this;
+   var self = this;
     self.Id = ko.observable();
     self.Title = ko.observable();
     self.PictureUrl = ko.observable();

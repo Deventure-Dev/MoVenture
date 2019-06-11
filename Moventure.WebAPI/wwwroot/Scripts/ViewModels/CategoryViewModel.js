@@ -5,7 +5,6 @@
     self.MinifiedMoviesListViewModel = ko.observableArray();
 
     self.init = function (id, name, minifiedMovies) {
-        debugger
         self.Id(id);
         self.Name(name);
 
