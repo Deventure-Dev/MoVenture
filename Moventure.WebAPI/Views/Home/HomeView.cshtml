@@ -4,26 +4,41 @@
     Layout = "_Layout";
 }
 
-<div class="category-container" data-bind="foreach: CategoriesListViewModel" id="minified">
-    <div class="category-item">
-        <div class="category-name">
-            <span data-bind="text: Name"></span>
-        </div>
-        <div class="movie-items" data-bind="foreach: MinifiedMoviesListViewModel">
-            <div class="movie-item">
-                <img class="item-photo" alt="movie-photo" data-bind="attr: {src: PictureUrl}" />
-                <div class="item-rating">
-                    <img class="photo-star" />
-                    <span data-bind="text: Rating"></span>
-                </div>
-                <span data-bind="text: Tags"></span>
-                @*<span data-bind="text: Actors"></span>*@
-                <span data-bind="text: Title"></span>
 
+<!-- For routing partial views -->
+<div id="view">
+    <p>Loading...</p>
+</div>
+
+<!-- Partial Inline Views -->
+<!-- Home View -->
+<div id="home_html">
+    <div class="category-container" data-bind="foreach: CategoriesListViewModel" id="minified">
+        <div class="category-item">
+            <div class="category-name">
+                <span data-bind="text: Name"></span>
+            </div>
+            <div class="movie-items" data-bind="foreach: MinifiedMoviesListViewModel">
+                <div class="movie-item">
+                    <img class="item-photo" alt="movie-photo" data-bind="attr: {src: PictureUrl}" />
+                    <div class="item-rating">
+                        <img class="photo-star" />
+                        <span data-bind="text: Rating"></span>
+                    </div>
+                    <span data-bind="text: Tags"></span>
+                    @*<span data-bind="text: Actors"></span>*@
+                    <span data-bind="text: Title"></span>
+
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<div id="details">
+
+</div>
+
 
 <link rel="stylesheet" type="text/css" href="~/css/home.css" media="screen" />
 
@@ -32,6 +47,8 @@
 @section Scripts{
     <script type="text/javascript" src="~/js/knockout.js"></script>
     <script type="text/javascript" src="~/js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="~/js/sammy.js"></script>
+    <script type="text/javascript" src="~/Scripts/ViewModels/mainViewModel.js"></script>
     <script type="text/javascript" src="~/Scripts/ViewModels/MinifiedMoviesViewModel.js"></script>
     <script type="text/javascript" src="~/Scripts/ViewModels/CategoriesViewModel.js"></script>
     <script type="text/javascript" src="~/Scripts/ViewModels/CategoryViewModel.js"></script>
