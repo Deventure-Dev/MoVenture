@@ -41,9 +41,11 @@
     width: inherit;
 }
 
+
 .image-content {
     padding: 25px;
 }
+
 
 .routing {
     padding: 25px;
@@ -135,6 +137,13 @@
     text-align: left;
     color: #004191;
 }
+
+@media (max-width: 400px) {
+    .routing {
+        background-color: red;
+    }
+}
+
 
 
 
