@@ -25,4 +25,17 @@
     <ProjectReference Include="..\Moventure.BusinessLogic\Moventure.BusinessLogic.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Scripts\common\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\Partial\_Cast.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Partial\_Rating.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
 </Project>

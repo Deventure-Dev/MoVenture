@@ -9,6 +9,8 @@
 <script type="text/javascript" src="~/Scripts/ViewModels/MovieDetailsViewModel.js"></script>
 <link rel="stylesheet" type="text/css" href="~/css/movie-details.css" media="screen" />
 <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/2.2.1/knockout-min.js"></script>
+<script type="text/javascript" src="~/Scripts/common/ntabs.js"></script>
+
 
 <div id="content" style="display: flex; flex-flow: column wrap; font-weight: bold; text-align: center;">
     <div data-bind="foreach: FetchedMovie">
@@ -20,9 +22,31 @@
                 <img class="image-url" style="width: 299px; height: 550px; border-radius: 15px; border: solid 1px #f0f0f0" data-bind="attr: {src: PictureUrl}" />
             </div>
             <div class="movie-details">
-                <div class="routing">
-                   <h4>Here are roots</h4>
+
+
+
+                <div class="n-tabs clearfix">
+                    <div class="n-tabs-header">
+                        <div class="n-tab n-tab-active" id="details" onclick="switchNTabs('details');">Details</div>
+                        <div class="n-tab" id="rating" onclick="switchNTabs('rating');">Rating</div>
+                        <div class="n-tab" id="cast" onclick="switchNTabs('cast');">Cast</div>
+                    </div>
+                    <div class="n-tabs-container clearfix">
+                        <div class="n-tab-body clearfix" id="details-tab">
+                            @await Html.PartialAsync("~/Views/Partial/_Details.cshtml")
+                        </div>
+                        <div class="n-tab-body hidden-n-tab clearfix" id="rating-tab">
+                            @await Html.PartialAsync("~/Views/Partial/_Rating.cshtml")
+                        </div>
+                        <div class="n-tab-body hidden-n-tab clearfix" id="rating-tab">
+                            @await Html.PartialAsync("~/Views/Partial/_Cast.cshtml")
+                        </div>
+                    </div>
                 </div>
+
+
+
+
                 <div class="details">
                     <h2 class="title" data-bind="text: Title"></h2>
                     <h2 class="tags" data-bind="text: Tags"></h2>
