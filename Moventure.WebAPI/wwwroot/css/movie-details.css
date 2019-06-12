@@ -138,10 +138,28 @@
     color: #004191;
 }
 
-@media (max-width: 400px) {
-    .routing {
-        background-color: red;
+.image-url {
+    width: 299px;
+    height: 550px;
+    border-radius: 15px;
+    border: solid 1px #f0f0f0;
+}
+
+@media (max-width: 795px) {
+    .image-url {
+        height: 250px;
+        width: 299px;
     }
+
+    .movie {
+        display: block;
+    }
+
+    .details {
+        display: block;
+        margin: auto;
+    }
+
 }
 
 
