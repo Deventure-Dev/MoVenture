@@ -11,7 +11,7 @@
 // controller.home
 (function () {
     var app = Sammy.apps.body;
-    debugger
+   
     app.get("#/", homeController);
     app.get("#/home", homeController);
 
@@ -36,7 +36,7 @@
     };
 
     function homeView(view) {
-        $("#view").html(view);
+        $("#details").html(view);
       
     };
 })();

@@ -8,8 +8,8 @@
     self.Tags = ko.observableArray();
     self.Actors = ko.observableArray();
 
+    
     self.init = function (id, title, pictureUrl, rating, tags, actors, categoryName) {
-        debugger
         self.Id(id);
         self.Title(title);
         self.PictureUrl(pictureUrl);
@@ -26,8 +26,8 @@ var MovieDetailsViewModel = function () {
     self.FetchedMovie = ko.observable();
 
     self.init = function (data) {
-        debugger
         var currentMovie = new CurrentMovieViewModel();
+     
         currentMovie.init(data[0].id, data[0].title, data[0].pictureUrl, data[0].rating, data[0].tags, data[0].actors, data[0].categoryName)
         self.FetchedMovie(currentMovie);
     }

@@ -20,11 +20,9 @@
                 <img class="image-url" style="width: 299px; height: 550px; border-radius: 15px; border: solid 1px #f0f0f0" data-bind="attr: {src: PictureUrl}" />
             </div>
             <div class="movie-details">
-                @*<div class="routing">
-                        <ul data-bind="foreach: self.routes">
-                            <li data-bind="text: $data" style="color: black;"></li>
-                        </ul>
-                    </div>*@
+                <div class="routing">
+                   <h4>Here are roots</h4>
+                </div>
                 <div class="details">
                     <h2 class="title" data-bind="text: Title"></h2>
                     <h2 class="tags" data-bind="text: Tags"></h2>
@@ -58,7 +56,6 @@
             movieDetailsViewModel = new MovieDetailsViewModel();
             ko.applyBindings(movieDetailsViewModel, document.getElementById("content"));
             ajaxGet("/Movie/GetById?id=43cfb413-4c40-4d5c-96d6-3b0d4863dbb7", {}, function (data) {
-                console.log("FROM GET", data)
                 movieDetailsViewModel.init(data);
             }, function (err) {
                 alert("An error occured");
