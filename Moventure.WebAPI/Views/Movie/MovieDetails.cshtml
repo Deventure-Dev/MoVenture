@@ -22,9 +22,6 @@
                 <img class="image-url"  data-bind="attr: {src: PictureUrl}" />
             </div>
             <div class="movie-details">
-
-
-
                 <div class="n-tabs clearfix">
                     <div class="n-tabs-header">
                         <div class="n-tab n-tab-active" id="details" onclick="switchNTabs('details');">Details</div>
@@ -33,37 +30,34 @@
                     </div>
                     <div class="n-tabs-container clearfix">
                         <div class="n-tab-body clearfix" id="details-tab">
-                            @await Html.PartialAsync("~/Views/Partial/_Details.cshtml")
+                            @*@await Html.PartialAsync("~/Views/Partial/_Details.cshtml")*@
+                            <div class="details">
+                                <h2 class="title" data-bind="text: Title"></h2>
+                                <h2 class="tags" data-bind="text: Tags"></h2>
+                                <h2 class="rating" data-bind="text: Rating"></h2>
+                                <h2 class="description">
+                                    This is description
+                                    Of movie
+                                    Lets do it
+                                    hahahaha
+                                    hahahaS
+                                </h2>
+                                <h1 class="screen-title">Screenshots</h1>
+                                <div class="screnshots">
+                                    <img class="image-url-screen" style="width: 100px; height: 100px; border-radius: 15px;" data-bind="attr: {src: PictureUrl}" />
+                                    <img class="image-url-screen" style="width: 100px; height: 100px; border-radius: 15px; " data-bind="attr: {src: PictureUrl}" />
+                                    <img class="image-url-screen" style="width: 100px; height: 100px; border-radius: 15px; " data-bind="attr: {src: PictureUrl}" />
+                                    <img class="image-url-screen" style="width: 100px; height: 100px; border-radius: 15px; " data-bind="attr: {src: PictureUrl}" />
+                                </div>
+                            </div>
+
                         </div>
                         <div class="n-tab-body hidden-n-tab clearfix" id="rating-tab">
                             @await Html.PartialAsync("~/Views/Partial/_Rating.cshtml")
                         </div>
-                        <div class="n-tab-body hidden-n-tab clearfix" id="rating-tab">
+                        <div class="n-tab-body hidden-n-tab clearfix" id="cast-tab">
                             @await Html.PartialAsync("~/Views/Partial/_Cast.cshtml")
                         </div>
-                    </div>
-                </div>
-
-
-
-
-                <div class="details">
-                    <h2 class="title" data-bind="text: Title"></h2>
-                    <h2 class="tags" data-bind="text: Tags"></h2>
-                    <h2 class="rating" data-bind="text: Rating"></h2>
-                    <h2 class="description">
-                        This is description
-                        Of movie
-                        Lets do it
-                        hahahaha
-                        hahahaS
-                    </h2>
-                    <h1 class="screen-title">Screenshots</h1>
-                    <div class="screnshots">
-                        <img class="image-url-screen" style="width: 100px; height: 100px; border-radius: 15px;" data-bind="attr: {src: PictureUrl}" />
-                        <img class="image-url-screen" style="width: 100px; height: 100px; border-radius: 15px; " data-bind="attr: {src: PictureUrl}" />
-                        <img class="image-url-screen" style="width: 100px; height: 100px; border-radius: 15px; " data-bind="attr: {src: PictureUrl}" />
-                        <img class="image-url-screen" style="width: 100px; height: 100px; border-radius: 15px; " data-bind="attr: {src: PictureUrl}" />
                     </div>
                 </div>
             </div>

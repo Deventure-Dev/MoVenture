@@ -28,7 +28,7 @@
     color: #171717;
     cursor: pointer;
     line-height: 50px;
-    margin-top: -1px;
+    margin-top: 5px;
     float: left;
     font-size: 15px;
     font-weight: 300;
@@ -64,6 +64,7 @@
     position: relative;
     width: auto;
     min-height: 300px;
+    margin-top: 10px;
 }
 
     .n-tab-body * {
