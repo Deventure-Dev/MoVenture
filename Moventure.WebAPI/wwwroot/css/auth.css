@@ -1,0 +1,80 @@
+﻿body {
+}
+
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+/* Create two equal columns that sits next to each other */
+.left-side {
+    flex: 50%;
+    height: 98vh;
+    background-image: linear-gradient(to top, #004191, #0f1954);
+}
+
+.auth-title h1 {
+    width: 273px;
+    height: 62px;
+    margin-left: 25px;
+    font-size: 42px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.17;
+    letter-spacing: normal;
+    text-align: left;
+    color: #ffffff;
+}
+
+/* Create two equal columns that sits next to each other */
+.right-side {
+    flex: 50%;
+}
+
+.form-content {
+    position: fixed;
+    top: 50%;
+    left: 75%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+}
+
+.label-details {
+    width: 74px;
+    height: 17px;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.21;
+    letter-spacing: normal;
+    text-align: left;
+    color: #0b2668;
+}
+
+
+input[type=text], [type=password] {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-bottom: 1px solid #8aaff8;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+}
+
+input[type=submit] {
+    border-radius: 100px;
+    background-color: #0f1954;
+    border: none;
+    cursor: pointer;
+    color: white;
+    width: 380px;
+    height: 48px;
+}
+
+
+

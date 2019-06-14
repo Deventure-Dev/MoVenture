@@ -25,6 +25,11 @@ namespace Moventure.WebAPI.Controllers
             _configuration = configuration;
         }
 
+        public IActionResult Index()
+        {
+            return View("AuthView");
+        }
+
         // /register
         [Route("register")]
         [HttpPost]

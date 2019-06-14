@@ -1,0 +1,27 @@
+﻿body {
+}
+
+.rating-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.rating-details {
+    display: inline-block;
+    margin-top: 10px;
+    width: 831px;
+    height: 90px;
+    border-radius: 15px;
+    border: solid 1px #f5f5f5;
+    background-color: #ffffff;
+}
+
+.image-rating {
+    float: left;
+    margin-top: 10px;
+    width: 70px;
+    height: 70px;
+    border-radius: 15px;
+    background-color: #0f1954;
+}

@@ -2,16 +2,22 @@
     display: none !important;
 }
 
-/*.n-tabs {
+/*.n-tabs-auth {
     margin-left:-36px;
 }*/
 
 .n-tabs-header {
     height: 50px;
-    width: auto;
-    border-bottom: 1px solid #c2bed1;
+    width: 20%;
     color: #F4F7F9;
     margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 50%;
+    left: 40%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
 }
 
 #activity-container {
@@ -19,41 +25,34 @@
 }
 
 .n-tab {
-    display: inline-block;
     vertical-align: top;
     height: 51px;
     min-width: 170px;
     text-align: center;
     font-size: 14px;
-    color: #171717;
     cursor: pointer;
     line-height: 50px;
     margin-top: 5px;
     float: left;
     font-size: 15px;
     font-weight: 300;
+    color: white;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-
 }
 
-    .n-tab:first-child {
-        margin-left: 50px;
-    }
-
-    .n-tab:hover {
-        background: #ededed;
-    }
 
 .n-tab-active {
     border: none;
-    box-shadow: inset 0 -5px 0 0;
     margin: 0;
-    color: #3809ad;
+    color: #0b2668;
+    background-color: white;
+    border-bottom-left-radius: 20px;
+    border-top-left-radius: 20px;
 }
 
     .n-tab-active:hover {
@@ -80,7 +79,7 @@
     background: #f0fcfe;
 }
 
-.n-tab-loading-icon {
+.n-tab-loading-icon-auth {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -112,10 +111,10 @@
 }
 
 
-    .table-n-tabs .n-tab:hover {
-        background: none !important;
-        color: #2a6496;
-    }
+.table-n-tabs .n-tab:hover {
+    background: none !important;
+    color: #2a6496;
+}
 
 .table-n-tabs .n-tab-active {
     color: #2a6496;

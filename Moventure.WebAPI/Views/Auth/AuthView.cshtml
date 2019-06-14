@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewData["Title"] = "Auth";
+    Layout = "_Layout";
+}
+
+<script type="text/javascript" src="~/js/knockout.js"></script>
+<script type="text/javascript" src="~/js/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="~/Scripts/ViewModels/MovieDetailsViewModel.js"></script>
+<link rel="stylesheet" type="text/css" href="~/css/auth.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="~/css/ntabsauth.css" media="screen" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/knockout/2.2.1/knockout-min.js"></script>
+<script type="text/javascript" src="~/Scripts/common/ntabs.js"></script>
+
+<div class="content">
+    <div class="left-side">
+        <div class="auth-title">
+            <h1 class="auth-title">MOVENTURE</h1>
+        </div>
+        <div class="n-tabs clearfix">
+            <div class="n-tabs-header">
+                <div class="n-tab n-tab-active" id="signin" onclick="switchNTabs('signin');">SIGN IN</div>
+                <div class="n-tab" id="signup" onclick="switchNTabs('signup');">SIGN UP</div>
+          
+            </div>
+        </div>
+    </div>
+    <div class="right-side">
+        <div class="n-tabs-container clearfix">
+            <div class="n-tab-body clearfix" id="signin-tab">
+                @await Html.PartialAsync("~/Views/Partial/_Login.cshtml")
+            </div>
+            <div class="n-tab-body hidden-n-tab clearfix" id="signup-tab">
+                @await Html.PartialAsync("~/Views/Partial/_Register.cshtml")
+            </div>
+        </div>
+    </div>
+
+
