@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewData["Title"] = "AddMovie";
+    Layout = "_Layout";
+}
+
+<script type="text/javascript" src="~/js/knockout.js"></script>
+<script type="text/javascript" src="~/js/jquery-3.3.1.js"></script>
+<link rel="stylesheet" type="text/css" href="~/css/addMovie.css" media="screen" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/knockout/2.2.1/knockout-min.js"></script>
+
+<button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">ADD MOVIE</button>
+
+<div class="content">
+    <div id="id01" class="modal">
+
+        <form class="modal-content animate" action="/action_page.php">
+            <div class="imgcontainer">
+                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+            </div>
+
+            <div class="container">
+                <input type="text" placeholder="" name="uname" required>
+
+                <input type="password" placeholder="" name="psw" required>
+
+                <button type="submit">ADD</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Get the modal
+    var modal = document.getElementById('id01');
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+
+

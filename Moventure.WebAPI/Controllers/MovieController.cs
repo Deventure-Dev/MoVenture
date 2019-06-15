@@ -30,6 +30,11 @@ namespace Moventure.WebAPI.Controllers
             return View("MovieDetails");
         }
 
+        public IActionResult AddMovie()
+        {
+            return View("AddMovie");
+        }
+
         #region WEBAPI specific
 
         // GET api/values/5
