@@ -3,10 +3,93 @@
 <head>
 
 </head>
+
+
 <body>
+    <div class="header">
+        <img src="~/img/menu_icn.png" class="menu" id="myBtn">
+        <img src="~/img/logo.png" class="logo">
+        <img src="~/img/search_icn.png" class="search" id="myBtn-search">
+    </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="details-menu">
+                <p>MY FILMS</p>
+                <p>REVIEWS RATING</p>
+                <p>ADD FILM</p>
+                <br>
+                <p>LOG OUT</p>
+            </div>
+        </div>
+    </div>
+    <div id="myModal-search" class="modal-search">
+        <div class="modal-content-search">
+            <span class="close-search">&times;</span>
+            <div class="details-search">
+                <input>
+            </div>
+        </div>
+    </div>
     @RenderBody()
     @RenderSection("Scripts", required: false)
+    <div class=footer>
+    </div>
 </body>
-
 </html>
 
+<link rel="stylesheet" type="text/css" href="~/css/_layout.css" media="screen" />
+
+<script type="text/javascript">
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal
+    btn.onclick = function () {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    var modal2 = document.getElementById("myModal-search");
+
+    // Get the button that opens the modal
+    var btn2 = document.getElementById("myBtn-search");
+
+    // Get the <span> element that closes the modal
+    var span2 = document.getElementsByClassName("close-search")[0];
+
+    // When the user clicks the button, open the modal
+    btn2.onclick = function () {
+        modal2.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span2.onclick = function () {
+        modal2.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window2.onclick = function (event) {
+        if (event.target == modal2) {
+            modal2.style.display = "none";
+        }
+    }
+
+</script>
