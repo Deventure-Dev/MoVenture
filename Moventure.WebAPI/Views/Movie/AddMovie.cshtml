@@ -11,20 +11,31 @@
 
 <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">ADD MOVIE</button>
 
-<div class="content">
-    <div id="id01" class="modal">
+<div class="add-content">
+    <div id="id01" class="add-modal">
 
-        <form class="modal-content animate" action="/action_page.php">
+        <form class="add-modal-content animate">
             <div class="imgcontainer">
-                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+                <span onclick="document.getElementById('id01').style.display='none'" class="add-close" title="Close Modal">&times;</span>
             </div>
 
-            <div class="container">
-                <input type="text" placeholder="" name="uname" required>
-
-                <input type="password" placeholder="" name="psw" required>
-
-                <button type="submit">ADD</button>
+            <div class="add-container">
+                <div class="add-container-left">
+                    <input type="text" style="height: 90%; border-radius: 15px;" placeholder="Thumbnail" name="thumbnail" /> 
+                </div>
+                <div class="add-container-right">
+                    <div class="firstSection">
+                        <input type="text" style="width: 40%; border-radius: 12px;" placeholder="Title" name="title" required />
+                        <input type="text" style="width: 40%; border-radius: 12px;" placeholder="Category" name="category" required />
+                        <input type="text" style="width: 40%; border-radius: 12px;" placeholder="Duration" name="duration" />
+                    </div>
+                    <div class="secondSection">
+                        <input type="text" style="border-radius: 12px" placeholder="Description" name="description" />
+                        <input type="text" style="border-radius: 12px" placeholder="Trailer" name="trailer" />
+                        <input type="text" style="border-radius: 12px; width: 40%;" placeholder="Cast" name="cast" />
+                    </div>
+                    <button type="submit" style="margin: auto;">ADD</button>
+                </div>
             </div>
         </form>
     </div>
