@@ -7,6 +7,7 @@
 <script type="text/javascript" src="~/js/knockout.js"></script>
 <script type="text/javascript" src="~/js/jquery-3.3.1.js"></script>
 <script type="text/javascript" src="~/Scripts/ViewModels/RegisterViewModel.js"></script>
+<script type="text/javascript" src="~/Scripts/ViewModels/LoginViewModel.js"></script>
 <link rel="stylesheet" type="text/css" href="~/css/auth.css" media="screen" />
 <link rel="stylesheet" type="text/css" href="~/css/ntabsauth.css" media="screen" />
 <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/2.2.1/knockout-min.js"></script>
@@ -19,8 +20,8 @@
         </div>
         <div class="n-tabs clearfix">
             <div class="n-tabs-header">
-                <div class="n-tab" id="signin" onclick="switchNTabs('signin');">SIGN IN</div>
-                <div class="n-tab n-tab-active" id="signup" onclick="switchNTabs('signup');">SIGN UP</div>
+                <div class="n-tab n-tab-active" id="signin" onclick="switchNTabs('signin');">SIGN IN</div>
+                <div class="n-tab" id="signup" onclick="switchNTabs('signup');">SIGN UP</div>
             </div>
         </div>
     </div>
@@ -39,21 +40,25 @@
 @section Scripts{
     <script type="text/javascript">
         var registerViewModel = null;
+        var loginViewModel = null;
+
         $(document).ready(function () {
             registerViewModel = new RegisterViewModel();
-      
-            ko.applyBindings(registerViewModel, document.getElementById("registerId"));
+            loginViewModel = new LoginViewModel();
 
-            /*$.ajax ({
-                url: "/auth/register",
-                type: "POST",
-                data: JSON.stringify({Email:"silviu@yahoo.com", Password:"baaa@123"}),
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                    success: function (returnedData) {
-                        console.log("DA", returnedData)
-                }
-            });*/
+            ko.applyBindings(registerViewModel, document.getElementById("registerId"));
+            ko.applyBindings(loginViewModel, document.getElementById("loginId"));
+            //registerViewModel.init()
+            //loginViewModel.init()
+            if (document.getElementsByClassName("n-tab-active")[0].id == 'signin') {
+                loginViewModel.init();
+                //console.log("LOGIN")
+            }
+            else {
+                registerViewModel.init();
+                //console.log("REGISTER");
+            }
+     
         });
 
     </script>

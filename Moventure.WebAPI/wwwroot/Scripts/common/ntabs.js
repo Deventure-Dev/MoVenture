@@ -129,7 +129,6 @@ function switchNTabs(tabId) {
     //list of containers
     var tabContainersParent = tabParent.parent().children()[1];
     var tabsContainers = $(tabContainersParent).children();
-
     //sets all tabs unactive and hides all containers in the given context
     for (var i = 0; i < tabs.length; i++) {
         $(tabs[i]).removeClass("n-tab-active");

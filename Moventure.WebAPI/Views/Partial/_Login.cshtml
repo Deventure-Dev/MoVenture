@@ -1,11 +1,11 @@
-﻿<div class="form-content">
+﻿<div class="form-content" id="loginId">
     <form method="POST">
         <label class="label-details" for="name">Username</label>
-        <input type="text" id="name" name="username" placeholder="Your username..">
+        <input type="text" id="name" name="username" placeholder="Your username.." data-bind="value: loginUsername">
 
         <label class="label-details" for="password">Password</label>
-        <input type="password" id="password" name="userpassword" placeholder="Your password..">
+        <input type="password" id="password" name="userpassword" placeholder="Your password.." data-bind="value: loginPassword">
 
-        <input type="submit" value="SIGN IN">
+        <input type="submit" data-bind="click: loginUserFunction" value="SIGN IN">
     </form>
 </div>

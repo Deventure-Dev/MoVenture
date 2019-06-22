@@ -1,11 +1,11 @@
 ﻿<div class="form-content" id="registerId">
     <form method="POST">
         <label class="label-details" for="email">Email</label>
-        <input type="text" id="remail" name="useremail" placeholder="Your email..">
+        <input type="text" id="remail" name="useremail" placeholder="Your email.." data-bind="value: registerEmail">
 
         <label class="label-details" for="password">Password</label>
-        <input type="password" id="rpassword" name="userpassword" placeholder="Your password..">
+        <input type="password" id="rpassword" name="userpassword" placeholder="Your password.." data-bind="value: registerPassword">
 
-        <input type="submit" value="SIGN UP">
+        <input type="submit" data-bind="click: registerUserFunction" value="SIGN UP">
     </form>
 </div>
