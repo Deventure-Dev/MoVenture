@@ -1,7 +1,7 @@
 ﻿body {
 }
 
-input[type=text], textarea {
+input[type=text], textarea, select, input[type=number] {
     width: 80%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -103,7 +103,7 @@ span.psw {
     border: 1px solid #888;
     border-radius: 15px;
     height: 70%;
-    width: 60%; /* Could be more or less, depending on screen size */
+    width: 80%; /* Could be more or less, depending on screen size */
 }
 
 /* The Close Button (x) */

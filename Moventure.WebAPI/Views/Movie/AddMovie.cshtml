@@ -6,13 +6,14 @@
 
 <script type="text/javascript" src="~/js/knockout.js"></script>
 <script type="text/javascript" src="~/js/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="~/Scripts/ViewModels/AddMovieViewModel.js"></script>
 <link rel="stylesheet" type="text/css" href="~/css/addMovie.css" media="screen" />
 <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/2.2.1/knockout-min.js"></script>
 
 <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">ADD MOVIE</button>
 
 <div class="add-content">
-    <div id="id01" class="add-modal">
+    <div id="id01" class="add-modal" id="addMovieId">
 
         <form class="add-modal-content animate">
             <div class="imgcontainer">
@@ -21,36 +22,52 @@
 
             <div class="add-container">
                 <div class="add-container-left">
-                    <input type="text" style="height: 90%; border-radius: 15px;" placeholder="Thumbnail" name="thumbnail" /> 
+                    <input type="text" style="height: 90%; border-radius: 15px; text-align: center; margin-left: 12px;" placeholder="Thumbnail" name="thumbnail" />
                 </div>
                 <div class="add-container-right">
                     <div class="firstSection">
-                        <input type="text" style="width: 40%; border-radius: 12px;" placeholder="Title" name="title" required />
-                        <input type="text" style="width: 40%; border-radius: 12px;" placeholder="Category" name="category" required />
-                        <input type="text" style="width: 40%; border-radius: 12px;" placeholder="Duration" name="duration" />
+                        <input type="text" style="width: 40%; border-radius: 12px;" placeholder="Title" name="title" required data-bind="value: movieTitle"/>
+                        <select style="width: 40%; border-radius: 12px;" name="category" required data-bind="options: categories, value: selectedCategory"/>
+                        <input type="text" style="width: 40%; border-radius: 12px;" placeholder="PictureUrl" name="pictureUrl" required data-bind="value: moviePictureUrl"/>
                     </div>
                     <div class="secondSection">
-                        <input type="text" style="border-radius: 12px" placeholder="Description" name="description" />
-                        <input type="text" style="border-radius: 12px" placeholder="Trailer" name="trailer" />
-                        <input type="text" style="border-radius: 12px; width: 40%;" placeholder="Cast" name="cast" />
+                        <input type="text" style="border-radius: 12px" placeholder="Description" name="description" required data-bind="value: movieDescription"/>
+                        <input type="text" style="border-radius: 12px" placeholder="Trailer" name="trailer" required data-bind="value: movieTrailerUrl"/>
+                        <input type="number" style="border-radius: 12px; width: 40%;" placeholder="Rating" name="rating" required data-bind="value: movieRating"/>
                     </div>
-                    <button type="submit" style="margin: auto;">ADD</button>
+                    <button type="submit" style="margin: auto;" data-bind="click: addMovieFunction">ADD</button>
                 </div>
             </div>
         </form>
     </div>
 </div>
 
-<script>
-    // Get the modal
-    var modal = document.getElementById('id01');
 
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function (event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
+@section Scripts{
+    <script type="text/javascript">
+        var addMovieViewModel = null;
+
+        $(document).ready(function () {
+            addMovieViewModel = new AddMovieViewModel();
+
+            ko.applyBindings(addMovieViewModel, document.getElementById("addMovieId"));
+            addMovieViewModel.init();
+        });
+
+    </script>
+
+
+    <script>
+        // Get the modal
+        var modal = document.getElementById('id01');
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
         }
-    }
-</script>
+    </script>
+}
 
 
