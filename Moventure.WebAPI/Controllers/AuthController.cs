@@ -31,7 +31,6 @@ namespace Moventure.WebAPI.Controllers
         }
 
         // /register
-        [Route("register")]
         [HttpPost]
         public async Task<ActionResult> Register([FromBody] RegisterViewModel model)
         {
@@ -49,7 +48,6 @@ namespace Moventure.WebAPI.Controllers
             return Ok(new { Username = user.UserName });
         }
 
-        [Route("login")] // /login
         [HttpPost]
         public async Task<ActionResult> Login([FromBody] LoginViewModel model)
         {

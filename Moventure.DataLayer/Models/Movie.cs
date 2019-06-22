@@ -6,7 +6,7 @@ namespace Moventure.DataLayer.Models
     public partial class Movie
     {
         public Guid Id { get; set; }
-        //public Guid CategoryId { get; set; }
+        public Guid CategoryId { get; set; }
         public string Title { get; set; }
         public DateTime LaunchDate { get; set; }
         public string PictureUrl { get; set; }

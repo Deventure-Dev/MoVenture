@@ -156,6 +156,7 @@ namespace Moventure.WebAPI.Controllers
             var categoryRepo = new CategoryRepo();
             var fetchedCategory = categoryRepo.GetAll().FirstOrDefault(c => c.Name == movie.CategoryName);
 
+
             if (fetchedCategory == null)
             {
                 return BadRequest("This category doesn't exit!");
@@ -165,6 +166,7 @@ namespace Moventure.WebAPI.Controllers
             var movieToAdd = mMapper.Map<Movie>(movie);
             movieToAdd.Status = (int)EntityStatus.ACTIVE;
             movieToAdd.SavedAt = DateTime.UtcNow;
+            movieToAdd.CategoryId = fetchedCategory.Id;
 
 
             var claimsIdentity = User.Identity as ClaimsIdentity;
