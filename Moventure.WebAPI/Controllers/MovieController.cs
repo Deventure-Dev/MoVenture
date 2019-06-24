@@ -25,8 +25,9 @@ namespace Moventure.WebAPI.Controllers
             mMapper = mapper;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(Guid id)
         {
+            ViewBag.MovieId = id;
             return View("MovieDetails");
         }
 

@@ -15,9 +15,6 @@
 
 <div id="content" style="display: flex; flex-flow: column wrap; font-weight: bold; text-align: center;">
     <div data-bind="foreach: FetchedMovie">
-        <header class="header">
-            <p class="header-title">MOVENTURE</p>
-        </header>
         <div class="movie">
             <div class="image-content"> 
                 <img class="image-url"  data-bind="attr: {src: PictureUrl}" />
@@ -42,6 +39,7 @@
                                     Lets do it
                                     hahahaha
                                     hahahaS
+                                   
                                 </h2>
                                 <h1 class="screen-title">Screenshots</h1>
                                 <div class="screnshots">
@@ -64,7 +62,6 @@
             </div>
         </div>
     </div>
-    <footer class="footer"></footer>
 </div>
 
 
@@ -74,7 +71,7 @@
         $(document).ready(function () {
             movieDetailsViewModel = new MovieDetailsViewModel();
             ko.applyBindings(movieDetailsViewModel, document.getElementById("content"));
-            ajaxGet("/Movie/GetById?id=43cfb413-4c40-4d5c-96d6-3b0d4863dbb7", {}, function (data) {
+            ajaxGet("/Movie/GetById?id=@(ViewBag.MovieId)", {}, function (data) {
                 movieDetailsViewModel.init(data);
             }, function (err) {
                 alert("An error occured");

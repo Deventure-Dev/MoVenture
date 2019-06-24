@@ -6,7 +6,6 @@
 
     self.init = function (categories) {
         var categoriesList = [];
-        console.log(categories,"aici");
         for (var i = 0; i < categories.data.length; i++)
         {
             console.log(categories.data[0])

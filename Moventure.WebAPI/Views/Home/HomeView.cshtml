@@ -14,24 +14,29 @@
 <!-- Home View -->
 <div id="home_html">
     <div class="category-container" data-bind="foreach: CategoriesListViewModel" id="minified">
+
         <div class="category-item">
             <div class="category-name">
                 <span data-bind="text: Name"></span>
             </div>
             <div class="movie-items" data-bind="foreach: MinifiedMoviesListViewModel">
-                <div class="movie-item">
-                    <img class="item-photo" alt="movie-photo" data-bind="attr: {src: PictureUrl}" />
-                    <div class="item-rating">
-                        <img class="photo-star" src="~/img/star_icn.png"/>
-                        <span data-bind="text: Rating"></span>
-                    </div>
-                    <span data-bind="text: Tags"></span>
-                    @*<span data-bind="text: Actors"></span>*@
-                    <span data-bind="text: Title" class="title"></span>
+                <a data-bind="attr: {href: '/movie?id=' + Id()}">
+                    <div class="movie-item">
+                        <img class="item-photo" alt="movie-photo" data-bind="attr: {src: PictureUrl}" />
+                        <div class="item-rating">
+                            <img class="photo-star" src="~/img/star_icn.png" />
+                            <span data-bind="text: Rating"></span>
+                        </div>
+                        <span data-bind="text: Tags"></span>
+                        @*<span data-bind="text: Actors"></span>*@
+                        <span data-bind="text: Title" class="title"></span>
 
-                </div>
+                    </div>
+                </a>
             </div>
+
         </div>
+
     </div>
 </div>
 
