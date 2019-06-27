@@ -30,23 +30,23 @@
                         <div class="n-tab-body clearfix" id="details-tab">
                             @*@await Html.PartialAsync("~/Views/Partial/_Details.cshtml")*@
                             <div class="details">
-                                <h2 class="title" data-bind="text: Title"></h2>
-                                <h2 class="tags" data-bind="text: Tags"></h2>
-                                <h2 class="rating" data-bind="text: Rating"></h2>
-                                <h2 class="description">
-                                    This is description
-                                    Of movie
-                                    Lets do it
-                                    hahahaha
-                                    hahahaS
-                                   
-                                </h2>
-                                <h1 class="screen-title">Screenshots</h1>
-                                <div class="screnshots">
-                                    <img class="image-url-screen" style="width: 100px; height: 100px; border-radius: 15px;" data-bind="attr: {src: PictureUrl}" />
-                                    <img class="image-url-screen" style="width: 100px; height: 100px; border-radius: 15px; " data-bind="attr: {src: PictureUrl}" />
-                                    <img class="image-url-screen" style="width: 100px; height: 100px; border-radius: 15px; " data-bind="attr: {src: PictureUrl}" />
-                                    <img class="image-url-screen" style="width: 100px; height: 100px; border-radius: 15px; " data-bind="attr: {src: PictureUrl}" />
+                                <div class="left-details">
+                                    <h2 class="title" data-bind="text: Title"></h2>
+                                    <h2 class="tags" data-bind="text: Tags"></h2>
+                                    <h2 class="rating" data-bind="text: Rating"></h2>
+                                    <h2 class="description" data-bind="text: Description"></h2>
+                                    <h1 class="screen-title">Screenshots</h1>
+                                    <div class="screnshots">
+                                        <img class="image-url-screen" style="width: 100px; height: 100px; border-radius: 15px;" data-bind="attr: {src: PictureUrl}" />
+                                        <img class="image-url-screen" style="width: 100px; height: 100px; border-radius: 15px; " data-bind="attr: {src: PictureUrl}" />
+                                        <img class="image-url-screen" style="width: 100px; height: 100px; border-radius: 15px; " data-bind="attr: {src: PictureUrl}" />
+                                        <img class="image-url-screen" style="width: 100px; height: 100px; border-radius: 15px; " data-bind="attr: {src: PictureUrl}" />
+                                    </div>
+                                </div>
+                                <div class="right-details">
+                                    <video width="320" height="240" controls>
+                                        <source src=Trailer type="video/mp4">
+                                    </video>
                                 </div>
                             </div>
 

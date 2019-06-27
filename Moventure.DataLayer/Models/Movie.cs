@@ -12,6 +12,7 @@ namespace Moventure.DataLayer.Models
         public string PictureUrl { get; set; }
         public string TrailerUrl { get; set; }
         public int RatingCount { get; set; }
+        public string Description { get; set; }
         public double Rating { get; set; }
         public int Status { get; set; }
         public DateTime SavedAt { get; set; }

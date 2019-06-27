@@ -36,25 +36,8 @@ var LoginViewModel = function () {
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function (returnedData) {
-                console.log("AICI");
-                $.ajax({
-                    url: "/#",
-                    type: "GET",
-                    data: {},
-                    dataType: "json",
-                    xhrFields: {
-                        withCredentials: true
-                    },
-                    beforeSend: function (xhr) { xhr.setRequestHeader('Authorization', 'Bearer ' + returnedData.token); },
-                    contentType: "application/json; charset=utf-8",
-                    success: function (returnedData) {
-                        alert("Successfully redirection!!");
-
-                    },
-                    error: function (err) {
-                        window.location = "/#";
-                    }
-                });
+                localStorage.setItem("token", returnedData.token);
+                location.href = "/#"
             },
             error: function (err) {
                 alert("Failed to asdasdasd");

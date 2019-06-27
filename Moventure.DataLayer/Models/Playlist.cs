@@ -7,7 +7,8 @@ namespace Moventure.DataLayer.Models
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        //public Guid UserId { get; set; }
+        public Guid UserId { get; set; }
+        public int Status { get; set; }
         public DateTime SavedAt { get; set; }
 
         public virtual User User { get; set; }

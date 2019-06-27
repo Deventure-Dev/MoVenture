@@ -10,6 +10,7 @@ using Moventure.BusinessLogic.Models;
 //using Moventure.BusinessLogic.Models;
 using Moventure.BusinessLogic.Repo;
 using Moventure.DataLayer.Models;
+using EntityStatus = Moventure.BusinessLogic.Models.EntityStatus;
 
 namespace Moventure.WebAPI.Controllers
 {
@@ -28,7 +29,10 @@ namespace Moventure.WebAPI.Controllers
         public IActionResult GetAll()
         {
             var playlistRepo = new PlaylistRepo();
-            var fetchedPlaylists = playlistRepo.GetAll();
+            //var fetchedPlaylists = playlistRepo.GetAll();
+            var fetchedPlaylists = playlistRepo.GetList(p => p.Status == (int)EntityStatus.ACTIVE , new[] {
+               $"{nameof(Playlist.MovieList)}.{nameof(PlaylistMovieAssignment.Movie)}"
+            });
             var playlistsCount = playlistRepo.Count();
 
             if (fetchedPlaylists == null && playlistsCount < 0)
@@ -36,7 +40,7 @@ namespace Moventure.WebAPI.Controllers
                 return BadRequest("Fetching playlists failed...!");
             }
 
-            var mappedPlaylists = mMapper.Map<IList<PlaylistModel>>(fetchedPlaylists);
+            var mappedPlaylists = mMapper.Map<IList<DisplayPlaylist>>(fetchedPlaylists);
 
             return Ok(new
             {
@@ -73,7 +77,10 @@ namespace Moventure.WebAPI.Controllers
             }
 
             var playlistToAdd = mMapper.Map<DataLayer.Models.Playlist>(playlist);
+            playlistToAdd.UserId = playlist.UserId;
+            playlistToAdd.Id = Guid.NewGuid();
             playlistToAdd.SavedAt = DateTime.UtcNow;
+            playlistToAdd.Status = (int)EntityStatus.ACTIVE;
 
 
             var claimsIdentity = User.Identity as ClaimsIdentity;
@@ -88,6 +95,36 @@ namespace Moventure.WebAPI.Controllers
             }
 
             return Ok(createdPlaylist);
+        }
+
+        [HttpPost]
+        public IActionResult AddMovieToPlaylist([FromQuery] Guid movieId, [FromQuery] Guid playlistId)
+        {
+            var movieRepo = new MovieRepo();
+            var playlistRepo = new PlaylistRepo();
+            var fetchedMovie = movieRepo.Get(movieId);
+            if (fetchedMovie == null)
+            {
+                return NotFound("Movie with this id doesn't exist...!");
+            }
+
+            var fetchedPlaylist = playlistRepo.Get(playlistId);
+            if (fetchedPlaylist == null)
+            {
+                return NotFound("Playlist with this id doesn't exist...!");
+            }
+
+
+            var playlistMovieRepo = new PlaylistMovieAssignmentRepo();
+            var toAdd = new PlaylistMovieAssignment()
+            {
+                MovieId = movieId,
+                PlaylistId = playlistId
+
+            };
+            playlistMovieRepo.Create(toAdd);
+
+            return Ok(fetchedPlaylist);
         }
 
         // PUT api/values/5

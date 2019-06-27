@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Moventure.DataLayer.Context;
 
 namespace Moventure.DataLayer.Migrations
 {
     [DbContext(typeof(Entities))]
-    partial class EntitiesModelSnapshot : ModelSnapshot
+    [Migration("20190627171256_adddescription")]
+    partial class adddescription
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -305,9 +307,7 @@ namespace Moventure.DataLayer.Migrations
 
                     b.Property<DateTime>("SavedAt");
 
-                    b.Property<int>("Status");
-
-                    b.Property<Guid>("UserId");
+                    b.Property<Guid?>("UserId");
 
                     b.HasKey("Id");
 
@@ -469,8 +469,7 @@ namespace Moventure.DataLayer.Migrations
                 {
                     b.HasOne("Moventure.DataLayer.Models.User", "User")
                         .WithMany("Playlists")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Moventure.DataLayer.Models.PlaylistMovieAssignment", b =>

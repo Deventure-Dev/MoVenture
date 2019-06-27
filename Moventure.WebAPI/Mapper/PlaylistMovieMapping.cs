@@ -12,8 +12,8 @@ namespace Moventure.BusinessLogic.Mapper
     {
             public PlaylistMovieMapping()
             {
-                CreateMap<MovieActorAssignment, ActorsMovieAssignmentModel>();
-                CreateMap<ActorsMovieAssignmentModel, MovieActorAssignment>();
+                CreateMap<PlaylistMovieAssignment, PlaylistsMovieAssignmentModel>();
+                CreateMap<PlaylistsMovieAssignmentModel, PlaylistMovieAssignment>();
             }
     }
 }

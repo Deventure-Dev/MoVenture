@@ -79,6 +79,7 @@
                 url: url,
                 dataType: "json",
                 type: "GET",
+                beforeSend: function (xhr) { xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token')); },
                 contentType: 'application/json; charset=utf-8',
                 async: asyncCall === undefined ? true : asyncCall,
                 cache: false,

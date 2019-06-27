@@ -19,6 +19,7 @@ namespace Moventure.BusinessLogic.Models
         public string PictureUrl { get; set; }
         public string Title { get; set; }
         public string CategoryName { get; set; }
+        public string Description { get; set; }
         public ICollection<string> Tags { get; set; }
         public ICollection<string> Actors { get; set; }
     }

@@ -9,6 +9,17 @@
     height: 50%;
 }
 
+.details {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.right-details {
+    margin-top: 30px;
+    margin-left: 12px;
+}
+
 .header {
     height: 56px;
     background-color: #0f1954;
