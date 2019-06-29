@@ -36,8 +36,9 @@ var LoginViewModel = function () {
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function (returnedData) {
+                console.log(returnedData)
                 localStorage.setItem("token", returnedData.token);
-                location.href = "/#"
+                //location.href = "/#"
             },
             error: function (err) {
                 alert("Failed to asdasdasd");
