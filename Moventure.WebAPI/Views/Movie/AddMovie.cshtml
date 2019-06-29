@@ -47,10 +47,12 @@
     <script type="text/javascript">
         var addMovieViewModel = null;
 
-        $(document).ready(function () {
+    $(document).ready(function () {
+            
             addMovieViewModel = new AddMovieViewModel();
 
-            ko.applyBindings(addMovieViewModel, document.getElementById("addMovieId"));
+        ko.applyBindings(addMovieViewModel, document.getElementById("addMovieId"));
+       
             addMovieViewModel.init();
         });
 

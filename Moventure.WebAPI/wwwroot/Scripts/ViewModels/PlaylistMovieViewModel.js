@@ -17,8 +17,8 @@
         }
 
         self.MinifiedMoviesListViewModel(minifiedMovieList);
-    }
 
+    }
 
 }
 

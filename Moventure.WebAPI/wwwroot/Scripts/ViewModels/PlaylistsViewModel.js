@@ -1,4 +1,5 @@
-﻿var PlaylistsViewModel = function () {
+﻿
+var PlaylistsViewModel = function () {
     var self = this;
     self.PlaylistListViewModel = ko.observableArray();
 

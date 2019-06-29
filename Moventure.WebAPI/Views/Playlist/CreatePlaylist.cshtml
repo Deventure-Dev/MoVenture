@@ -1,0 +1,37 @@
+﻿
+
+<link rel="stylesheet" type="text/css" href="~/css/playlist.css" media="screen" />
+<script type="text/javascript" src="~/js/knockout.js"></script>
+<script type="text/javascript" src="~/js/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="~/Scripts/ViewModels/AddPlaylistViewModel.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/knockout/2.2.1/knockout-min.js"></script>
+
+
+<button onclick="document.getElementById('id02').style.display='block'" class="button create-pl-button">CREATE PLAYLIST</button>
+<div class="add-content" id="addPlaylistId">
+    <div id="id02" class="add-modal">
+        <form style="text-align:center;" class="add-modal-content animate" method="POST">
+            <h3 style="text-align: center; color: #0f1954;">CREATE PLAYLIST</h3>
+            <input type="text" style="width: 60%; height: 15%; border-radius: 12px;" placeholder="Playlist name..." name="playlistName" data-bind="value: playlistName, valueUpdated: 'input'" required />
+            <button type="submit" style="margin-left: 5px; cursor: pointer; background-color: #0f1954; color: white; border: none; font-size: 16px;" data-bind="click: addPlaylistFunction">CREATE</button>
+            <button style="margin-top: 15px; cursor: pointer; background-color: #0f1954; color: white; border: none; font-size: 16px;" onclick="document.getElementById('id02').style.display='none'">CANCEL</button>
+        </form>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var addPlaylistViewModel = null;
+
+    $(document).ready(function () {
+        addPlaylistViewModel = new AddPlaylistViewModel();
+
+        ko.applyBindings(addPlaylistViewModel, document.getElementById("addPlaylistId"));
+        addPlaylistViewModel.init();
+    });
+
+</script>
+
+
+

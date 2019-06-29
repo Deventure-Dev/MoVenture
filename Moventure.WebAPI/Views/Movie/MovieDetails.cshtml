@@ -68,10 +68,8 @@
 @section Scripts{
     <script type="text/javascript">
     var movieDetailsViewModel = null;
-    console.log("ASDAS");
         $(document).ready(function () {
             movieDetailsViewModel = new MovieDetailsViewModel();
-            console.log("MAAA", localStorage.getItem('token'))
             ko.applyBindings(movieDetailsViewModel, document.getElementById("content"));
             ajaxGet("/Movie/GetById?id=@(ViewBag.MovieId)", {}, function (data) {
                 movieDetailsViewModel.init(data);
