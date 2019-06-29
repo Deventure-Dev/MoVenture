@@ -14,8 +14,9 @@ using EntityStatus = Moventure.BusinessLogic.Models.EntityStatus;
 
 namespace Moventure.WebAPI.Controllers
 {
-    public class PlaylistController : ControllerBase
+    public class PlaylistController : Controller
     {
+    
 
         private readonly IMapper mMapper;
 
@@ -24,13 +25,19 @@ namespace Moventure.WebAPI.Controllers
             mMapper = mapper;
         }
 
+        public IActionResult Index()
+        {
+            return View("PlaylistView");
+        }
+
+
         // GET api/values
         [HttpGet]
         public IActionResult GetAll()
         {
             var playlistRepo = new PlaylistRepo();
             //var fetchedPlaylists = playlistRepo.GetAll();
-            var fetchedPlaylists = playlistRepo.GetList(p => p.Status == (int)EntityStatus.ACTIVE , new[] {
+            var fetchedPlaylists = playlistRepo.GetList(p => p.Status == (int)EntityStatus.ACTIVE, new[] {
                $"{nameof(Playlist.MovieList)}.{nameof(PlaylistMovieAssignment.Movie)}"
             });
             var playlistsCount = playlistRepo.Count();
@@ -125,6 +132,31 @@ namespace Moventure.WebAPI.Controllers
             playlistMovieRepo.Create(toAdd);
 
             return Ok(fetchedPlaylist);
+        }
+
+        [HttpGet]
+        public IActionResult GetByUserId([FromQuery] Guid userId)
+        {
+            var playlistRepo = new PlaylistRepo();
+            //var fetchedPlaylists = playlistRepo.GetAll();
+            var fetchedPlaylists = playlistRepo.GetList(p => p.Status == (int)EntityStatus.ACTIVE && p.UserId == userId, new[] {
+               $"{nameof(Playlist.MovieList)}.{nameof(PlaylistMovieAssignment.Movie)}"
+            });
+            var playlistsCount = playlistRepo.Count(p => p.UserId == userId);
+
+            if (fetchedPlaylists == null && playlistsCount < 0)
+            {
+                return BadRequest("Fetching playlists failed...!");
+            }
+
+            var mappedPlaylists = mMapper.Map<IList<DisplayPlaylist>>(fetchedPlaylists);
+
+            return Ok(new
+            {
+                Playlists = mappedPlaylists, 
+                Count = playlistsCount
+            });
+
         }
 
         // PUT api/values/5

@@ -1,19 +1,13 @@
 ﻿
 @{
-    ViewData["Title"] = "HomeView";
     Layout = "_Layout";
 }
 
 
-<!-- For routing partial views -->
-<div id="view">
-    <p>Loading...</p>
-</div>
-
 <!-- Partial Inline Views -->
 <!-- Home View -->
-<div id="home_html">
-    <div class="category-container" data-bind="foreach: CategoriesListViewModel" id="minified">
+<div id="main">
+    <div class="category-container" data-bind="foreach: PlaylistListViewModel" id="playlists">
 
         <div class="category-item">
             <div class="category-name">
@@ -37,13 +31,8 @@
 
         </div>
 
-    </div>
+    </div>-
 </div>
-
-<div id="details">
-
-</div>
-
 
 <link rel="stylesheet" type="text/css" href="~/css/home.css" media="screen" />
 
@@ -55,20 +44,20 @@
     <script type="text/javascript" src="~/js/sammy.js"></script>
     <script type="text/javascript" src="~/Scripts/ViewModels/mainViewModel.js"></script>
     <script type="text/javascript" src="~/Scripts/ViewModels/MinifiedMoviesViewModel.js"></script>
-    <script type="text/javascript" src="~/Scripts/ViewModels/CategoriesViewModel.js"></script>
-    <script type="text/javascript" src="~/Scripts/ViewModels/CategoryViewModel.js"></script>
+    <script type="text/javascript" src="~/Scripts/ViewModels/PlaylistsViewModel.js"></script>
+    <script type="text/javascript" src="~/Scripts/ViewModels/PlaylistMovieViewModel.js"></script>
 
     <script type="text/javascript">
-        var categoryListViewModel = null;
+        var playlistListViewModel = null;
         $(document).ready(function () {
-            var categoryListViewModel = new CategoriesViewModel();
-            ko.applyBindings(categoryListViewModel, document.getElementById("minified"));
+            playlistListViewModel = new PlaylistsViewModel();
+            ko.applyBindings(playlistListViewModel, document.getElementById("playlists"));
 
-            ajaxGet("/Movie/GetMoviesByCategories", {}, function (data) {
-                categoryListViewModel.init(data);
-                console.log("Data", data);
+            ajaxGet("/Playlist/GetByUserId?userId=36440D30-B955-4A62-831F-3108A11FDCBF", {}, function (data) {
+
+                playlistListViewModel.init(data);
             }, function (err) {
-                console.log(err);
+                console.log(err.message);
                 alert("An error occured");
             });
         });

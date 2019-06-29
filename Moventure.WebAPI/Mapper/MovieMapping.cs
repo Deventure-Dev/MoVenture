@@ -21,6 +21,7 @@ namespace Moventure.BusinessLogic.Mapper
 
                 });
             CreateMap<MovieModel, Movie>();
+            CreateMap<PlaylistMovieAssignment, DisplayMovie>();
       
 
             CreateMap<Movie, DisplayMovie>()

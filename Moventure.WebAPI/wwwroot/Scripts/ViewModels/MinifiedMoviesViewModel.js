@@ -19,12 +19,10 @@
 
 
 var MinifiedMoviesListViewModel = function () {
-    debugger
     var self = this;
     self.MinifiedMovies = ko.observableArray();
     self.init = function (minifiedMovies) {
         var minifiedMovieList = [];
-        console.log(minifiedMovies);
         for (var i = 0; i < minifiedMovies.length; i++)
         {
             var minifiedVm = new MinifiedMovieViewModel();

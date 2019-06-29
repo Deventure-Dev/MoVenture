@@ -8,13 +8,13 @@ namespace Moventure.BusinessLogic.Models
     {
         public DisplayPlaylist()
         {
-            Movies = new List<string>();
+            Movies = new List<DisplayMovie>();
         }
 
         public Guid Id { get; set; }
         public string Name { get; set; }
         public Guid UserId { get; set; }
 
-        public ICollection<string> Movies { get; set; }
+        public ICollection<DisplayMovie> Movies { get; set; }
     }
 }
