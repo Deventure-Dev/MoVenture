@@ -38,7 +38,7 @@ var LoginViewModel = function () {
             success: function (returnedData) {
                 console.log(returnedData)
                 localStorage.setItem("token", returnedData.token);
-                //location.href = "/#"
+                location.href = "/#"
             },
             error: function (err) {
                 alert("Failed to asdasdasd");
