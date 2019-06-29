@@ -63,10 +63,9 @@
         $(document).ready(function () {
             var categoryListViewModel = new CategoriesViewModel();
             ko.applyBindings(categoryListViewModel, document.getElementById("minified"));
-
             ajaxGet("/Movie/GetMoviesByCategories", {}, function (data) {
                 categoryListViewModel.init(data);
-                console.log("Data", data);
+                
             }, function (err) {
                 console.log(err);
                 alert("An error occured");

@@ -5,6 +5,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using Deventure.Common.Response;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Moventure.BusinessLogic.Models;
@@ -13,7 +15,6 @@ using Moventure.DataLayer.Models;
 
 namespace Moventure.WebAPI.Controllers
 {
-
     public class MovieController : Controller
     {
         private static DateTime today = DateTime.Today;
@@ -38,6 +39,7 @@ namespace Moventure.WebAPI.Controllers
 
         #region WEBAPI specific
 
+        [Authorize]
         // GET api/values/5
         [HttpGet]
         public ActionResult<Movie> GetAll()
@@ -65,6 +67,7 @@ namespace Moventure.WebAPI.Controllers
             });
         }
 
+        [Authorize]
         [HttpGet]
         public ActionResult<DisplayMovie> GetById([FromQuery] Guid id)
         {
@@ -86,6 +89,7 @@ namespace Moventure.WebAPI.Controllers
             return Ok(mappedMovie);
         }
 
+       
         [HttpPost]
         public IActionResult AddTagToMovie([FromQuery] Guid movieId, [FromQuery] Guid tagId)
         {
@@ -145,6 +149,7 @@ namespace Moventure.WebAPI.Controllers
             return Ok(fetchedMovie);
         }
 
+        [Authorize]
         // POST api/values
         [HttpPost]
         public IActionResult Create([FromBody] MovieModel movie)
@@ -184,12 +189,14 @@ namespace Moventure.WebAPI.Controllers
             return Ok(createdMovie);
         }
 
+
         // PUT api/values/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
+        [Authorize]
         // DELETE api/values/5
         [HttpDelete]
         public IActionResult Delete([FromQuery] Guid id)
@@ -210,7 +217,8 @@ namespace Moventure.WebAPI.Controllers
         #endregion
 
         #region WEB specific
-        
+
+        [Authorize]
         public IActionResult GetMoviesByCategories()
         {
             var movieData = new CategoryRepo(mMapper).GetMoviesByCategories(); //UserRepo.CategoryList;

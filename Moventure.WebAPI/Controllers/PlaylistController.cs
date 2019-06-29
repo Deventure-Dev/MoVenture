@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using Deventure.Common.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Moventure.BusinessLogic.Models;
 //using Moventure.BusinessLogic.Models;
@@ -30,7 +31,7 @@ namespace Moventure.WebAPI.Controllers
             return View("PlaylistView");
         }
 
-
+        [Authorize]
         // GET api/values
         [HttpGet]
         public IActionResult GetAll()
@@ -57,6 +58,7 @@ namespace Moventure.WebAPI.Controllers
       
         }
 
+        [Authorize]
         // GET api/values/5
         [HttpGet]
         public ActionResult<Playlist> GetById([FromQuery] Guid playlistId)
@@ -74,6 +76,7 @@ namespace Moventure.WebAPI.Controllers
             return Ok(mappedPlaylist);
         }
 
+        [Authorize]
         // POST api/values
         [HttpPost]
         public ActionResult Create([FromBody] PlaylistModel playlist)
@@ -104,6 +107,7 @@ namespace Moventure.WebAPI.Controllers
             return Ok(createdPlaylist);
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult AddMovieToPlaylist([FromQuery] Guid movieId, [FromQuery] Guid playlistId)
         {
@@ -134,6 +138,7 @@ namespace Moventure.WebAPI.Controllers
             return Ok(fetchedPlaylist);
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult GetByUserId([FromQuery] Guid userId)
         {

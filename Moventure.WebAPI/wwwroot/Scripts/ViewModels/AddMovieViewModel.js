@@ -46,6 +46,7 @@ var AddMovieViewModel = function () {
             type: "POST",
             data: JSON.stringify(movieData),
             dataType: "json",
+            beforeSend: function (xhr) { xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token')); },
             contentType: "application/json; charset=utf-8",
             success: function (returnedData) {
                 alert("Successfully added!!");

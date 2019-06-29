@@ -51,7 +51,7 @@ namespace Moventure.WebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult> Login([FromBody] LoginViewModel model)
         {
-            var user = await _userManager.FindByNameAsync(model.Username);
+            /*var user = await _userManager.FindByNameAsync(model.Username);
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
                 var claims = new List<Claim>();
@@ -80,6 +80,34 @@ namespace Moventure.WebAPI.Controllers
                     token = tokenHandler.WriteToken(token)
 
                 });
+            }
+            return Unauthorized();*/
+            var user = await _userManager.FindByNameAsync(model.Username);
+            if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+            {
+                var claim = new[] {
+                    new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                    new Claim(JwtRegisteredClaimNames.NameId, user.Id)
+                };
+                var signinKey = new SymmetricSecurityKey(
+                  Encoding.UTF8.GetBytes(_configuration["Jwt:SigningKey"]));
+
+                int expiryInMinutes = Convert.ToInt32(_configuration["Jwt:ExpiryInMinutes"]);
+
+                var token = new JwtSecurityToken(
+                    claims: claim,
+                  issuer: _configuration["Jwt:Site"],
+                  audience: _configuration["Jwt:Site"],
+                  expires: DateTime.UtcNow.AddMinutes(expiryInMinutes),
+                  signingCredentials: new SigningCredentials(signinKey, SecurityAlgorithms.HmacSha256)
+                );
+
+                return Ok(
+                  new
+                  {
+                      token = new JwtSecurityTokenHandler().WriteToken(token),
+                      expiration = token.ValidTo
+                  });
             }
             return Unauthorized();
         }
