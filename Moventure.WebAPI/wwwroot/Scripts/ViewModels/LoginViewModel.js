@@ -17,6 +17,7 @@ var LoginViewModel = function () {
     self.loginUsername = ko.observable("");
 
     self.init = function () {
+        localStorage.clear();
         var currentUser = new CurrentLoginViewModel();
         currentUser.init(self.loginUsername(), self.loginPassword());
         self.LoginUser(currentUser);
