@@ -13,6 +13,7 @@
         <div class="category-name">
             <span data-bind="text: Name"></span>
         </div>
+        <button data-bind="click: deletePlaylist" class="delete-playlist">X</button>
         <div class="movie-items" data-bind="foreach: MinifiedMoviesListViewModel">
             <a data-bind="attr: {href: '/movie?id=' + Id()}">
                 <div class="movie-item">

@@ -186,11 +186,22 @@ namespace Moventure.WebAPI.Controllers
         public void Put(int id, [FromBody] string value)
         {
         }
-
+        [Authorize]
         // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpPost]
+        public IActionResult DeletePlaylist([FromQuery] Guid id)
         {
+            var playlistRepo = new PlaylistRepo();
+            var fetchedPlaylist = playlistRepo.GetAll().FirstOrDefault(playlist => playlist.Id == id);
+
+            if (fetchedPlaylist == null)
+            {
+                return NotFound("Movie with this id doesn't exist...!");
+            }
+
+            playlistRepo.Delete(fetchedPlaylist);
+
+            return Ok(fetchedPlaylist);
         }
     }
 }

@@ -16,6 +16,24 @@
     cursor: pointer;
 }
 
+.delete-playlist {
+    position: absolute;
+    left: 90%;
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    font-size: 18px;
+    outline: none;
+    font-weight: bold;
+}
+
+    .delete-playlist:hover {
+        color: red;
+        cursor: pointer;
+    }
+
 .create-pl-button {
     background-color: white;
     color: black;
