@@ -76,6 +76,23 @@ namespace Moventure.WebAPI.Controllers
             return Ok(mappedPlaylist);
         }
 
+
+        [Authorize]
+        // GET api/values/5
+        [HttpGet]
+        public ActionResult<Playlist> GetByName([FromQuery] string playlistName)
+        {
+            var playlistRepo = new PlaylistRepo();
+            var fetchedPlaylist = playlistRepo.GetList(p => p.Name == playlistName);
+
+            if (fetchedPlaylist == null)
+            {
+                return BadRequest("Fetching playlist failed...!");
+            }
+
+            return Ok(fetchedPlaylist);
+        }
+
         [Authorize]
         // POST api/values
         [HttpPost]

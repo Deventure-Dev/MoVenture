@@ -30,37 +30,79 @@
 var MovieDetailsViewModel = function () {
     var self = this;
     self.FetchedMovie = ko.observable();
-    self.playlistList = ko.observableArray();
+    self.playlistList = ko.observableArray(["Select playlist"]);
     self.selectedPlaylist = ko.observable("");
 
-    self.init = function (data) {
-
+    addToPlaylistFunction = function () {
+        var destinationPlaylist = self.FetchedMovie().selectedPlaylist();
 
         $.ajax({
-            url: "/playlist/GetAll",
+            url: "/playlist/GetByName?playlistName=" + destinationPlaylist,
+            type: "GET",
+            dataType: "json",
+            beforeSend: function (xhr) { xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token')); },
+            contentType: "application/json; charset=utf-8",
+            success: function (playlistByName) {
+                $.ajax({
+                    url: "/playlist/AddMovieToPlaylist?movieId=" + self.FetchedMovie().Id() + "&playlistId=" + playlistByName[0].id,
+                    type: "POST",
+                    dataType: "json",
+                    beforeSend: function (xhr) { xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token')); },
+                    contentType: "application/json; charset=utf-8",
+                    success: function (posted) {
+                        alert("Movie added successfully to " + destinationPlaylist)
+                    },
+                    error: function (err) {
+                        console.log("ERR", err)
+                    }
+
+                });
+            },
+            error: function (err) {
+                console.log("ERR", err)
+            }
+
+        });
+    }
+
+    self.init = function (recievedData) {
+
+        var decodedToken = self.parseJwt(localStorage.getItem('token'));
+
+        $.ajax({
+            url: "/playlist/GetByUserId?userId=" + decodedToken.nameid,
             type: "GET",
             dataType: "json",
             beforeSend: function (xhr) { xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token')); },
             contentType: "application/json; charset=utf-8",
             success: function (data) {
-                for (var i = 0; i < data.count; i++) {
-                    console.log(data.playlists[i])
-                    self.playlistList.push({
-                        playlistId: data.playlists[i].id,
-                        playlistName: data.playlists[i].name,
-                    });
+                for (var i = 0; i < data.playlists.length; i++) {
+                    self.playlistList.push(
+                        data.playlists[i].name,
+                    );
                 }
+
+                var currentMovie = new CurrentMovieViewModel();
+                if (recievedData[0].description == null) {
+                    recievedData[0].description = 'No description';
+                }
+
+                currentMovie.init(recievedData[0].id, recievedData[0].title, recievedData[0].pictureUrl, recievedData[0].rating, recievedData[0].tags, recievedData[0].actors, recievedData[0].categoryName, recievedData[0].description, self.selectedPlaylist(), self.playlistList())
+                self.FetchedMovie(currentMovie);
             }
 
         });
-
-        var currentMovie = new CurrentMovieViewModel();
-        if (data[0].description == null) {
-            data[0].description = 'No description';
-        }
-        currentMovie.init(data[0].id, data[0].title, data[0].pictureUrl, data[0].rating, data[0].tags, data[0].actors, data[0].categoryName, data[0].description)
-        self.FetchedMovie(currentMovie);
     }
+
+    self.parseJwt = function (token) {
+        var base64Url = token.split('.')[1];
+        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        return JSON.parse(jsonPayload);
+    };
 
 }
 

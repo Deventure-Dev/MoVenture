@@ -9,6 +9,7 @@
 <script type="text/javascript" src="~/Scripts/ViewModels/MovieDetailsViewModel.js"></script>
 <link rel="stylesheet" type="text/css" href="~/css/movie-details.css" media="screen" />
 <link rel="stylesheet" type="text/css" href="~/css/ntabs.css" media="screen" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.0.0/knockout-min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/2.2.1/knockout-min.js"></script>
 <script type="text/javascript" src="~/Scripts/common/ntabs.js"></script>
 
@@ -69,11 +70,14 @@
                 </div>
             </div>
             <div class="add-content">
-
                 <div id="id03" class="add-modal">
-                    <form class="add-modal-content animate" style="text-align: center; ">
-                            <select class="select-playlist" style="width: 40%; border-radius: 12px;" name="playlistList" required data-bind="options: playlistList, value: selectedPlaylist" />
-                            <input type="text" style="margin-top: 15px; text-align: center;" disabled data-bind="value: Title" />
+                    <form class="add-modal-content animate" style="text-align: center; " method="POST">
+                        <div class="add-to-playlist-content">
+                            <select class="select-playlist" style="width: 90%; margin-left: 8px; border-radius: 12px;" name="play" required data-bind="options: playlistList, value: selectedPlaylist" />
+                            <input type="text" style="margin-top: 15px; margin-left: 8px; text-align: center; width: 89%;" disabled data-bind="value: Title" />
+                            <button type="submit" style="width: 90%; margin-top: 15px; margin-left: 8px; color: #004191" data-bind="click: addToPlaylistFunction">ADD</button>
+                            <button  onclick="document.getElementById('id03').style.display='none'" style="width: 90%; margin-top: 15px; margin-left: 8px; color: red;">CANCEL</button>
+                        </div>
                     </form>
                 </div>
             </div>
